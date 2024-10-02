@@ -1,0 +1,23 @@
+spring:
+  config: 
+    import: security-variable.yml
+  application:
+    name: Davena
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Davena
+    username: root 
+    password: ${mysql.password}
+  thymeleaf:
+    cache: false
+  mvc:
+    static-path-pattern: /static/**
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+mybatis:
+  mapper-locations: mappers/*Mapper.xml
