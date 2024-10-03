@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+#wrap{
+	width:1200px;
+	margin:0 auto;
+	display: flex;
+	justify-content: center;
+ 	align-items: center;
+}
+
+#form{
+	width:800px;
+}
+
+/*****타이틀제목 page : header.html******/
+.bigTitle {
+	font-family: serif;
+	font-size : 110px;	
+	text-align : center;
+	margin-top: 150px;
+}
+
+
+/******login page : login.html******/
+.idInputDiv{
+	display: flex;
+	justify-content: center;
+}
+.pwInputDiv{
+	display: flex;
+	justify-content: center;
+}
+#idInput {
+	border-radius :10px;
+	width : 300px;
+	box-shadow: 3px 3px #F2F2F2;
+}
+#pwInput {
+	border-radius :10px;
+	width : 300px;
+	margin-top: 20px;
+	box-shadow: 3px 3px #F2F2F2;
+}
+.loginBtnDiv {
+	display: flex;
+	justify-content: end;
+	margin-right : 100px;
+	margin-top: 20px;
+}
+
+#joinBtn {
+	cursor:pointer;
+	font-size : 18px;
+}
+
+#loginBtn {
+	color:#1478CD;
+	font-size : 18px;
+	cursor:pointer;
+	margin-left: 20px;
+}

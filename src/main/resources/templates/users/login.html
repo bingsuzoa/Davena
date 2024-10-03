@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/default}">
+
+
+	<section layout:fragment="loginBanner" class="mt-3">
+		<div class="idInputDiv">
+			<input type="text" class="form-control" id="idInput" placeholder="아이디">
+		</div>
+		<div class="pwInputDiv">
+			<input type="password" class="form-control" id="pwInput" placeholder="비밀번호">
+		</div>
+		<div class="loginBtnDiv">
+			<div id="joinBtn">회원가입</div>
+			<div id="loginBtn">로그인</div>
+		</div>
+	</section>
+	
+</html>
