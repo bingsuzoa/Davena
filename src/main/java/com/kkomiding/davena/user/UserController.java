@@ -15,6 +15,18 @@ public class UserController {
 		return "users/login";
 	}
 	
+	@GetMapping("/before-apply-view")
+	public String afterjoin() {
+		
+		return "users/beforeapply";
+	}
+	
+	@GetMapping("/after-apply-view")
+	public String afterlogin() {
+		
+		return "users/afterapply";
+	}
+	
 	
 
 }

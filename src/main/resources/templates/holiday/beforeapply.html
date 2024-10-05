@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+
+
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .miniheader}"></th:block>
+	</header>
+	<section layout:fragment="content">
+		<div class="main-content">
+			<div class="calendar-content">
+				 <div id='calendar'></div>	
+			</div>
+			<div class="apply-content">
+				<div class="idInputDiv">
+					<input type="text" class="form-control" id="requestDate" placeholder="날짜선택" value="">
+				</div>
+				<div class="pwInputDiv">
+					<input type="text" class="form-control" id="requestMenu" placeholder="종류선택">
+				</div>
+				<div class="pwInputDiv">
+					<input type="text" class="form-control" id="requestReason" placeholder="사유작성(팀장만 볼 수 있어요.)">
+				</div>
+				<div>
+					<div id="vacApplyBtn">신청하기</div>
+				</div>
+			</div>
+	</section>
+	
+	<script layout:fragment="script">
+	
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          	initialView: 'dayGridMonth'
+          	,locale : 'ko'
+          	,selectable : true
+          	,headerToolbar: {
+              start:'title'
+              ,center:''
+              ,end:'prev,next'  
+           }
+          ,select: function(info) {
+        	  $("#requestDate").attr('value', "시작일 : " + info.startStr + " 00:00" + "  종료일 : " + info.endStr + " 00:00");
+          }	
+          ,dayCellContent:function(e){
+          	return e.dayNumberText.replace('일',''); 
+          }
+        });
+        calendar.render();
+        
+      });
+
+    </script>
+</html>
