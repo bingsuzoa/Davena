@@ -15,11 +15,15 @@
 			</div>
 			<div class="apply-content">
 				<div class="idInputDiv">
-					<input type="text" class="form-control" id="requestDate" placeholder="날짜선택" value="">
+					<input type="text" class="form-control" id="requestDate" placeholder="날짜선택(달력에서 클릭해주세요.)" value="">
 				</div>
-				<div class="pwInputDiv">
-					<input type="text" class="form-control" id="requestMenu" placeholder="종류선택">
-				</div>
+			<div class="requestMenu">
+				<input class="requestMenuBtn dropdown-toggle" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="종류선택" value="">			
+  				<div class="dropdown-menu">
+    				<a class="dropdown-item" href="#" value="오프">오프</a>
+   					<a class="dropdown-item" href="#" value="연가">연가</a>
+  				</div>
+  			</div>
 				<div class="pwInputDiv">
 					<input type="text" class="form-control" id="requestReason" placeholder="사유작성(팀장만 볼 수 있어요.)">
 				</div>
@@ -52,6 +56,10 @@
         calendar.render();
         
       });
+      
+      $('.dropdown-menu > a').on('click',function(){
+    	  $('.requestMenuBtn').attr('value', $(this).text());
+      })
 
     </script>
 </html>
