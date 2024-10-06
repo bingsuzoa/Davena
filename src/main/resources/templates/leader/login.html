@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{Layouts/default}">    
+        layout:decorate="~{Layouts/default}">
 
-	
 	<header layout:fragment="header">
 		<th:block th:replace="~{fragments/header :: .rightheader}"></th:block>
 	</header>
+	
 	<section layout:fragment="content" class="mt-3">
 		<div class="idInputDiv">
-			<button type="button" class="requestBtn">리퀘스트 신청하기</button>
+			<button type="button" id="makeRoomBtn">방 만들기</button>
 		</div>
 		<div class="pwInputDiv">
-			<button type="button" id="findWorkBtn">전체근무 조회하기</button>
+			<button type="button" id="manageRoomBtn">방 관리하기</button>
+		</div>
+		<div class="pwInputDiv">
+			<button type="button" class="requestBtn" id="leader-requestBtn">리퀘스트 신청하기</button>
 		</div>
 	</section>
+	
 </html>
