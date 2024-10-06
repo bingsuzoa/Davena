@@ -200,6 +200,7 @@ a:hover {
 /******beforeapply.htmll******/
 
 .main-content {
+	margin-top: 30px;
 	display: flex;
 	justify-content: center;
 }
@@ -448,3 +449,52 @@ a {
 	margin-bottom : 10px;
 	
 }
+
+/******leader/alldetail.html******/
+.request-detail-content {
+	margin-left : 450px;
+	margin-top : 100px;
+}
+#request-status-picture {
+	width : 400px;
+	height : 40px;
+	border-radius :30px;
+	border: 1px solid #F2F2F2;
+ 	background-color: transparent;
+	box-shadow: 3px 3px #F2F2F2;
+	margin-top : 5px;
+}
+.request-status-p {
+	font-size : 18px;
+}
+#worker {
+	color : #505050;
+	font-size : 15px;
+	margin-left : 3px;
+}
+.request-status-detail {
+	margin-top : 5px;
+}
+#request-detail-board {
+	width : 400px;
+	height : 200px;
+	border-radius :30px;
+	border: 2px solid #F2F2F2;
+ 	background-color: transparent;
+ 	color : #505050;
+ 	font-size : 15px;
+}
+#request-detail-board-content {
+	margin-left : 48px;
+	margin-top : 30px;
+}
+#request-detail-board > hr {
+	width : 350px;
+	color : #505050;
+}
+#unComplete-name {
+	margin-top : 20px;
+	color : #000000;	
+}
+
+

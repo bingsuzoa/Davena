@@ -19,5 +19,11 @@ public class LeaderController {
 		
 		return "leader/make";
 	}
+	
+	@GetMapping("/all-detail-view")
+	public String alldetail() {
+		
+		return "leader/alldetail";
+	}
 
 }

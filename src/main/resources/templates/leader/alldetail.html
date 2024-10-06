@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .miniheader}"></th:block>
+	</header>
+	
+	<section layout:fragment="content" class="d-flex">
+		<div>
+			<th:block th:replace="~{fragments/navbar :: .navbar}"></th:block>
+		</div>
+		<div class="request-detail-content">
+			<div class="request-status-div">
+				<p class="request-status-p">리퀘스트 신청 진행현황</p>
+				<div id="worker">간호사</div>
+				<div class="mr-5">
+					<div id="count-chart"></div>
+				</div>		
+			</div>
+			<div class="request-status-detail">
+				<p class="request-status-p">리퀘스트 세부내용</p>
+				<div id="request-detail-board">
+					<div id="request-detail-board-content">
+						<div>간호사 총 팀원 : 13명</div>
+						<hr>
+						<div>미완료 :5명</div>
+						<div id="unComplete-name">권미경 박수현 이은희 사과 메론</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</section>
+	
+	<script layout:fragment="script" type="text/javascript">
+	 	google.charts.load('current', {'packages':['corechart']});
+	    google.charts.setOnLoadCallback(drawCharts);
+	    
+	    function drawCharts() {
+		    var data = google.visualization.arrayToDataTable([
+		        ['직군', '완료'],
+		        ['', 8]
+		      ]);
+	
+		    var view = new google.visualization.DataView(data);
+		      	view.setColumns([0, 1,
+		    	  {
+		    	  calc: "stringify",
+                  sourceColumn: 1,
+                  type: "string",
+                  role: "annotation",
+                  }
+		      ]);	
+		    var options = {
+				   legend: 'none',
+				   title: '',
+				   width: 600,
+				   height: 200,
+				   bar: {groupWidth: "40%"},
+				   colors : ['#E8F5FF'],
+				   hAxis : {
+				     viewWindow : {min : 0, max : 20}
+				   },
+				   chartArea:{left:15, top:10}
+			}	 
+		    var chart = new google.visualization.BarChart(document.getElementById('count-chart'));
+				chart.draw(view, options);		
+	    }
+	    
+	</script>
+</html>
