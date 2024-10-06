@@ -4,26 +4,29 @@
         layout:decorate="~{Layouts/contents}">
         
 
-
 	<header layout:fragment="header">
 		<th:block th:replace="~{fragments/header :: .miniheader}"></th:block>
 	</header>
+	
 	<section layout:fragment="content">
 		<div class="main-content">
 			<div class="calendar-content">
-				 <div id='calendar'></div>	
+				 <div id='calendar'></div>
 			</div>
 			<div class="apply-content">
 				<div class="idInputDiv">
-					<input type="text" class="form-control" id="requestDate" placeholder="날짜선택(달력에서 클릭해주세요.)" value="">
+					<input type="text" class="requestDate form-control" id="request-start-date" placeholder="휴가시작날짜(달력에서 클릭해주세요.)" value="">
 				</div>
-			<div class="requestMenu">
-				<input class="requestMenuBtn dropdown-toggle" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="종류선택" value="">			
-  				<div class="dropdown-menu">
-    				<a class="dropdown-item" href="#" value="오프">오프</a>
-   					<a class="dropdown-item" href="#" value="연가">연가</a>
+				<div class="idInputDiv">
+					<input type="text" class="requestDate form-control" id="request-end-date" placeholder="휴가종료날짜(달력에서 클릭해주세요.)" value="">
+				</div>
+				<div class="requestMenu">
+					<input class="requestMenuBtn dropdown-toggle" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="종류선택" value="">			
+  					<div class="dropdown-menu">
+    					<a class="dropdown-item" href="#" value="오프">오프</a>
+   						<a class="dropdown-item" href="#" value="연가">연가</a>
+  					</div>
   				</div>
-  			</div>
 				<div class="pwInputDiv">
 					<input type="text" class="form-control" id="requestReason" placeholder="사유작성(팀장만 볼 수 있어요.)">
 				</div>
@@ -31,35 +34,34 @@
 					<div id="vacApplyBtn">신청하기</div>
 				</div>
 			</div>
+		</div>
 	</section>
 	
 	<script layout:fragment="script">
-	
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          	initialView: 'dayGridMonth'
-          	,locale : 'ko'
-          	,selectable : true
-          	,headerToolbar: {
-              start:'title'
-              ,center:''
-              ,end:'prev,next'  
-           }
-          ,select: function(info) {
-        	  $("#requestDate").attr('value', "시작일 : " + info.startStr + " 00:00" + "  종료일 : " + info.endStr + " 00:00");
-          }	
-          ,dayCellContent:function(e){
-          	return e.dayNumberText.replace('일',''); 
-          }
-        });
-        calendar.render();
-        
-      });
-      
-      $('.dropdown-menu > a').on('click',function(){
-    	  $('.requestMenuBtn').attr('value', $(this).text());
-      })
-
+		document.addEventListener('DOMContentLoaded', function() {
+    		var calendarEl = document.getElementById('calendar');
+    		var calendar = new FullCalendar.Calendar(calendarEl, {
+      			initialView: 'dayGridMonth'
+      			,locale : 'ko'
+      			,selectable : true
+      			,headerToolbar: {
+         	 		start:'title'
+          			,center:''
+          			,end:'prev,next'  
+       			}
+      			,select: function(info) {
+    	  			$("#request-start-date").attr('value', "시작일 : " + info.startStr + " 00:00");
+    	  			$("#request-end-date").attr('value', "종료일 : " + info.endStr + " 00:00");
+      			}	
+     		 	,dayCellContent:function(e){
+      				return e.dayNumberText.replace('일',''); 
+      			}
+    		});
+    		calendar.render();
+  		});
+		
+  		$('.dropdown-menu > a').on('click',function(){
+	  		$('.requestMenuBtn').attr('value', $(this).text());
+ 	 	})
     </script>
 </html>

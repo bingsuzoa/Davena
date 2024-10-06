@@ -13,5 +13,16 @@ public class HolidayController {
 		
 		return "holiday/beforeapply";
 	}
+	
+	@GetMapping("/after-apply-view")
+	public String afterapply() {
+		
+		return "holiday/afterapply";
+	}
 
+	@GetMapping("/detail-view")
+	public String detailview() {
+		
+		return "holiday/detailview";
+	}
 }

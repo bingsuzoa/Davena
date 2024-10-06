@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+    <header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .miniheader}"></th:block>
+	</header>
+	<section layout:fragment="content">
+		<div class="content d-flex">
+			<nav>
+				<div class="high-nav">
+					<th:block th:replace="~{fragments/navbar :: .navbar}"></th:block>
+				</div>
+				<div class="low-nav">
+					<th:block th:replace="~{fragments/navbar :: .low-navbar}"></th:block>
+				</div>
+			</nav>	
+			<div class="calendar-detailview">
+				<div id="calendar"></div>
+			</div>
+			<div>
+				<div id="change-applyBtn">휴가변경하기 </div>
+			</div>
+		</div>
+	</section>
+	
+	<script layout:fragment="script">
+		document.addEventListener('DOMContentLoaded', function() {
+    		var calendarEl = document.getElementById('calendar');
+    		var calendar = new FullCalendar.Calendar(calendarEl, {
+      			initialView: 'dayGridMonth'
+      			,locale : 'ko'
+      			,selectable : false
+      			,headerToolbar: {
+         	 		start:'title'
+          			,center:''
+          			,end:'prev,next'  
+       			}
+     		 	,dayCellContent:function(e){
+      				return e.dayNumberText.replace('일',''); 
+      			}
+    		});
+    		calendar.render();
+  		});
+	</script>
+</html>
