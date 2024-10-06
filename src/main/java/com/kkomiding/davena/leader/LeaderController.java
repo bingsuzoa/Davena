@@ -25,5 +25,17 @@ public class LeaderController {
 		
 		return "leader/alldetail";
 	}
+	
+	@GetMapping("/holiday-set-view")
+	public String holidaySetView() {
+		
+		return "leader/holidaysetview";
+	}
+	
+	@GetMapping("/work-set-view")
+	public String workySetView() {
+		
+		return "leader/worksetview";
+	}
 
 }

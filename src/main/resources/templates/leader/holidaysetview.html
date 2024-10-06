@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .miniheader}"></th:block>
+	</header>
+	<section layout:fragment="content" class="d-flex">
+		<div>
+			<th:block th:replace="~{fragments/navbar :: .navbar}"></th:block>
+		</div>
+		<div class="holiday-set-Div">
+			<div class="set-offCount">
+				<p>간호사</p>
+				<div class="set-Div-write">이번달 제공해야 하는 오프 수를 설정해주세요.</div>
+				<input class="set-Div-input form-control" id="set-offCount-input" placeholder="이번 달 오프 수">
+			</div>
+			<div class="set-continueWork">
+				<div class="set-Div-write">연속한 근무 가능일 수를 설정해주세요.</div>
+				<div class="set-Div-small-write"></div>
+				<input class="set-Div-input form-control" id="set-continueWork-input" placeholder="가능한 연속 N 근무 수">
+				<input class="set-Div-input form-control" id="set-minimumOff-input" placeholder="최소 휴무 수">
+				<div id="set-Btn">저장하기</div>
+			</div>
+		</div> 
+	</section>       
+</html>

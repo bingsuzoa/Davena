@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .miniheader}"></th:block>
+	</header>
+	<section layout:fragment="content" class="d-flex">
+		<div>
+			<th:block th:replace="~{fragments/navbar :: .navbar}"></th:block>
+		</div>
+		<div class="set-Div d-flex">
+			<div class="set-workCount">
+				<p>근무 수 설정</p>
+				<div class="set-Div-write">설정한 인원 수 만큼 근무장소에서 근무합니다.</div>
+				<input class="set-Div-input form-control" id="set-workCount-input1" placeholder="D근무 수">
+				<input class="set-Div-input form-control" id="set-workCount-input2" placeholder="E근무 수">
+				<input class="set-Div-input form-control" id="set-workCount-input3" placeholder="N근무 수">
+			</div>
+			<div class="set-team">
+				<p>팀 간호 설정</p>
+				<div class="set-Div-write">설정한 팀별로 근무표를 만들어볼게요.</div>
+				<div class="set-Div-write">한팀으로 일하는 곳은 항목을 하나로만 설정해주세요.</div>
+				<div class="option-team">
+					<div>
+						<button class="optionTeamBtn dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-expanded="false" value="">A팀</button>		
+	  					<div class="dropdown-menu">
+	    					<div class="form-check">
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name1">
+	    							<label class="form-check-label" for="name1">권미경</label>
+	    						</div>
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name2">
+	    							<label class="form-check-label" for="name2">박수현</label>
+	    						</div>
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name3">
+	    							<label class="form-check-label" for="name3">이은희</label>
+	    						</div>
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name4">
+	    							<label class="form-check-label" for="name4">김메론</label>
+	    						</div>
+	    					</div>
+	  					</div>
+  					</div>
+  					
+  					<div>
+	  					<button class="optionTeamBtn dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-expanded="false" value="">B팀</button>		
+	  					<div class="dropdown-menu">
+	    					<div class="form-check">
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name1">
+	    							<label class="form-check-label" for="name1">권미경</label>
+	    						</div>
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name2">
+	    							<label class="form-check-label" for="name2">박수현</label>
+	    						</div>
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name3">
+	    							<label class="form-check-label" for="name3">이은희</label>
+	    						</div>
+	    						<div class="team-item">
+	    							<input type="checkbox" class="form-check-input" id="name4">
+	    							<label class="form-check-label" for="name4">김메론</label>
+	    						</div>
+	    					</div>
+	  					</div>
+  					</div>
+  				
+				<div id="set-Btn">저장하기</div>
+			</div>
+		</div> 
+	</div>
+	</section>      
+</html>

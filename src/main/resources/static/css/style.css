@@ -497,4 +497,72 @@ a {
 	color : #000000;	
 }
 
+/******holidaysetview.html******/
+.holiday-set-Div {
+	margin-left : 350px;
+	margin-top: 100px;
+}
+.set-offCount > p {
+	font-size : 20px;
+	color:#1478CD;
+}
+.set-Div-write {
+	font-size : 18px;
+}
+.set-continueWork {
+	margin-top: 40px;
+}
+.set-Div-small-write {
+	font-size : 16px;
+	color : #505050;
+}
+.set-Div-input {
+	border-radius :10px;
+	width : 300px;
+	margin-top: 20px;
+	box-shadow: 3px 3px #F2F2F2;
+}
+#set-Btn {
+	color:#1478CD;
+	cursor : pointer;
+	font-size : 18px;
+	display : flex;
+	justify-content: end;
+	margin-right : 20px;
+	margin-top : 20px;
+}
 
+/******worksetview.html******/
+.set-Div {
+	margin-left : 150px;
+	margin-top: 120px;
+}
+.set-workCount > p {
+	font-size : 18px;
+}
+
+.set-team > p {
+	font-size : 18px;
+}
+
+.set-team {
+	margin-left : 100px;
+}
+.set-Div-write {
+	font-size : 16px;
+	color:#505050;
+}
+.optionTeamBtn {
+	text-align : left;
+	border-radius :10px;
+	width : 320px;
+	margin-top: 20px;
+	border: 1px solid #F2F2F2;
+ 	background-color: transparent;
+	box-shadow: 3px 3px #F2F2F2;
+}
+
+.team-item {
+	margin-left : 8px;
+	margin-top : 2px;
+}
