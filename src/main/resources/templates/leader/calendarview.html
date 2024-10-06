@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .header-synthesis}"></th:block>
+	</header>
+	<section layout:fragment="content">
+		<div class="calendar-view-Div">
+			<div class="calendar-content">
+				 <div id='calendar'></div>
+			</div>
+		</div>
+	</section>
+	
+	<script layout:fragment="script">
+		document.addEventListener('DOMContentLoaded', function() {
+    		var calendarEl = document.getElementById('calendar');
+    		var calendar = new FullCalendar.Calendar(calendarEl, {
+      			initialView: 'dayGridMonth'
+      			,locale : 'ko'
+      			,selectable : false
+      			,headerToolbar: {
+         	 		start:'title'
+          			,center:''
+          			,end:'prev,next'  
+       			}
+     		 	,dayCellContent:function(e){
+      				return e.dayNumberText.replace('일',''); 
+      			}
+    		});
+    		calendar.render();
+  		});
+	</script>
+</html>

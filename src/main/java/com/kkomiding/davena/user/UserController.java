@@ -27,6 +27,12 @@ public class UserController {
 		return "users/afterapply";
 	}
 	
+	@GetMapping("/join-view")
+	public String join() {
+		
+		return "users/join";
+	}
+	
 	
 
 }

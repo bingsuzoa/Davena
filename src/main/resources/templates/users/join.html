@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layouts/contents}">
+        
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .leftheader}"></th:block>
+	</header>
+	
+	<section layout:fragment="content" class="d-flex justify-content-center">
+		<div class="join-content mt-4">
+			<div class="joinDiv d-flex">
+				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" placeholder="아이디 입력">
+				<button type="button" class="join-btn btn col-5" id="check-duplicateBtn">중복확인</button>
+			</div>
+			<div class="joinDiv">
+				<input type="text" class="join-roomInfo form-control" id="join-PwInput" placeholder="비밀번호 입력">
+			</div>
+			<div class="joinDiv">
+				<input type="text" class="join-roomInfo form-control" id="join-checkPwInput" placeholder="비밀번호 확인">
+			</div>
+			<div class="joinDiv d-flex">
+				<input type="text" class="join-roomInfo form-control col-5" id="join-roomName" placeholder="이름">
+				<button type="button" class="join-btn btn col-7" id="join-profileBtn">프로필 사진 선택</button>
+			</div>
+			<div class="joinDiv">
+				<div>
+  					<button class="positionBtn dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-expanded="false" value="">직책 선택</button>
+		  			<div class="dropdown-menu">
+		    			<a class="dropdown-item" href="#" id="join-team-leader">팀장</a>
+		    			<a class="dropdown-item" href="#" id="join-team-member">팀원</a>
+		  			</div>
+	  			</div>
+			</div>
+			<div class="joinDiv">
+				<input type="text" class="join-roomInfo form-control" id="join-roomName" placeholder="방 이름">
+			</div>
+			<div class="joinDiv">
+				<input type="password" class="join-roomInfo form-control" id="join-roomPw" placeholder="방 비밀번호🔑">
+			</div>
+			<div class="joinDiv d-flex justify-content-end">
+				<div id="join-accountBtn">계정만들기</div>
+			</div>
+		</div>
+	</section>
+</html>

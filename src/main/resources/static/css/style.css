@@ -32,13 +32,18 @@
 	height : 25%;
 }
 /*****navbar.html******/
+
+.navbar-synthesis {
+	margin-left : 20px;
+}
 .navbar_menu {
 	list-style-type: none;
 	padding : 0;
 	margin : 0;
 	margin-left : 20px;
-	margin-top : 50px;
+	margin-top : 70px;
 }
+
 
 .menu-item {
 	width : 250px;
@@ -46,7 +51,6 @@
 	border-radius : 20px;
 	margin-top : 25px;
 }
-
 .menu-item:hover{
 	background-color : #F2F2F2;
 }
@@ -57,6 +61,12 @@
 	font-size : 20px;
 }
 
+
+#synthesisBtn {
+	color : #1478CD;
+	font-weight : 600px;
+	
+}
 a:hover {
 	text-decoration : none;
 	color: #000000;
@@ -104,6 +114,44 @@ a:hover {
 	margin-left : 10px;
 	cursor:pointer;	
 }
+.header-synthesis {
+	 width:100%;
+	 display: flex;
+	 justify-content: space-between;
+}
+.header-synthesis > p {
+	font-family: serif;
+	font-size : 50px;
+	margin-left : 10px;
+	cursor:pointer;	
+}
+
+.navbar-width-version {
+	width : 800px;
+	margin-right : 380px;
+}
+.navbar-width-version > ul li {
+	display : inline-block;
+}
+.menu-width-item {
+	width : 150px;
+	height : 50px;
+	border-radius : 20px;
+	margin-right : 10px;
+}
+.menu-width-item:hover{
+	background-color : #F2F2F2;
+}
+.menu-width-link {
+	text-decoration : none;
+	color: #000000;
+	font-size : 17px;
+}
+.navbar-width-menu {
+	list-style-type: none;
+	margin-top : 30px;
+}
+
 
 .rightheader {
 	 width:100%;
@@ -132,6 +180,13 @@ a:hover {
 	margin-left : 10px;
 }
 
+.leftheader > p {
+	font-family: serif;
+	font-size : 50px;
+	margin-left : 10px;
+	cursor:pointer;
+}
+
 /******login.html******/
 .idInputDiv{
 	display: flex;
@@ -155,8 +210,8 @@ a:hover {
 .loginBtnDiv {
 	display: flex;
 	justify-content: end;
-	margin-right : 100px;
-	margin-top: 20px;
+	margin-right : 250px;
+	margin-top: 30px;
 }
 
 #joinBtn {
@@ -169,6 +224,45 @@ a:hover {
 	font-size : 18px;
 	cursor:pointer;
 	margin-left: 20px;
+}
+/******join.html******/
+.joinDiv {
+	margin-top : 30px;
+	width : 300px;
+}
+.join-roomInfo {
+	border-radius :10px;
+	width : 300px;
+	box-shadow: 3px 3px #F2F2F2;
+}
+
+.join-btn {
+	color : #FFFFFF;
+	background-color :#1E82FF;
+	border-radius :10px;
+	margin-left : 10px;
+}
+.join-btn:hover {
+	color : #FFFFFF;
+	background-color :#3296FF;
+}
+.positionBtn {
+	color :#787878;
+	text-align : left;
+	border-radius :10px;
+	width : 300px;
+	border: 1px solid #d2d2d2	;
+ 	background-color: transparent;
+	box-shadow: 3px 3px #F2F2F2;
+}
+#join-accountBtn {
+	color:#1478CD;
+	font-size : 18px;
+	cursor:pointer;
+	margin-top : 10px;
+}
+.dropdown-menuDiv {
+	margin-right : 100px;
 }
 /******afterapply.html******/
 
@@ -204,15 +298,16 @@ a:hover {
 	display: flex;
 	justify-content: center;
 }
-.calendar-content {
-	width : 500vw;
-	padding : 80px;
+.beforeApply-calendar {
+	width : 700px;
 	padding-top : 0;
 }
+
 .apply-content {
-	width : 400vw;
+	width : 500px;
 	margin-top :100px;
 	margin-right : 50px;
+	margin-left : 80px;
 }
 .requestDate {
 	cursor:pointer;
@@ -227,6 +322,7 @@ a:hover {
 #request-end-date {
 	margin-top : 40px;
 }
+
 .requestMenuBtn {
 	color : #505050;
 	cursor:pointer;
@@ -238,13 +334,11 @@ a:hover {
 	box-shadow: 3px 3px #F2F2F2;
 	padding-left : 12px;
 	margin-top : 40px;
-	margin-left : 85px;
 }
 
 .dropdown-menu {
 	border-radius :10px;
 	margin-top : 10px;
-	margin-left : 10px;
 	width : 300px;
 }
 
@@ -257,12 +351,19 @@ a:hover {
 	box-shadow: 3px 3px #F2F2F2;
 	margin-top : 40px;
 }
+
+.vacApplyBtn-div {
+	display:flex;
+	justify-content : end;
+	margin-right : 100px;
+}
+
 #vacApplyBtn {
 	color:#1478CD;
 	font-size : 18px;
 	cursor:pointer;
-	margin-left : 420px;
 	margin-top : 40px;
+	
 }
 
 a {
@@ -450,10 +551,10 @@ a {
 	
 }
 
-/******leader/alldetail.html******/
+/******alldetail.html******/
 .request-detail-content {
-	margin-left : 450px;
-	margin-top : 100px;
+	margin-left : 300px;
+	margin-top : 80px;
 }
 #request-status-picture {
 	width : 400px;
@@ -565,4 +666,31 @@ a {
 .team-item {
 	margin-left : 8px;
 	margin-top : 2px;
+}
+
+/******memberdetail.html******/
+.choose-member > p {
+	font-size : 18px;
+}
+.choose-memberBtn {
+	color:#1478CD;
+	cursor : pointer;
+	font-size : 18px;
+	display : flex;
+	justify-content: end;
+	margin-right : 20px;
+	margin-bottom : 10px;
+}
+.memberDetail-calendar {
+	width : 800px;
+	margin-left : 80px;
+}
+/******calendarview.html******/
+.calendar-view-Div {
+	width :800px;
+	margin-top : 40px;
+	margin-left :120px;
+}
+.calendar-content {
+	width :1200px;
 }
