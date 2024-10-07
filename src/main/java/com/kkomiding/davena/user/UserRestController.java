@@ -25,17 +25,18 @@ public class UserRestController {
 	
 	@PostMapping("/join")
 	public Map<String, String> join(
-									@RequestParam("join-idInput") String loginId
+									 @RequestParam("join-idInput") String loginId
 									,@RequestParam("join-checkPwInput") String password
 									,@RequestParam("join-userName") String name
+									,@RequestParam("position") String position
 									,@RequestParam(value="profile", required = false) MultipartFile profile
-									,@RequestParam("positionBtn") String position
 									,@RequestParam("join-roomName") String roomName
 									,@RequestParam("join-roomPw") String roomPassword) throws Exception {
 		
 		
 		User user = userService.addUser(loginId, password, name
-										,profile, position
+										,position
+										,profile
 										,roomName, roomPassword);
 		
 		Map<String, String> resultMap = new HashMap<>();

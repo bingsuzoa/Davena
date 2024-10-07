@@ -24,11 +24,13 @@ public class UserService {
 	
 	
 	public User addUser(String loginId,String password ,String name
-					  ,MultipartFile profile
 					  ,String position
+					  ,MultipartFile profile
 					  ,String roomName ,String roomPassword) throws Exception {
-		
+		//프로필 사진
 		String urlPath = FileManager.saveFile(loginId, profile);
+		
+		//Hashing
 		List<String> saltAndPw = salting.setSaltPw(loginId, password);
 		String salt = saltAndPw.get(0);
 		String encryptpassword = saltAndPw.get(1);
@@ -45,7 +47,7 @@ public class UserService {
 					.approve("미승인")
 					.build();
 		
-		return user;
+		return userRepository.save(user);
 					
 	}	
 }

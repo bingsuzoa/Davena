@@ -228,6 +228,19 @@ a:hover {
 
 /*********회원가입*******/
 /******join.html******/
+#duplicateText {
+	margin-left : 10px;
+	margin-top : 3px;
+	font-size : 14px;
+	color : #CD1039;
+}
+#availableText {
+	margin-left : 10px;
+	margin-top : 3px;
+	font-size : 14px;
+	color : #147814;
+}
+
 .joinDiv {
 	margin-top : 30px;
 	width : 300px;
@@ -247,6 +260,10 @@ a:hover {
 	color : #8CBDED;
 }
 
+#check-duplicateBtn {
+	margin-left : 30px;
+}
+
 .profile-btn {
 	cursor : pointer;
 	color : #1478CD;
@@ -257,14 +274,14 @@ a:hover {
 .profile-btn:hover {
 	color : #8CBDED;;
 }
-.positionBtn {
-	color :#787878;
-	text-align : left;
+#positionBtn {
+	cursor:pointer;
+	border: 1px solid #d2d2d2;
+	box-shadow: 3px 3px #F2F2F2;
 	border-radius :10px;
 	width : 300px;
-	border: 1px solid #d2d2d2	;
- 	background-color: transparent;
-	box-shadow: 3px 3px #F2F2F2;
+	height : 40px;
+	padding-left : 10px;
 }
 
 #join-accountBtn {

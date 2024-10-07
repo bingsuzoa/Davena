@@ -11,8 +11,10 @@
 		<div class="join-content mt-4">
 			<div class="joinDiv d-flex">
 				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" placeholder="아이디 입력">
-				<button type="button" class="join-btn btn col-5" id="check-duplicateBtn">중복확인</button>
+				<div class="profile-btn col-5" id="check-duplicateBtn">중복확인</div>
 			</div>
+			<div class="d-none" id="duplicateText">이미 사용중인 ID입니다. 변경해주세요.</div>
+			<div class="d-none" id="availableText">사용가능한 ID입니다.</div>
 			<div class="joinDiv">
 				<input type="password" class="join-roomInfo form-control" id="join-PwInput" placeholder="비밀번호 입력">
 			</div>
@@ -26,10 +28,10 @@
 			</div>
 			<div class="joinDiv">
 				<div>
-  					<button class="positionBtn dropdown-toggle form-control" id="positionBtn" type="button" data-toggle="dropdown" aria-expanded="false" value="">직책 선택</button>
+					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택" value="">
 		  			<div class="dropdown-menu">
-		    			<a class="dropdown-item" href="#" id="join-team-leader">팀장</a>
-		    			<a class="dropdown-item" href="#" id="join-team-member">팀원</a>
+		    			<a class="dropdown-item" href="#" value="join-team-leader">팀장</a>
+		    			<a class="dropdown-item" href="#" value="join-team-member">팀원</a>
 		  			</div>
 	  			</div>
 			</div>
@@ -44,4 +46,79 @@
 			</div>
 		</div>
 	</section>
+	
+	<script layout:fragment ="script">
+		//drop-down의 value값 넣기
+		$(".dropdown-menu > a").on('click',function(){
+			$("#positionBtn").attr('value', $(this).text());
+		})
+		
+		//계정만들기
+		$("#join-accountBtn").on('click',function(){
+			let id = $("#join-idInput").val();
+			let password = $("#join-PwInput").val();
+			let Checkpassword = $("#join-checkPwInput").val();
+			let name = $("#join-userName").val();
+			let imgFile = $("#imgFile")[0].files[0];
+			let position = $("#positionBtn").val();
+			let roomName = $("#join-roomName").val();
+			let roomPassword = $("#join-roomPw").val();
+			
+			if(id == ""){
+				alert("아이디를 입력해주세요.");
+				return;
+			}
+			if(password == ""){
+				alert("비밀번호를 입력해주세요.");
+				return;
+			}
+			if(Checkpassword == ""){
+				alert("비밀번호확인을 해주세요.")
+				return
+			}
+			if(name == "") {
+				alert("이름을 입력해주세요.");
+				return;
+			}
+			if(position == ""){
+				alert("직책을 선택해주세요.");
+				return;
+			}
+			if(roomName == ""){
+				alert("참여할 방 이름을 적어주세요.");
+				return;
+			}
+			if(roomPassword == ""){
+				alert("방 비밀번호를 입력해주세요.");
+				return
+			}
+			
+			let formData = new FormData();
+			formData.append("join-idInput", id);
+			formData.append("join-checkPwInput", Checkpassword);
+			formData.append("join-userName", name);
+			formData.append("profile", imgFile);
+			formData.append("position", position);
+			formData.append("join-roomName", roomName);
+			formData.append("join-roomPw", roomPassword);
+			
+			$.ajax({
+				type:"post"
+				,url :"/user/join"
+				,data:formData
+				,enctype:"multiplart/form-data"
+				,processData:false
+    			,contentType:false
+    			,success:function(data){
+    				if(data.result == "success"){
+    					location.href="/user/before-apply-view";
+    				} else {
+    					alert("회원가입 실패!");
+    				}
+				} ,error:function(){
+					alert("회원가입 에러!");
+    			}
+			})
+		})
+	</script>
 </html>
