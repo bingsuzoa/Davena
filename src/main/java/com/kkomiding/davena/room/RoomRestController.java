@@ -1,0 +1,50 @@
+package com.kkomiding.davena.room;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.kkomiding.davena.room.domain.Room;
+import com.kkomiding.davena.room.service.RoomService;
+
+import jakarta.servlet.http.HttpSession;
+
+@RequestMapping("/room")
+@RestController
+public class RoomRestController {
+	
+	private RoomService roomService;
+	
+	public RoomRestController(RoomService roomService) {
+		this.roomService = roomService;
+	}
+	
+	@PostMapping("make")
+	public Map<String, String> makeRoom(@RequestParam("roomName") String roomName
+										,@RequestParam("roomPw") String roomPassword
+										,HttpSession session){
+		
+		String loginId = (String)session.getAttribute("userId");
+		
+		Room room = roomService.addRoom(roomName, roomPassword, loginId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		if(room != null) { 
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+	}
+	
+	@PostMapping("duplicate-room")
+	public Map<String, String> duplicateRoom(@RequestParam("roomName") String roomName
+											,@RequestParam("roomPw") String roomPassword){
+		
+	}
+}

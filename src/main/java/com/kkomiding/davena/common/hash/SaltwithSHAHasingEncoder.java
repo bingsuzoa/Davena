@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.kkomiding.davena.user.domain.User;
 
 @Component("sha256Hashing")
 public class SaltwithSHAHasingEncoder {

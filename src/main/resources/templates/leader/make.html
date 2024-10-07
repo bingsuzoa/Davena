@@ -22,16 +22,47 @@
 	<div layout:fragment="modal">
 		<div class="modal fade" id="BtnMakeRoom">
   		<div class="modal-dialog modal-dialog-centered">
-  		<div class="modal-content">     		
-     	<div class="modal-body">
-     		<p>같은 방 이름, 비밀번호가 존재합니다.</p>
-      		<p>변경해주세요.</p>
-      	</div>
-      	<div>
-      		<div data-dismiss="modal" class="closeBtn">Close</div>
-      	</div>
-    </div>
-  </div>
-</div>
+  			<div class="modal-content">     		
+     			<div class="modal-body">
+     				<p>같은 방 이름, 비밀번호가 존재합니다.</p>
+      				<p>변경해주세요.</p>
+      			</div>
+      			<div>
+      				<div data-dismiss="modal" class="closeBtn">Close</div>
+      			</div>
+    		</div>
+ 		 </div>
+		</div>
 	</div>
+	
+	<script layout:fragment="script">
+		$(".BtnMakeRoom").on('click',function(){
+			let roomName = $("#roomName").val();
+			let roomPw = $("#roomPw").val();
+			
+			if(roomName == ""){
+				alert("방 이름을 적어주세요.");
+				return;
+			}
+			if(roomPw == ""){
+				alert("방 비밀번호를 적어주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"post"
+				,url:"/room/make"
+				,data:{"roomName" : roomName, "roomPw" : roomPw}
+				,success:function(data){
+					if(data.result =="success"){
+						location.href="/leader/all-detail-view";
+					} else {
+						alert("방만들기 실패!");
+					}
+				},error:function(){
+					alert("방만들기 에러!");
+				}
+			})
+		})
+	</script>
 </html>

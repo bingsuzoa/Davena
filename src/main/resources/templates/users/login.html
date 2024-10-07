@@ -15,9 +15,41 @@
 			<input type="password" class="pwInput form-control" id="pwInput" placeholder="비밀번호">
 		</div>
 		<div class="loginBtnDiv">
-			<div id="joinBtn">회원가입</div>
+			<div id="joinBtn"><a href="/user/join-view">회원가입</a></div>
 			<div id="loginBtn">로그인</div>
 		</div>
 	</section>
+	
+	
+	<script layout:fragment="script">
+		$("#loginBtn").on('click',function(){
+			let id = $("#idInput").val();
+			let password = $("#pwInput").val();
+			
+			if(id == ""){
+				alert("아이디를 입력해주세요.");
+				return;
+			}
+			if(password == ""){
+				alert("비밀번호를 입력해주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"post"
+				,url:"/user/login"
+				,data:{"idInput" : id, "pwInput" : password}
+				,success:function(data){
+					if(data.result == "success"){
+						location.href="/user/after-apply-view";
+					} else {
+						alert("로그인 실패!");
+					}
+				},error:function(){
+					alert("로그인 에러!");
+				}
+			})
+		})
+	</script>
 	
 </html>
