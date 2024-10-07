@@ -1,13 +1,13 @@
 package com.kkomiding.davena.room.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.kkomiding.davena.room.domain.Room;
 import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class RoomService {
@@ -35,6 +35,14 @@ public class RoomService {
 					.build();
 		
 		return roomRepository.save(room);
+	}
+	
+	public Room getRoom(String roomName, String roomPassword) {
+		
+		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
+		Room room = optionalRoom.orElse(null);
+		
+		return room;
 	}
 
 }

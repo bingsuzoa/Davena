@@ -62,6 +62,7 @@
     		
     		$("#join-idInput").on("input", function(){
     			//입력이 바뀌면 중복체크를 다시해야함 , 중복확인과정 초기화
+    		
     			checkDuplicate = false;
     			isDuplicatedId = true;
     			$("#availableText").addClass("d-none");
@@ -97,6 +98,7 @@
     		})
 		//계정만들기
 		$("#join-accountBtn").on('click',function(){
+			checkIsRoom = false;
 			let id = $("#join-idInput").val();
 			let password = $("#join-PwInput").val();
 			let Checkpassword = $("#join-checkPwInput").val();
@@ -143,6 +145,23 @@
 				alert("방 비밀번호를 입력해주세요.");
 				return
 			}
+			//있는 방인지 여부 확인
+			$.ajax({
+				type:"post"
+				,url:"/room/duplicate-room"
+				,data:{"roomName" : roomName, "roomPw" : roomPassword}
+				,success:function(data){
+					if(data.isDuplicate == true) {
+						checkIsRoom = true;
+						alert("가입가능");	
+					} else {
+						checkIsRoom = false;
+						alert("가입불가.");
+					}
+				}, error:function(){
+					alert("방 중복여부 확인 에러!");
+				}
+			})
 			
 			let formData = new FormData();
 			formData.append("join-idInput", id);
@@ -161,7 +180,7 @@
 				,processData:false
     			,contentType:false
     			,success:function(data){
-    				if(data.result == "success"){
+    				if(data.result == "success" && checkIsRoom == true){
     					location.href="/user/before-apply-view";
     				} else {
     					alert("회원가입 실패!");
