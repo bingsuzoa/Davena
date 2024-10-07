@@ -225,6 +225,8 @@ a:hover {
 	cursor:pointer;
 	margin-left: 20px;
 }
+
+/*********회원가입*******/
 /******join.html******/
 .joinDiv {
 	margin-top : 30px;
@@ -237,14 +239,23 @@ a:hover {
 }
 
 .join-btn {
-	color : #FFFFFF;
-	background-color :#1E82FF;
-	border-radius :10px;
-	margin-left : 10px;
+	color : #1478CD;
+	font-size : 18px;
+	margin-left : 5px;
 }
 .join-btn:hover {
-	color : #FFFFFF;
-	background-color :#3296FF;
+	color : #8CBDED;
+}
+
+.profile-btn {
+	cursor : pointer;
+	color : #1478CD;
+	font-size : 18px;
+	margin-top : 5px;
+	margin-left : 15px;
+}
+.profile-btn:hover {
+	color : #8CBDED;;
 }
 .positionBtn {
 	color :#787878;
@@ -255,11 +266,15 @@ a:hover {
  	background-color: transparent;
 	box-shadow: 3px 3px #F2F2F2;
 }
+
 #join-accountBtn {
 	color:#1478CD;
 	font-size : 18px;
 	cursor:pointer;
 	margin-top : 10px;
+}
+#join-accountBtn:hover {
+	color : #8CBDED;
 }
 .dropdown-menuDiv {
 	margin-right : 100px;
