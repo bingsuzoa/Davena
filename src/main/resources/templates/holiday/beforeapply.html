@@ -49,19 +49,61 @@
           			,center:''
           			,end:'prev,next'  
        			}
-      			,select: function(info) {
-    	  			$("#request-start-date").attr('value', "시작일 : " + info.startStr + " 00:00");
-    	  			$("#request-end-date").attr('value', "종료일 : " + info.endStr + " 00:00");
+      			,select: function(obj) {
+    	  			$("#request-start-date").attr('value', obj.startStr + " 00:00");
+    	  			$("#request-end-date").attr('value', obj.endStr + " 00:00");
       			}	
      		 	,dayCellContent:function(e){
       				return e.dayNumberText.replace('일',''); 
       			}
-    		});
+    		});   		
     		calendar.render();
+    		
+    		
   		});
 		
   		$('.dropdown-menu > a').on('click',function(){
 	  		$('.requestMenuBtn').attr('value', $(this).text());
  	 	})
+ 	 	
+ 	 	$("#vacApplyBtn").on('click', function(){
+     	 	 		let startDay = $("#request-start-date").val();
+     	 	 		let endDay = $("#request-end-date").val();
+     	 	 		let type = $(".requestMenuBtn").val();
+     	 	 		let comment = $("#requestReason").val();
+     	 	 		
+     	 	 		if(startDay == ""){
+     	 	 			alert("휴가 시작일자가 설정되지 않았습니다.");
+     	 	 			return;
+     	 	 		}
+     	 	 		
+     	 	 		if(endDay == ""){
+     	 	 			alert("휴가 종료일자가 설정되지 않았습니다.");
+     	 	 			return;
+     	 	 		}
+     	 	 		if(type == ""){
+     	 	 			alert("휴가 종류가 설정되지 않았습니다.");
+     	 	 			return;
+     	 	 		}
+     	 	 		if(comment == ""){
+     	 	 			alert("휴가 사유가 설정되지 않았습니다.");
+     	 	 			return;
+     	 	 		}
+     	 	 		
+     	 	 		$.ajax({
+     	 	 			type:"post"
+     	 	 			,url:"/holiday/apply"
+     	 	 			,data:{"startDay" : startDay, "endDay" : endDay, "type" : type, "comment" : comment}
+     	 	 			,success:function(data){
+     	 	 				if(data.result == "success"){
+     	 	 					location.href="/holiday/after-apply-view";
+     	 	 				} else {
+     	 	 					alert("휴가 신청 실패");
+     	 	 				}
+     	 	 			},error:function() {
+     	 	 				alert("휴가신청에러!");
+     	 	 			}
+     	 	 		})
+     	})
     </script>
 </html>

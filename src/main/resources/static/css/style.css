@@ -306,7 +306,9 @@ a:hover {
 .dropdown-menuDiv {
 	margin-right : 100px;
 }
-/******afterapply.html******/
+
+
+/******user/afterapply.html******/
 
 .afterjoin-phase {
 	font-size:20px;
@@ -314,7 +316,10 @@ a:hover {
 	display: flex;
 	justify-content: center;
 }
-
+.afterApplyUser-Atag {
+	text-decoration : none;
+	font-size:16px;
+}
 .requestBtn {
 	border-radius :10px;
 	width : 500px;
@@ -323,6 +328,7 @@ a:hover {
  	background-color: transparent;
 	box-shadow: 3px 3px #F2F2F2;
 }
+
 #findWorkBtn {
 	border-radius :10px;
 	width : 500px;
@@ -333,7 +339,7 @@ a:hover {
 	margin-top : 20px;
 }
 
-/******beforeapply.htmll******/
+/******user/beforeapply.htmll******/
 
 .main-content {
 	margin-top: 30px;
