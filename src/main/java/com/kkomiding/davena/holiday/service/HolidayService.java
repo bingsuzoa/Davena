@@ -1,6 +1,7 @@
 package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -34,9 +35,13 @@ public class HolidayService {
 						 .type(type)
 						 .comment(comment)
 						 .build();
+						 		
+		return holidayRepository.save(holiday);		
+	}
+	
+	public List<Holiday> selectByUserId(int userId){
 		
-		return holidayRepository.save(holiday);
-		
+		return holidayRepository.findByUserId(userId);
 	}
 
 }
