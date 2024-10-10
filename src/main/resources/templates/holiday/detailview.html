@@ -54,7 +54,7 @@
 	     			,dayCellContent:function(e){
 	      				return e.dayNumberText.replace('일',''); 
 	      			}
-	    			,eventClick:function(info, successCallback){
+	    			,eventClick:function(info){
 	    				info.event.remove();
 	    				var holidayId = info.event.extendedProps.holidayId;
 	    				$.ajax({
@@ -62,10 +62,16 @@
 	    					,url:"/holiday/delete"
 	    					,data : {"holidayId" : holidayId}
 	    					,success : function(data){
-	    						location.reload();
-	    						console.log(data);
+	    						if(data.result == "success"){
+	    							location.reload();
+	    						} else {
+	    							alert("일정 삭제 실패!");
+	    						}
+	    					}, error : function(){
+	    						alert("일정 삭제 에러!");
 	    					}
 	    				})
+	    				
 	    			}
 	    		}); 
 	    		calendar.render();

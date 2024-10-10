@@ -1,4 +1,4 @@
-package com.kkomiding.davena.holiday.service;
+	package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,11 +72,11 @@ public class HolidayService {
 	}
 	
 	public boolean deleteRequest(int holidayId, int userId) {
-		Optional<Holiday> optionalHoliday = holidayRepository.findHolidayByIdAndUserId(holidayId, userId);
+		Optional<Holiday> optionalHoliday = holidayRepository.findByIdAndUserId(holidayId, userId);
 		Holiday holiday = optionalHoliday.orElse(null);
 		
 		if(holiday != null) {
-			deleteHolidayByIdAndUserId(holidayId, userId);
+			holidayRepository.deleteByIdAndUserId(holidayId, userId);
 			return true;
 		} else {
 			return false;

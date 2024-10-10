@@ -13,9 +13,9 @@ public interface HolidayRepository extends JpaRepository<Holiday, Integer>  {
 	
 	public List<Holiday> findByUserId(int userId);
 	
-	public Optional<Holiday> findHolidayByIdAndUserId(int holidayId, int userId);
+	public Optional<Holiday> findByIdAndUserId(int holidayId, int userId);
 	
 	@Transactional
-	public void deleteHolidayByIdAndUserId(int holidayId, int userId);
+	public void deleteByIdAndUserId(int holidayId, int userId);
 
 }
