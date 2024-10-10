@@ -71,27 +71,14 @@ public class UserRestController {
 		
 		return resultMap;
 	}
-	
-	//로그인작업 - Id의 Hashing값 찾기, salt값 가져오기
-	public String getSALT(@RequestParam("idInput") String loginId) {
-		
-		User user = userService.getUser(loginId);
-		
-		if(user == null) {
-			return null;
-		} else {
-			return user.getSalt();
-		}
-	}
-	
+
 	//로그인 작업 - Id와 Hashing비밀번호 모두 일치하는지 확인
 	@PostMapping("/login")
 	public Map<String, String> loginUser(@RequestParam("idInput") String loginId
 										,@RequestParam("pwInput") String password
 										,HttpServletRequest request) throws Exception{
 		
-		String salt = getSALT(loginId);
-		User user = userService.getUserAndPw(loginId, password, salt);
+		User user = userService.getUserAndPw(loginId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(user != null) {

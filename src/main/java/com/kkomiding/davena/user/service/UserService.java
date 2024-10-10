@@ -23,6 +23,8 @@ public class UserService {
 		this.salting = salting;
 	}
 	
+	
+	
 	//회원가입, insert
 	public User addUser(String loginId,String password ,String name
 					  ,String position
@@ -59,8 +61,9 @@ public class UserService {
 	}
 	
 	//id, password통해 User객체 얻어오기
-	public User getUserAndPw(String loginId, String password, String salt) throws Exception {
+	public User getUserAndPw(String loginId, String password) throws Exception {
 		
+		String salt = salting.getSALT(loginId);
 		byte[] byte_pw = password.getBytes();
 		String Hashing_password = salting.Hashing(byte_pw, salt);
 		
