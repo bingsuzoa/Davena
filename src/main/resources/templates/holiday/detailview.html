@@ -27,55 +27,30 @@
 	
 	<script layout:fragment="script">
 		document.addEventListener('DOMContentLoaded', function() {
-			
-			$(function(){
-				var request = $.ajax({
-					type:"post"
-					,url:"/holiday/detail"
-				});
-				request.done(function(data){
-					console.log(data);
-    				var calendarEl = document.getElementById('calendar');
-	    			var calendar = new FullCalendar.Calendar(calendarEl, {
-	  				 	 initialDate: '2024-10-09'
-	      				,initialView: 'dayGridMonth'
-	      				,locale : 'ko'
-	      				,selectable : false
-	      				,droppable : true
-	      				,headerToolbar: {
-	         	 			 start:'title'
-	          				,center:''
-	          				,end:'prev,next'  
-	       				}
-	    				,events : [
-	    					{
-	    						title : 'davena'
-	    						,start : '2019-08-12 00:00'
-	    						,end : '2019-10-19 00:00'
-	    						,extendedProps : {
-	    							holidayId : 1
-	    						}
-	    					}
-	    				]
-	     		 		,dayCellContent:function(e){
-	      					return e.dayNumberText.replace('일',''); 
-	      				}
-	     		 		,events : data
-	     		 		,eventClick : function(info){
-	     		 			var holidayId = info.event.extendProps;
-	     		 			alert(holidayId);
-	     		 			
-	   		
-	     		 		}
-	    			}); 
-	    			calendar.render();
-				});
-				request.fail(function(jqXHR, textStatus){
-					alert(textStatus);
-				})
+  			var calendarEl = document.getElementById('calendar');
+  			var request = $.ajax({
+  				type : "post"
+  				,url : "/holiday/detail"
+  			});
+  			request.done(function(data){
+	    		var calendar = new FullCalendar.Calendar(calendarEl, {
+	  				initialDate: '2024-10-09'
+	      			,initialView: 'dayGridMonth'
+	      			,locale : 'ko'
+	      			,selectable : false
+	      			,droppable : true
+	      			,headerToolbar: {
+	         	 		start:'title'
+	          			,center:''
+	          			,end:'prev,next'  
+	       			}
+	     			,dayCellContent:function(e){
+	      			return e.dayNumberText.replace('일',''); 
+	      			}
+	     			,events : data
+	    		}); 
+	    		calendar.render();
 			});
-		});
-				
-			
+		});			
 	</script>
 </html>
