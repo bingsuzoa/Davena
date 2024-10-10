@@ -54,6 +54,19 @@
 	     			,dayCellContent:function(e){
 	      				return e.dayNumberText.replace('일',''); 
 	      			}
+	    			,eventClick:function(info){
+	    				var holidayId = info.event.extendProps.holidayId();
+	    				$.ajax({
+	    					 type:"post"
+	    					,url:"/holiday/delete"
+	    					,data : {"holidayId" : holidayId}
+	    					,success : function(info){
+	    						info.event.remove();				
+	    					},error : function(){
+	    						alert("일정 삭제 에러!");
+	    					}
+	    				})
+	    			}
 	    		}); 
 	    		calendar.render();
 		});		

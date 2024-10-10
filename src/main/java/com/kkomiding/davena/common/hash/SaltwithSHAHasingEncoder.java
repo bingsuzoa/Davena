@@ -35,15 +35,6 @@ public class SaltwithSHAHasingEncoder {
 		return sb.toString();
 	}	
 	
-	//로그인작업 - Id의 Hashing값 찾기, salt값 가져오기
-		public String getSALT(String loginId) {
-			
-			if(getSALT(loginId) != null) {
-				return getSALT(loginId);
-			} else {
-				return null;
-			}
-		}
 
 	//비밀번호 Hashing처리하기
 	public String Hashing(byte[] password, String salt) throws Exception {

@@ -24,7 +24,6 @@ public class UserService {
 	}
 	
 	
-	
 	//회원가입, insert
 	public User addUser(String loginId,String password ,String name
 					  ,String position
@@ -63,12 +62,14 @@ public class UserService {
 	//id, password통해 User객체 얻어오기
 	public User getUserAndPw(String loginId, String password) throws Exception {
 		
-		String salt = salting.getSALT(loginId);
+		User userForSalt = getUser(loginId);
+		String salt = userForSalt.getSalt();
+		
 		byte[] byte_pw = password.getBytes();
 		String Hashing_password = salting.Hashing(byte_pw, salt);
 		
 		Optional<User> optionalUser = userRepository.findByLoginIdAndPassword(loginId, Hashing_password);
-		User user = optionalUser.orElse(null);
-		return user;
+		User userForLogin = optionalUser.orElse(null);
+		return userForLogin;
 	}
 }
