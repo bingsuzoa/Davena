@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.user.service.UserService;
 
@@ -57,29 +58,13 @@ public class HolidayRestController {
 	
 
 	@PostMapping("/detail")
-	public List<Map<String, Object>> getRequest(HttpSession session) {
+	public List<PersonalSchedule> getRequest(HttpSession session) {
 		
 		String loginId = (String)session.getAttribute("userId");
-		int userId = userService.getUser(loginId).getId();
+		
+		List<PersonalSchedule> personalScheduleList = holidayService.getScheduleView(loginId);
 				
-		List<Holiday> listAll = holidayService.selectByUserId(userId);
-		List<Map<String, Object>> newList = new ArrayList<>();
-		
-		Map<String, Object> holidayMap = new HashMap<>();
-		
-		for(int i = 0; i < listAll.size(); i++) {
-			holidayMap = new HashMap<>();
-			holidayMap.put("title", listAll.get(i).getType());
-			holidayMap.put("start", listAll.get(i).getStartDay().toString());
-			holidayMap.put("end", listAll.get(i).getEndDay().toString());
-			holidayMap.put("holidayId", listAll.get(i).getId());
-			holidayMap.put("userId", listAll.get(i).getUserId());
-			
-			newList.add(holidayMap);
-		
-		}
-		
-		return newList;	
+		return personalScheduleList;	
 	}
 	
 	@DeleteMapping("/delete")

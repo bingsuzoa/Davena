@@ -1,12 +1,14 @@
 package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.kkomiding.davena.holiday.domain.Holiday;
+import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.service.UserService;
 
@@ -43,6 +45,30 @@ public class HolidayService {
 	public List<Holiday> selectByUserId(int userId){
 		
 		return holidayRepository.findByUserId(userId);
+	}
+	
+	//HolidayDto
+	public List<PersonalSchedule> getScheduleView(String loginId){
+		
+		int userId = userService.getUser(loginId).getId();
+		
+		List<Holiday> holidayByUserList = holidayRepository.findByUserId(userId);
+		List<PersonalSchedule> personalScheduleList = new ArrayList<>();
+		
+		for(Holiday holiday : holidayByUserList) {
+					
+			PersonalSchedule personalSchedule = PersonalSchedule.builder()
+												.title(holiday.getType())
+												.start(holiday.getStartDay())
+												.end(holiday.getEndDay())
+												.holidayId(holiday.getId())
+												.userId(userId)
+												.build();
+			
+			personalScheduleList.add(personalSchedule);
+		}
+		
+		return personalScheduleList;
 	}
 	
 	public boolean deleteRequest(int holidayId, int userId) {

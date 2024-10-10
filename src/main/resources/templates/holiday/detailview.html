@@ -28,12 +28,7 @@
 	<script layout:fragment="script">
 		document.addEventListener('DOMContentLoaded', function() {
   			var calendarEl = document.getElementById('calendar');
-  			var request = $.ajax({
-  				type : "post"
-  				,url : "/holiday/detail"
-  			});
-  			request.done(function(data){
-	    		var calendar = new FullCalendar.Calendar(calendarEl, {
+	    	var calendar = new FullCalendar.Calendar(calendarEl, {
 	  				initialDate: '2024-10-09'
 	      			,initialView: 'dayGridMonth'
 	      			,locale : 'ko'
@@ -43,14 +38,24 @@
 	         	 		start:'title'
 	          			,center:''
 	          			,end:'prev,next'  
-	       			}
-	     			,dayCellContent:function(e){
-	      			return e.dayNumberText.replace('일',''); 
 	      			}
-	     			,events : data
+	    			,eventSources : [{
+	    				events : function(info, successCallback){
+	    	    				$.ajax({
+	    	    					type:"post"
+	    	    					,url : "/holiday/detail"
+	    	    					,success : function(data){
+	    	    						successCallback(data);
+	    	    						console.log(data);
+	    	    					}	
+	    	    				})
+	    				}
+	    			}]
+	     			,dayCellContent:function(e){
+	      				return e.dayNumberText.replace('일',''); 
+	      			}
 	    		}); 
 	    		calendar.render();
-			});
-		});			
+		});		
 	</script>
 </html>
