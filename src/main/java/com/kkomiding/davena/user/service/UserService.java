@@ -1,6 +1,6 @@
 package com.kkomiding.davena.user.service;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -32,9 +32,9 @@ public class UserService {
 		String urlPath = FileManager.saveFile(loginId, profile);
 		
 		//Hashing
-		List<String> saltAndPw = salting.setSaltPw(loginId, password);
-		String salt = saltAndPw.get(0);
-		String encryptpassword = saltAndPw.get(1);
+		Map<String,String> saltAndPw = salting.setSaltPw(loginId, password);
+		String salt = saltAndPw.get("salt");
+		String encryptpassword = saltAndPw.get("saltedPassword");
 				
 		User user = User.builder()
 					.loginId(loginId)

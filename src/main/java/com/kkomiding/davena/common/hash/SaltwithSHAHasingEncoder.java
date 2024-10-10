@@ -3,12 +3,11 @@ package com.kkomiding.davena.common.hash;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.kkomiding.davena.user.domain.User;
 
 @Component("sha256Hashing")
 public class SaltwithSHAHasingEncoder {
@@ -48,16 +47,17 @@ public class SaltwithSHAHasingEncoder {
 	}
 	
 	//salted된 비밀번호 만들기
-	public List<String> setSaltPw(String loginId, String password) throws Exception {
+	public Map<String,String> setSaltPw(String loginId, String password) throws Exception {
 		byte[] password_byte = password.getBytes();
 		String Salt = getSALT();	
 		String saltedPassword = Hashing(password_byte, Salt);
+
+		Map<String, String> hashMap = new HashMap<>();
+		hashMap.put("salt", Salt);
+		hashMap.put("saltedPassword", saltedPassword);
+
 		
-		List<String> saltPwList = new ArrayList<>();
-		saltPwList.add(Salt);
-		saltPwList.add(saltedPassword);
-		
-		return saltPwList;
+		return hashMap;
 	}
 
 }
