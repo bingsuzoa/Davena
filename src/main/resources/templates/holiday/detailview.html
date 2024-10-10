@@ -20,7 +20,7 @@
 				<div id="calendar"></div>
 			</div>
 			<div>
-				<div id="change-applyBtn">휴가변경하기 </div>
+				<div id="change-applyBtn"><a href="/holiday/before-apply-view">휴가 추가하기</a></div>
 			</div>
 		</div>
 	</section>
@@ -43,14 +43,30 @@
 	      				,selectable : false
 	      				,droppable : true
 	      				,headerToolbar: {
-	         	 			start:'title'
+	         	 			 start:'title'
 	          				,center:''
 	          				,end:'prev,next'  
 	       				}
+	    				,events : [
+	    					{
+	    						title : 'davena'
+	    						,start : '2019-08-12 00:00'
+	    						,end : '2019-10-19 00:00'
+	    						,extendedProps : {
+	    							holidayId : 1
+	    						}
+	    					}
+	    				]
 	     		 		,dayCellContent:function(e){
 	      					return e.dayNumberText.replace('일',''); 
 	      				}
-	     		 		,events :data
+	     		 		,events : data
+	     		 		,eventClick : function(info){
+	     		 			var holidayId = info.event.extendProps;
+	     		 			alert(holidayId);
+	     		 			
+	   		
+	     		 		}
 	    			}); 
 	    			calendar.render();
 				});

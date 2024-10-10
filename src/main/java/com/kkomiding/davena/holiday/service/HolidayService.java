@@ -2,6 +2,7 @@ package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,20 @@ public class HolidayService {
 		
 		return holidayRepository.findByUserId(userId);
 	}
-
+	
+	public boolean deleteRequest(int holidayId, int userId) {
+		Optional<Holiday> optionalHoliday = holidayRepository.findHolidayByIdAndUserId(holidayId, userId);
+		Holiday holiday = optionalHoliday.orElse(null);
+		
+		if(holiday != null) {
+			deleteHolidayByIdAndUserId(holidayId, userId);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void deleteHolidayByIdAndUserId(int holidayId, int userId) {
+		
+	}
 }
