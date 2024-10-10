@@ -55,7 +55,7 @@
 	      				return e.dayNumberText.replace('일',''); 
 	      			}
 	    			,eventClick:function(info){
-	    				var holidayId = info.event.extendProps.holidayId();
+	    				var holidayId = info.event.extendedProps.holidayId;
 	    				$.ajax({
 	    					 type:"post"
 	    					,url:"/holiday/delete"
