@@ -57,7 +57,7 @@
 	    			,eventClick:function(info){
 	    				var holidayId = info.event.extendedProps.holidayId;
 	    				$.ajax({
-	    					 type:"post"
+	    					 type:"delete"
 	    					,url:"/holiday/delete"
 	    					,data : {"holidayId" : holidayId}
 	    					,success : function(info){
