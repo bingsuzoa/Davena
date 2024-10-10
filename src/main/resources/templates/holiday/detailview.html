@@ -54,16 +54,16 @@
 	     			,dayCellContent:function(e){
 	      				return e.dayNumberText.replace('일',''); 
 	      			}
-	    			,eventClick:function(info){
+	    			,eventClick:function(info, successCallback){
+	    				info.event.remove();
 	    				var holidayId = info.event.extendedProps.holidayId;
 	    				$.ajax({
-	    					 type:"delete"
+	    					type:"delete"
 	    					,url:"/holiday/delete"
 	    					,data : {"holidayId" : holidayId}
-	    					,success : function(info){
-	    						info.event.remove();				
-	    					},error : function(){
-	    						alert("일정 삭제 에러!");
+	    					,success : function(data){
+	    						location.reload();
+	    						console.log(data);
 	    					}
 	    				})
 	    			}
