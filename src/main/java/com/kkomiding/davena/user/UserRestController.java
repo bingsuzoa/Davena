@@ -2,6 +2,7 @@ package com.kkomiding.davena.user;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -95,16 +96,11 @@ public class UserRestController {
 	}
 
 	@PostMapping("/apply")
-	public Map<String, Object> approveJoin(@RequestParam("roomName") String roomName
-										  ,@RequestParam("roomPassword") String roomPassword
-										  ,HttpSession session){
-		
-		//로그인한 id : 로그인한 id가 팀장 id와 일치할때 view화면 띄울려고 사용 
-		String loginId = (String)session.getAttribute("userId");
-		int userId = userService.getUser(loginId).getId();
+	public List<User> approveJoin(@RequestParam("roomName") String roomName
+								 ,@RequestParam("roomPassword") String roomPassword){
 		
 		//modal에 띄울 리스트
-		Map<String, Object> notApproveDirectory = userService.useRoomInfo(roomName, roomPassword);
+		List<User> notApproveDirectory = userService.useRoomInfo(roomName, roomPassword);
 		
 		return notApproveDirectory;
 		

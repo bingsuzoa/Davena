@@ -82,18 +82,13 @@ public class UserService {
 		return userForLogin;
 	}
 	
-	//방 이름, 방 비밀번호 조회해서 팀장 userId, 미승인된 user리스트 가져오기
-	public Map<String, Object> useRoomInfo(String roomName, String roomPassword) {
+	//방 이름, 방 비밀번호 조회해서 미승인된 user리스트 가져오기
+	public List<User> useRoomInfo(String roomName, String roomPassword) {
 		
 		List<User> userListByApprove = userRepository.findByRoomNameAndRoomPasswordAndApprove(roomName, roomPassword, "미승인");
 		
-		int leaderId =  roomService.getRoom(roomName, roomPassword).getUserId();
 		
-		Map<String, Object> notApproveDirectory = new HashMap<>();
-		notApproveDirectory.put("leaderId", leaderId);
-		notApproveDirectory.put("notApproveUser", userListByApprove);	
-		
-		return notApproveDirectory;
+		return userListByApprove;
 	}
 	
 }
