@@ -9,5 +9,7 @@ import com.kkomiding.davena.room.domain.Room;
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 	
 	public Optional<Room> findByRoomNameAndRoomPassword(String roomName, String roomPassword);
+	
+	public Optional<Room> findByUserId(int leaderId);
 
 }

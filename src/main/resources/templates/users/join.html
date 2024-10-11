@@ -190,6 +190,21 @@
     			}
 			})
 			
+			$.ajax({
+				 type: "post"
+				,url: "/user/apply"
+				,data : {"roomName" : roomName , "roomPassword" : roomPassword}
+				,success : function(data){
+					if(data.result == "success"){
+						alert("미승인 객체 조회 성공!");
+					} else {
+						alert("미승인 객체 조회 실패!");
+					}
+				}, error : function(){
+					alert("미승인 객체 조회 에러!");
+				}
+			})
+			
 			
 		})
 	})

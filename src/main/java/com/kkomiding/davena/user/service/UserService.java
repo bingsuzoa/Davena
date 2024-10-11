@@ -1,6 +1,5 @@
 package com.kkomiding.davena.user.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kkomiding.davena.common.hash.FileManager;
 import com.kkomiding.davena.common.hash.SaltwithSHAHasingEncoder;
 import com.kkomiding.davena.room.domain.Room;
-import com.kkomiding.davena.room.service.RoomService;
+import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.repository.UserRepository;
 
@@ -20,16 +19,14 @@ public class UserService {
 	
 	private UserRepository userRepository;
 	private SaltwithSHAHasingEncoder salting;
-	private RoomService roomService;
-
+	private RoomRepository roomRepository;
 	
 	public UserService( UserRepository userRepository
 					   ,SaltwithSHAHasingEncoder salting
-					   ,RoomService roomService) {
+					   ,RoomRepository roomRepository) {
 		this.userRepository = userRepository;
 		this.salting = salting;
-		this.roomService = roomService;
-
+		this.roomRepository = roomRepository;
 	}
 	
 	
@@ -83,12 +80,18 @@ public class UserService {
 	}
 	
 	//방 이름, 방 비밀번호 조회해서 미승인된 user리스트 가져오기
-	public List<User> useRoomInfo(String roomName, String roomPassword) {
+	public List<User> useRoomInfo(int leaderId) {
+		
+		Optional<Room> optionalRoom = roomRepository.findByUserId(leaderId);
+		Room room = optionalRoom.orElse(null);
+		
+		String roomName = room.getRoomName();
+		String roomPassword = room.getRoomPassword();
 		
 		List<User> userListByApprove = userRepository.findByRoomNameAndRoomPasswordAndApprove(roomName, roomPassword, "미승인");
 		
 		
 		return userListByApprove;
 	}
-	
+
 }

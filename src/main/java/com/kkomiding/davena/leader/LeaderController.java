@@ -1,12 +1,26 @@
 package com.kkomiding.davena.leader;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kkomiding.davena.user.domain.User;
+import com.kkomiding.davena.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/leader")
 public class LeaderController {
+	
+	private UserService userService;
+	
+	public LeaderController(UserService userService) {
+		this.userService = userService;
+	}
 	
 	@GetMapping("/login-view")
 	public String login() {
@@ -21,7 +35,14 @@ public class LeaderController {
 	}
 	
 	@GetMapping("/all-detail-view")
-	public String alldetail() {
+	public String alldetail(Model model, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("userId");
+		int userId = userService.getUser(loginId).getId();
+		List<User> userListByApprove =userService.useRoomInfo(userId);
+		
+		model.addAttribute("notApproveUserList" , userListByApprove);
+		model.addAttribute("leaderId", userId);
 		
 		return "leader/alldetail";
 	}
