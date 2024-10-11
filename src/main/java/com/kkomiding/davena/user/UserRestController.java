@@ -94,4 +94,20 @@ public class UserRestController {
 		return resultMap;
 	}
 
+	@PostMapping("/apply")
+	public Map<String, Object> approveJoin(@RequestParam("roomName") String roomName
+										  ,@RequestParam("roomPassword") String roomPassword
+										  ,HttpSession session){
+		
+		//로그인한 id : 로그인한 id가 팀장 id와 일치할때 view화면 띄울려고 사용 
+		String loginId = (String)session.getAttribute("userId");
+		int userId = userService.getUser(loginId).getId();
+		
+		//modal에 띄울 리스트
+		Map<String, Object> notApproveDirectory = userService.useRoomInfo(roomName, roomPassword);
+		
+		return notApproveDirectory;
+		
+	}
+	
 }

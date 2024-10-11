@@ -83,7 +83,7 @@ public class HolidayService {
 		}
 	}
 	
-	public void deleteHolidayByIdAndUserId(int holidayId, int userId) {
+	public void deleteByIdAndUserId(int holidayId, int userId) {
 		
 	}
 }

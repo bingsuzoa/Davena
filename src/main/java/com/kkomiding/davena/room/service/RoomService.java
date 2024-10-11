@@ -21,7 +21,7 @@ public class RoomService {
 		this.userService = userService;
 	}
 	
-	
+	//방만들기 
 	public Room addRoom(String roomName
 					  ,String roomPassword
 					  ,String loginId) {
@@ -37,6 +37,7 @@ public class RoomService {
 		return roomRepository.save(room);
 	}
 	
+	//방 조회해오기
 	public Room getRoom(String roomName, String roomPassword) {
 		
 		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
