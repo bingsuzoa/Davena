@@ -74,6 +74,24 @@ public class UserService {
 		
 	}
 	
+	//팀장 방만들면 user객체 update수정
+	public User updateUser(int userId, String roomName, String roomPassword) {
+		
+		Optional<User> optionalUser = userRepository.findById(userId);
+		User user = optionalUser.orElse(null);
+		
+		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
+		Room room = optionalRoom.orElse(null);
+		
+		User newUser = User.builder()
+					.roomId(room.getId())
+					.roomName(roomName)
+					.roomPassword(roomPassword)
+					.build();
+		
+		return userRepository.save(newUser);
+	}
+	
 	//User객체 얻어오기
 	public User getUser(int userId) {
 		Optional<User> optionalUser = userRepository.findById(userId);

@@ -37,6 +37,7 @@
 	
 	<script layout:fragment="script">
 		$(".BtnMakeRoom").on('click',function(){
+			isDuplicate = true;
 			let roomName = $("#roomName").val();
 			let roomPw = $("#roomPw").val();
 			
@@ -55,6 +56,7 @@
 				,data:{"roomName" : roomName, "roomPw" : roomPw}
 				,success:function(data){
 					if(data.result =="success"){
+						isDuplicate = false;
 						location.href="/leader/all-detail-view";
 					} else {
 						alert("방만들기 실패!");
@@ -63,6 +65,24 @@
 					alert("방만들기 에러!");
 				}
 			})
+			
+			if(isDuplicate = true){
+				$.ajax({
+					type:"post"
+					,url:"/user/join/update"
+					,data:{"roomName" : roomName, "roomPassword" : roomPw}
+					,success: function(data){
+						if(data.result =="success") {
+							locion.reload();
+							alert("팀장 객체 업데이트 성공!");
+						} else {
+							alert("팀장 객체 업데이트 실패!");
+						}
+					}, error : function() {
+						alert("팀장 객체 업데이트 에러!");
+					}
+				})	
+			}
 		})
 	</script>
 </html>

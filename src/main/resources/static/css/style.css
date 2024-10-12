@@ -202,9 +202,15 @@ a:hover {
 	display: flex;
 	justify-content: center;
 }
+.idInputDiv > a{
+	text-decoration : none;
+}
 .pwInputDiv{
 	display: flex;
 	justify-content: center;
+}
+.pwInputDiv > a{
+	text-decoration : none;
 }
 .idInput {
 	border-radius :10px;

@@ -56,6 +56,26 @@ public class UserRestController {
 		return resultMap;
 	}
 	
+	@PostMapping("/join/update")
+	public Map<String, String> update(@RequestParam("roomName") String roomName
+									 ,@RequestParam("roomPassword") String roomPassword
+									 ,HttpSession session){
+		
+		int userId = (Integer)session.getAttribute("userId");
+		
+		User user = userService.updateUser(userId, roomName, roomPassword);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(user != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;		
+	}
+	
+	
 	//Id 중복확인
 	@GetMapping("/duplicate-id")
 	public Map<String, Boolean> selectLoginId(@RequestParam("join-idInput") String loginId) {
@@ -81,18 +101,23 @@ public class UserRestController {
 		
 		int userId = userService.getLoginId(loginId).getId();
 		User user = userService.getUserAndPw(userId, password);
+		String position = user.getPosition();
 		
 		Map<String, String> resultMap = new HashMap<>();
-		if(user != null) {
-			resultMap.put("result", "success");
+		if(position != null) {
+			if(position.equals("팀장")) {
+				resultMap.put("result", "leader");
+			} else {
+				resultMap.put("result", "member");
+			}
 			
-			HttpSession session = request.getSession();
-			session.setAttribute("userId", user.getId());
-			session.setAttribute("userName", user.getName());
-			
+				HttpSession session = request.getSession();
+				session.setAttribute("userId", user.getId());
+				session.setAttribute("userName", user.getName());
 		} else {
 			resultMap.put("result", "fail");
 		}
+	
 		return resultMap;
 	}
 

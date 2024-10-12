@@ -32,8 +32,7 @@ public class RoomService {
 					.userId(user.getId())
 					.roomName(roomName)
 					.roomPassword(roomPassword)
-					.build();
-		
+					.build();				
 		return roomRepository.save(room);
 	}
 	
@@ -41,6 +40,13 @@ public class RoomService {
 	public Room getRoom(String roomName, String roomPassword) {
 		
 		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
+		Room room = optionalRoom.orElse(null);
+		
+		return room;
+	}
+	
+	public Room getRoomById(int roomId) {
+		Optional<Room> optionalRoom = roomRepository.findById(roomId);
 		Room room = optionalRoom.orElse(null);
 		
 		return room;

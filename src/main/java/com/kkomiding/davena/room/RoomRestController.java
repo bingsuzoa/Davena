@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kkomiding.davena.room.domain.Room;
 import com.kkomiding.davena.room.service.RoomService;
+import com.kkomiding.davena.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,6 +32,7 @@ public class RoomRestController {
 		int userId = (Integer)session.getAttribute("userId");
 		
 		Room room = roomService.addRoom(roomName, roomPassword, userId);
+		
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(room != null) { 

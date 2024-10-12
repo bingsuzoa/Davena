@@ -11,5 +11,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 	public Optional<Room> findByRoomNameAndRoomPassword(String roomName, String roomPassword);
 	
 	public Optional<Room> findByUserId(int leaderId);
+	
+	public Optional<Room> findById(int roomId);
 
 }

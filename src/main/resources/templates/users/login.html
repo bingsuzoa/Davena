@@ -40,9 +40,13 @@
 				,url:"/user/login"
 				,data:{"idInput" : id, "pwInput" : password}
 				,success:function(data){
-					if(data.result == "success"){
+					if(data.result == "member"){
 						location.href="/user/after-apply-view";
-					} else {
+					} 
+					else if (data.result == "leader") {
+						location.href="/leader/login-view";
+					}
+					else {
 						alert("로그인 실패!");
 					}
 				},error:function(){
