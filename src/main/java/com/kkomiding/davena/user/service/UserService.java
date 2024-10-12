@@ -67,7 +67,7 @@ public class UserService {
 					.position(position)
 					.roomName(roomName)
 					.roomPassword(roomPassword)
-					.approve("팀장")
+					.approve("승인")
 					.build();
 		return userRepository.save(user);
 		}

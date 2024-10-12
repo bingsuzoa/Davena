@@ -109,7 +109,8 @@
     				}
     			})
     		})
-		//계정만들기
+		
+    		//계정만들기
 		$("#join-accountBtn").on('click',function(){
 			checkIsRoom = false;
 			let id = $("#join-idInput").val();
@@ -173,9 +174,11 @@
 						if(data.isDuplicate == true) {
 							checkIsRoom = true;
 							alert("가입가능");	
+							return;
 						} else {
 							checkIsRoom = false;
 							alert("가입불가.");
+							return;
 						}
 					}, error:function(){
 						alert("방 중복여부 확인 에러!");
@@ -189,6 +192,10 @@
 				checkIsRoom = true;
 			}
 			
+			if(checkIsRoom == false) {
+				alert("존재하지 않는 방을 입력하셨습니다.");
+				return;
+			}
 			//데이터 넘기기
 			let formData = new FormData();
 			formData.append("join-idInput", id);
@@ -207,9 +214,13 @@
 				,processData:false
     			,contentType:false
     			,success:function(data){
-    				if(data.result == "success" && checkIsRoom == true){
+    				if(data.result == "success" && checkIsRoom == true && position == "팀원"){
     					location.href="/user/before-apply-view";
-    				} else {
+    				} 
+    				else if(data.result == "success" && checkIsRoom == true && position == "팀장") {
+    					location.href="/leader/login-view"
+    				}
+    				else {
     					alert("회원가입 실패!");
     				}
 				} ,error:function(){
