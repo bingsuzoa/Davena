@@ -44,7 +44,21 @@ public class UserService {
 		String salt = saltAndPw.get("salt");
 		String encryptpassword = saltAndPw.get("saltedPassword");
 				
-		User user = User.builder()
+		if(position == "팀원") {
+			User user = User.builder()
+						.loginId(loginId)
+						.password(encryptpassword)
+						.salt(salt)
+						.name(name)
+						.profile(urlPath)
+						.position(position)
+						.roomName(roomName)
+						.roomPassword(roomPassword)
+						.approve("미승인")
+						.build();
+			return userRepository.save(user);					
+		} else {
+			User user = User.builder()
 					.loginId(loginId)
 					.password(encryptpassword)
 					.salt(salt)
@@ -53,10 +67,11 @@ public class UserService {
 					.position(position)
 					.roomName(roomName)
 					.roomPassword(roomPassword)
-					.approve("미승인")
+					.approve("팀장")
 					.build();
+		return userRepository.save(user);
+		}
 		
-		return userRepository.save(user);					
 	}
 	
 	//User객체 얻어오기
