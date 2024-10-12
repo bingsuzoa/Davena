@@ -647,6 +647,50 @@ a {
 	color : #000000;	
 }
 
+/******* modal 시작 **********/
+.modal {
+	text-align : center;
+}
+
+#modal-content-alldetail {
+	width : 600px;
+	height : 300px;
+	border-radius : 40px;
+	background-color :#DEEDFE;
+	border : none;
+	font-size : 18px;
+	padding : 40px;
+}
+
+#modal-body-alldetail-div {
+	margin : 0;
+	margin-left : 130px;
+	margin-top : 10px;
+}
+
+.modal > a{
+	text-decoration : none;
+}
+
+#modal-approveBtn {
+	cursor : pointer;
+	color : #46AAFF;
+	margin-left : 20px;
+}
+
+#modal-approveBtn:hover {
+	color : #B4E5FF;
+}
+ 
+#modal-notApproveBtn {
+	cursor : pointer;
+	color : #FF0000;
+	margin-left : 20px;
+}
+#modal-notApproveBtn:hover {
+	color : #FF8282	;
+}
+
 /******holidaysetview.html******/
 .holiday-set-Div {
 	margin-left : 350px;

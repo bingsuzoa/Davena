@@ -96,11 +96,13 @@ public class UserRestController {
 	}
 
 	@PostMapping("/apply")
-	public Map<String, String> approveJoin(@RequestParam("roomName") String roomName
-								 ,@RequestParam("roomPassword") String roomPassword){
+	public Map<String, String> approveJoin(HttpSession session){
+		
+		String loginId = (String)session.getAttribute("userId");
+		int userId = userService.getUser(loginId).getId();
 		
 		//modal에 띄울 리스트
-		List<User> notApproveDirectory = userService.useRoomInfo(roomName, roomPassword);
+		List<User> notApproveDirectory = userService.useRoomInfo(userId);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(notApproveDirectory != null) {

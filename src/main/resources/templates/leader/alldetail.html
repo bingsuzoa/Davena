@@ -33,6 +33,23 @@
 		</div>
 	</section>
 	
+	<th:block layout:fragment="modal">
+		<div class="modal fade" id="approveBtnModal" role ="dialog" aria-hidden="true" >
+				<div class="modal-dialog modal-dialog-centered" id="modal-dialog-alldetail">
+					<div class="modal-content" id="modal-content-alldetail">
+						<div class="modal-body-alldetail">
+							<p>회원가입 신청 내역 입니다.</p>
+							<div class="d-flex" id="modal-body-alldetail-div">
+								<div id="modal-notApprove-name"><a>권미경</a></div>		
+								<div id="modal-approveBtn"  data-dismiss="modal"><a>승인</a></div>
+								<div id="modal-notApproveBtn"  data-dismiss="modal"><a>미승인</a></div>	
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</th:block>
+	
 	<script layout:fragment="script" type="text/javascript">
 	 	google.charts.load('current', {'packages':['corechart']});
 	    google.charts.setOnLoadCallback(drawCharts);
@@ -67,6 +84,8 @@
 		    var chart = new google.visualization.BarChart(document.getElementById('count-chart'));
 				chart.draw(view, options);		
 	    }
+	    
+	    $("#approveBtnModal").modal('show');
 	    
 	</script>
 </html>
