@@ -41,9 +41,9 @@ public class HolidayRestController {
 			,@RequestParam("comment") String comment
 			,HttpSession session){
 		
-		String loginId = (String)session.getAttribute("userId");
+		int userId = (Integer)session.getAttribute("userId");
 		
-		Holiday holiday = holidayService.insertRequest(startDay, endDay, type, comment, loginId);
+		Holiday holiday = holidayService.insertRequest(startDay, endDay, type, comment, userId);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		
@@ -60,9 +60,9 @@ public class HolidayRestController {
 	@PostMapping("/detail")
 	public List<PersonalSchedule> getRequest(HttpSession session) {
 		
-		String loginId = (String)session.getAttribute("userId");
+		int userId = (Integer)session.getAttribute("userId");
 		
-		List<PersonalSchedule> personalScheduleList = holidayService.getScheduleView(loginId);
+		List<PersonalSchedule> personalScheduleList = holidayService.getScheduleView(userId);
 				
 		return personalScheduleList;	
 	}
@@ -71,8 +71,7 @@ public class HolidayRestController {
 	public Map<String, String> deleteById(@RequestParam("holidayId") int holidayId
 										,HttpSession session){
 		
-		String loginId = (String)session.getAttribute("userId");
-		int userId = userService.getUser(loginId).getId();
+		int userId = (Integer)session.getAttribute("userId");
 
 		Map<String, String> resultMap = new HashMap<>();
 		

@@ -58,23 +58,30 @@ public class UserService {
 		return userRepository.save(user);					
 	}
 	
-	//Id중복확인, User객체 얻어오기
-	public User getUser(String loginId) {
+	//User객체 얻어오기
+	public User getUser(int userId) {
+		Optional<User> optionalUser = userRepository.findById(userId);
+		User user = optionalUser.orElse(null);
+		return user;
+	}
+	
+	//Id중복확인
+	public User getLoginId(String loginId) {
 		Optional<User> optionalUser = userRepository.findByLoginId(loginId);
 		User user = optionalUser.orElse(null);
 		return user;
 	}
 	
 	//id, password통해 User객체 얻어오기
-	public User getUserAndPw(String loginId, String password) throws Exception {
+	public User getUserAndPw(int userId, String password) throws Exception {
 		
-		User userForSalt = getUser(loginId);
+		User userForSalt = getUser(userId);
 		String salt = userForSalt.getSalt();
 		
 		byte[] byte_pw = password.getBytes();
 		String Hashing_password = salting.Hashing(byte_pw, salt);
 		
-		Optional<User> optionalUser = userRepository.findByLoginIdAndPassword(loginId, Hashing_password);
+		Optional<User> optionalUser = userRepository.findByIdAndPassword(userId, Hashing_password);
 		User userForLogin = optionalUser.orElse(null);
 		return userForLogin;
 	}
@@ -85,8 +92,13 @@ public class UserService {
 		Optional<Room> optionalRoom = roomRepository.findByUserId(leaderId);
 		Room room = optionalRoom.orElse(null);
 		
-		String roomName = room.getRoomName();
-		String roomPassword = room.getRoomPassword();
+		String roomName = null;
+		String roomPassword = null;
+		
+		if(room != null) {
+			roomName = room.getRoomName();
+			roomPassword = room.getRoomPassword();
+		}
 		
 		List<User> userListByApprove = userRepository.findByRoomNameAndRoomPasswordAndApprove(roomName, roomPassword, "미승인");
 		

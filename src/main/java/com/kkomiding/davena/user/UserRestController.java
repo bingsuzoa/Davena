@@ -60,7 +60,7 @@ public class UserRestController {
 	@GetMapping("/duplicate-id")
 	public Map<String, Boolean> selectLoginId(@RequestParam("join-idInput") String loginId) {
 		
-		User user = userService.getUser(loginId);
+		User user = userService.getLoginId(loginId);
 		
 		Map<String, Boolean> resultMap = new HashMap<>();
 		
@@ -79,14 +79,15 @@ public class UserRestController {
 										,@RequestParam("pwInput") String password
 										,HttpServletRequest request) throws Exception{
 		
-		User user = userService.getUserAndPw(loginId, password);
+		int userId = userService.getLoginId(loginId).getId();
+		User user = userService.getUserAndPw(userId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(user != null) {
 			resultMap.put("result", "success");
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("userId", user.getLoginId());
+			session.setAttribute("userId", user.getId());
 			session.setAttribute("userName", user.getName());
 			
 		} else {
@@ -98,8 +99,7 @@ public class UserRestController {
 	@PostMapping("/apply")
 	public Map<String, String> approveJoin(HttpSession session){
 		
-		String loginId = (String)session.getAttribute("userId");
-		int userId = userService.getUser(loginId).getId();
+		int userId = (Integer)session.getAttribute("userId");
 		
 		//modal에 띄울 리스트
 		List<User> notApproveDirectory = userService.useRoomInfo(userId);

@@ -25,9 +25,8 @@ public class HolidayService {
 	}
 	
 	public Holiday insertRequest(LocalDateTime startDay, LocalDateTime endDay
-								,String type, String comment, String loginId) {
+								,String type, String comment, int userId) {
 		
-		int userId = userService.getUser(loginId).getId();
 		
 		Holiday holiday = Holiday.builder()
 						 .userId(userId)
@@ -48,10 +47,9 @@ public class HolidayService {
 	}
 	
 	//HolidayDto
-	public List<PersonalSchedule> getScheduleView(String loginId){
+	public List<PersonalSchedule> getScheduleView(int userId){
 		
-		int userId = userService.getUser(loginId).getId();
-		
+
 		List<Holiday> holidayByUserList = holidayRepository.findByUserId(userId);
 		List<PersonalSchedule> personalScheduleList = new ArrayList<>();
 		

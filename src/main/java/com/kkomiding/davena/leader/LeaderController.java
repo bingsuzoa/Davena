@@ -37,12 +37,12 @@ public class LeaderController {
 	@GetMapping("/all-detail-view")
 	public String alldetail(Model model, HttpSession session) {
 		
-		String loginId = (String)session.getAttribute("userId");
-		int userId = userService.getUser(loginId).getId();
+		int userId =(Integer)session.getAttribute("userId");
+		String position = userService.getUser(userId).getPosition();
 		List<User> userListByApprove =userService.useRoomInfo(userId);
 		
 		model.addAttribute("notApproveUserList" , userListByApprove);
-		model.addAttribute("leaderId", userId);
+		model.addAttribute("position", position);
 		
 		return "leader/alldetail";
 	}

@@ -28,9 +28,9 @@ public class RoomRestController {
 										,@RequestParam("roomPw") String roomPassword
 										,HttpSession session){
 		
-		String loginId = (String)session.getAttribute("userId");
+		int userId = (Integer)session.getAttribute("userId");
 		
-		Room room = roomService.addRoom(roomName, roomPassword, loginId);
+		Room room = roomService.addRoom(roomName, roomPassword, userId);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(room != null) { 

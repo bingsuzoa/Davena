@@ -24,9 +24,9 @@ public class RoomService {
 	//방만들기 
 	public Room addRoom(String roomName
 					  ,String roomPassword
-					  ,String loginId) {
+					  ,int userId) {
 				
-		User user = userService.getUser(loginId);
+		User user = userService.getUser(userId);
 		
 		Room room = Room.builder()
 					.userId(user.getId())

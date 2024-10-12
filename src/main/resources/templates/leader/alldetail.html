@@ -34,6 +34,7 @@
 	</section>
 	
 	<th:block layout:fragment="modal">
+		<div th:if="${position} == '팀장'">
 		<div class="modal fade" id="approveBtnModal" role ="dialog" aria-hidden="true" >
 				<div class="modal-dialog modal-dialog-centered" id="modal-dialog-alldetail">
 					<div class="modal-content" id="modal-content-alldetail">
@@ -49,6 +50,7 @@
 						</div>
 					</div>
 				</div>
+		</div>
 		</div>
 	</th:block>
 	
