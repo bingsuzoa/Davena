@@ -39,11 +39,13 @@
 					<div class="modal-content" id="modal-content-alldetail">
 						<div class="modal-body-alldetail">
 							<p>회원가입 신청 내역 입니다.</p>
+							<th:block th:each="notApproveUser:${notApproveUserList}">
 							<div class="d-flex" id="modal-body-alldetail-div">
-								<div id="modal-notApprove-name"><a>권미경</a></div>		
+								<div id="modal-notApprove-name" th:text="${notApproveUser.name}">권미경</div>		
 								<div id="modal-approveBtn"  data-dismiss="modal"><a>승인</a></div>
 								<div id="modal-notApproveBtn"  data-dismiss="modal"><a>미승인</a></div>	
 							</div>
+							</th:block>
 						</div>
 					</div>
 				</div>

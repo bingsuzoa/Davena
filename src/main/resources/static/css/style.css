@@ -672,6 +672,11 @@ a {
 	text-decoration : none;
 }
 
+#modal-notApprove-name {
+	font-size : 15px;
+	margin-top : 3px;
+}
+
 #modal-approveBtn {
 	cursor : pointer;
 	color : #46AAFF;
