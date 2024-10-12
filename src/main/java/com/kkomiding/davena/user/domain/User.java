@@ -29,6 +29,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(name="holidayId")	
+	private int holidayId;
+	
 	@Column(name="loginId")
 	private String loginId;
 	
@@ -41,6 +44,9 @@ public class User {
 	private String profile;
 	
 	private String position;
+	
+	@Column(name="roomId")
+	private int roomId;
 	
 	@Column(name="roomName")
 	private String roomName;

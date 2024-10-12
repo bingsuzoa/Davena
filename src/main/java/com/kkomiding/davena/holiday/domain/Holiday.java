@@ -36,6 +36,9 @@ public class Holiday {
 	@Column(name="userId")
 	private int userId;
 	
+	@Column(name="holidayId")
+	private int holidayId;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	@Column(name="startDay")

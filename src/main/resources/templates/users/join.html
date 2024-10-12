@@ -35,11 +35,13 @@
 		  			</div>
 	  			</div>
 			</div>
-			<div class="joinDiv">
-				<input type="text" class="join-roomInfo form-control" id="join-roomName" placeholder="방 이름">
-			</div>
-			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-roomPw" placeholder="방 비밀번호🔑">
+			<div class="joinDiv-room d-none">
+				<div class="joinDiv">
+					<input type="text" class="join-roomInfo form-control" id="join-roomName" placeholder="방 이름">
+				</div>
+				<div class="joinDiv">
+					<input type="password" class="join-roomInfo form-control" id="join-roomPw" placeholder="방 비밀번호🔑">
+				</div>
 			</div>
 			<div class="joinDiv d-flex justify-content-end">
 				<div id="join-accountBtn">계정만들기</div>
@@ -50,7 +52,16 @@
 	<script layout:fragment ="script">
 		//drop-down의 value값 넣기
 		$(".dropdown-menu > a").on('click',function(){
+			
 			$("#positionBtn").attr('value', $(this).text());
+			let value = $("#positionBtn").val();
+			
+			if(value == "join-team-leader") {
+				$(".joinDiv-room").addClass("d-none");
+			} else {
+				$(".joinDiv-room").removeClass("d-none");
+			}
+			
 		})
 		
 		//Id중복확인
