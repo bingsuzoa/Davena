@@ -1,5 +1,6 @@
 package com.kkomiding.davena.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -104,6 +105,30 @@ public class UserService {
 		
 		
 		return userListByApprove;
+	}
+	
+	public User changeApprove(int userId) {
+		Optional<User> optionalUser = userRepository.findById(userId);
+		User user = optionalUser.orElse(null);
+		
+		user = user.toBuilder()
+				.approve("승인")
+				.updatedAt(LocalDateTime.now())
+				.build();
+		
+		return userRepository.save(user);
+	}
+	
+	public User rejectApprove(int userId) {
+		Optional<User> optionalUser = userRepository.findById(userId);
+		User user = optionalUser.orElse(null);
+		
+		user = user.toBuilder()
+				.approve("거부")
+				.updatedAt(LocalDateTime.now())
+				.build();
+		
+		return userRepository.save(user);
 	}
 
 }

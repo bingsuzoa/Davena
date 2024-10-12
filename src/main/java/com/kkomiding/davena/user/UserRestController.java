@@ -114,4 +114,32 @@ public class UserRestController {
 		
 	}
 	
+	@PostMapping("/apply/approve")
+	public Map<String, String> changeApprove(@RequestParam("userId") int userId) {
+		
+		User user = userService.changeApprove(userId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		if(user.getApprove() == "승인") {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
+	@PostMapping("/apply/reject")
+	public Map<String, String> rejectApprove(@RequestParam("userId") int userId) {
+		
+		User user = userService.rejectApprove(userId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		if(user.getApprove() == "거부") {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+	
 }

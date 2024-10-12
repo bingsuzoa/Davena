@@ -662,37 +662,46 @@ a {
 	padding : 40px;
 }
 
-#modal-body-alldetail-div {
+.modal-body-alldetail-div {
 	margin : 0;
-	margin-left : 130px;
 	margin-top : 10px;
+	display : flex;
+	justify-content : center;
+	align-items : center;
 }
 
 .modal > a{
 	text-decoration : none;
 }
 
-#modal-notApprove-name {
+.modal-notApprove-name {
 	font-size : 15px;
 	margin-top : 3px;
 }
 
-#modal-approveBtn {
+.modal-approveBtn {
 	cursor : pointer;
 	color : #46AAFF;
-	margin-left : 20px;
 }
 
-#modal-approveBtn:hover {
-	color : #B4E5FF;
+.modal-approveBtn:hover {
+	color : #AADBFF
+}
+
+.modal-holdBtn {
+	cursor : pointer;
+	color : #FF9B00;
+}
+
+.modal-holdBtn:hover {
+	color : #FACD87;
 }
  
-#modal-notApproveBtn {
+.modal-notApproveBtn {
 	cursor : pointer;
 	color : #FF0000;
-	margin-left : 20px;
 }
-#modal-notApproveBtn:hover {
+.modal-notApproveBtn:hover {
 	color : #FF8282	;
 }
 
