@@ -687,15 +687,6 @@ a {
 .modal-approveBtn:hover {
 	color : #AADBFF
 }
-
-.modal-holdBtn {
-	cursor : pointer;
-	color : #FF9B00;
-}
-
-.modal-holdBtn:hover {
-	color : #FACD87;
-}
  
 .modal-notApproveBtn {
 	cursor : pointer;

@@ -44,7 +44,6 @@
 							<div class="modal-body-alldetail-div" th:data-user-data="${notApproveUser.id}" th:id="|userName${notApproveUser.id}|">
 								<div class="modal-notApprove-name col-2" th:text="${notApproveUser.name}">권미경</div>		
 								<div class="modal-approveBtn col-2"><a>승인</a></div>
-								<div class="modal-holdBtn col-2"><a>보류</a></div>	
 								<div class="modal-notApproveBtn col-2"><a>거부</a></div>	
 							</div>
 							</th:block>
@@ -105,6 +104,7 @@
 		    			,success:function(data){
 		    				if(data.result == "success"){
 		    					$("#userName" + id).addClass("d-none");
+		    					location.reload();
 		    				} else {
 		    					alert("승인실패!");
 		    				}
@@ -113,12 +113,6 @@
 		    			}
 		    		})
 		    	})
-		    	
-		    	//보류
-		    	$(".modal-holdBtn").on('click',function(){
-		    		$("#userName" + id).addClass("d-none");
-	   			})
-	   			
 	   			
 	   			//거부
 	   			$(".modal-notApproveBtn").on('click',function(){
@@ -130,6 +124,7 @@
 		    			,success:function(data){
 		    				if(data.result == "success"){
 		    					$("#userName" + id).addClass("d-none");
+		    					location.reload();
 		    				} else {
 		    					alert("거부실패!");
 		    				}

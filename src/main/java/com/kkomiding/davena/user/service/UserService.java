@@ -87,7 +87,7 @@ public class UserService {
 		return userForLogin;
 	}
 	
-	//방 이름, 방 비밀번호 조회해서 미승인된 user리스트 가져오기
+	//방 이름, 방 비밀번호 조회해서 미승인이며, 팀원인 user리스트 가져오기
 	public List<User> useRoomInfo(int leaderId) {
 		
 		Optional<Room> optionalRoom = roomRepository.findByUserId(leaderId);
@@ -101,7 +101,7 @@ public class UserService {
 			roomPassword = room.getRoomPassword();
 		}
 		
-		List<User> userListByApprove = userRepository.findByRoomNameAndRoomPasswordAndApprove(roomName, roomPassword, "미승인");
+		List<User> userListByApprove = userRepository.findByRoomNameAndRoomPasswordAndApproveAndPosition(roomName, roomPassword, "미승인", "팀원");
 		
 		
 		return userListByApprove;

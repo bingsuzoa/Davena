@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	public Optional<User> findByIdAndPassword(int userId, String Hashing_password);
 	
 	//User list가져오기
-	public List<User> findByRoomNameAndRoomPasswordAndApprove(String roomName, String roomPassword, String approve);
+	public List<User> findByRoomNameAndRoomPasswordAndApproveAndPosition(String roomName, String roomPassword, String approve, String position);
 	
 	
 
