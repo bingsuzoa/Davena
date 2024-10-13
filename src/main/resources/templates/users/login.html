@@ -40,17 +40,18 @@
 				,url:"/user/login"
 				,data:{"idInput" : id, "pwInput" : password}
 				,success:function(data){
-					if(data.result == "member"){
-						location.href="/user/after-apply-view";
-					} 
-					else if (data.result == "leader") {
+					if(data.position == "leader") {
 						location.href="/leader/login-view";
 					}
-					else {
-						alert("로그인 실패!");
+					else if(data.position == "member") {
+						if(data.isApprove == "notApprove") {
+							location.href="/user/before-apply-view";
+						} else {
+							location.href="/user/after-apply-view";
+						}
 					}
-				},error:function(){
-					alert("로그인 에러!");
+				},error : function(){
+					alert("로그인에러!");
 				}
 			})
 		})

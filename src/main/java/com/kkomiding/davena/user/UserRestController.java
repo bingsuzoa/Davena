@@ -102,22 +102,26 @@ public class UserRestController {
 		int userId = userService.getLoginId(loginId).getId();
 		User user = userService.getUserAndPw(userId, password);
 		String position = user.getPosition();
+		String approve = user.getApprove();
 		
 		Map<String, String> resultMap = new HashMap<>();
 		if(position != null) {
-			if(position.equals("팀장")) {
-				resultMap.put("result", "leader");
+			if(position.equals("팀원")) {
+				if(approve.equals("미승인")) {
+					resultMap.put("position", "member");
+					resultMap.put("isApprove", "notApprove");		
+				} else {
+					resultMap.put("position", "member");
+					resultMap.put("isApprove", "approve");	
+				}
 			} else {
-				resultMap.put("result", "member");
+				resultMap.put("position", "leader");
+				resultMap.put("isApprove", "approve");	
 			}
-			
-				HttpSession session = request.getSession();
-				session.setAttribute("userId", user.getId());
-				session.setAttribute("userName", user.getName());
-		} else {
-			resultMap.put("result", "fail");
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userName", user.getName());
 		}
-	
 		return resultMap;
 	}
 

@@ -48,7 +48,7 @@ public class UserService {
 		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
 		Room room = optionalRoom.orElse(null);
 				
-		if(position == "팀원") {
+		if(position.equals("팀원")) {
 			User user = User.builder()
 						.loginId(loginId)
 						.password(encryptpassword)
