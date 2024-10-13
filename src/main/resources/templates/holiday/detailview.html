@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{Layouts/contents}">
@@ -26,6 +26,10 @@
 	</section>
 	
 	<script layout:fragment="script">
+		function getType(data) {
+	   	 return Object.prototype.toString.call(data).slice(8, -1);
+		}
+		
 		document.addEventListener('DOMContentLoaded', function() {
   			var calendarEl = document.getElementById('calendar');
 	    	var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -41,10 +45,15 @@
 	      			}
 	    			,eventSources : [{
 	    				events : function(info, successCallback){
-	    						console.log(info);
-	    	    				$.ajax({
+	    						let startDate = info.start;
+	    						let endDate = info.end;
+	    						console.log(startDate)
+	    						console.log(getType(endDate))
+	    	    				
+	    						$.ajax({
 	    	    					type:"post"
 	    	    					,url : "/holiday/detail"
+	    	    					,data : {"startDate" : startDate, "endDate" : endDate}
 	    	    					,success : function(data){
 	    	    						successCallback(data);
 	    	    						console.log(data);

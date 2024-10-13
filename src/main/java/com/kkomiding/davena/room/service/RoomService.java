@@ -51,5 +51,12 @@ public class RoomService {
 		
 		return room;
 	}
+	
+	public Room getRoomByUserId(int userId) {
+		Optional<Room> optionalRoom = roomRepository.findByUserId(userId);
+		Room room = optionalRoom.orElse(null);
+		
+		return room;
+	}
 
 }

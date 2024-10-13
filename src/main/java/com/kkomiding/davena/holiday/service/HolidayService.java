@@ -49,10 +49,14 @@ public class HolidayService {
 	}
 	
 	//HolidayDto
-	public List<PersonalSchedule> getScheduleView(int userId){
+	public List<PersonalSchedule> getScheduleView(LocalDateTime startDate
+												 ,LocalDateTime endDate
+												 ,int userId){
 		
-
-		List<Holiday> holidayByUserList = holidayRepository.findByUserId(userId);
+		
+		List<Holiday> holidayByUserList = holidayRepository.findByUserIdAndStartDayGreaterThanAndEndDayLessThan(userId
+																											   ,startDate
+																											   ,endDate);
 		List<PersonalSchedule> personalScheduleList = new ArrayList<>();
 		
 		for(Holiday holiday : holidayByUserList) {
@@ -71,6 +75,7 @@ public class HolidayService {
 		return personalScheduleList;
 	}
 	
+	//삭제 -1/2
 	public boolean deleteRequest(int holidayId, int userId) {
 		Optional<Holiday> optionalHoliday = holidayRepository.findByIdAndUserId(holidayId, userId);
 		Holiday holiday = optionalHoliday.orElse(null);
@@ -82,8 +87,11 @@ public class HolidayService {
 			return false;
 		}
 	}
+	//삭제 -2/2
+	public void deleteByIdAndUserId(int holidayId, int userId) {	
+	}
 	
-	public void deleteByIdAndUserId(int holidayId, int userId) {
-		
+	public List<Holiday> findByRoomId(int roomId) {
+		return holidayRepository.findByRoomId(roomId);
 	}
 }

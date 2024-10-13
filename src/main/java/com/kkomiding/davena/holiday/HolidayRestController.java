@@ -1,7 +1,6 @@
-package com.kkomiding.davena.holiday.domain;
+package com.kkomiding.davena.holiday;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.service.HolidayService;
-import com.kkomiding.davena.user.service.UserService;
+import com.kkomiding.davena.room.service.RoomService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,12 +24,12 @@ import jakarta.servlet.http.HttpSession;
 public class HolidayRestController {
 	
 	private HolidayService holidayService;
-	private UserService userService;
+	private RoomService roomService;
 	
 	public HolidayRestController(HolidayService holidayService
-								,UserService userService) {
+								,RoomService roomService) {
 		this.holidayService = holidayService;
-		this.userService = userService;
+		this.roomService = roomService;
 	}
 
 		
@@ -58,13 +58,25 @@ public class HolidayRestController {
 	
 
 	@PostMapping("/detail")
-	public List<PersonalSchedule> getRequest(HttpSession session) {
+	public List<PersonalSchedule> getRequest(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDate
+											,@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDate
+											,HttpSession session) {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		
-		List<PersonalSchedule> personalScheduleList = holidayService.getScheduleView(userId);
+		List<PersonalSchedule> personalScheduleList = holidayService.getScheduleView(startDate, endDate, userId);
 				
 		return personalScheduleList;	
+	}
+	
+	@PostMapping("/detail/all")
+	public List<Holiday> getDetailAll(HttpSession session) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		int roomId = roomService.getRoomByUserId(userId).getId();
+		
+		return holidayService.findByRoomId(roomId);
+		
 	}
 	
 	@DeleteMapping("/delete")
@@ -80,7 +92,6 @@ public class HolidayRestController {
 		} else {
 			resultMap.put("result", "fail");
 		}
-		return resultMap;
-		
+		return resultMap;		
 	}
 }
