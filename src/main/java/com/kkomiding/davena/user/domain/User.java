@@ -29,9 +29,6 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="holidayId")	
-	private int holidayId;
-	
 	@Column(name="loginId")
 	private String loginId;
 	

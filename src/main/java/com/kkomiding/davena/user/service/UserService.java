@@ -43,6 +43,10 @@ public class UserService {
 		Map<String,String> saltAndPw = salting.setSaltPw(loginId, password);
 		String salt = saltAndPw.get("salt");
 		String encryptpassword = saltAndPw.get("saltedPassword");
+		
+		//roomId찾기
+		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
+		Room room = optionalRoom.orElse(null);
 				
 		if(position == "팀원") {
 			User user = User.builder()
@@ -52,6 +56,7 @@ public class UserService {
 						.name(name)
 						.profile(urlPath)
 						.position(position)
+						.roomId(room.getId())
 						.roomName(roomName)
 						.roomPassword(roomPassword)
 						.approve("미승인")
@@ -65,6 +70,7 @@ public class UserService {
 					.name(name)
 					.profile(urlPath)
 					.position(position)
+					.roomId(0)
 					.roomName(roomName)
 					.roomPassword(roomPassword)
 					.approve("승인")

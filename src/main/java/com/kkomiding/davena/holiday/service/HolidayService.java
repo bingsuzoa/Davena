@@ -1,4 +1,4 @@
-	package com.kkomiding.davena.holiday.service;
+package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,9 +27,11 @@ public class HolidayService {
 	public Holiday insertRequest(LocalDateTime startDay, LocalDateTime endDay
 								,String type, String comment, int userId) {
 		
+		int roomId = userService.getUser(userId).getRoomId();
 		
 		Holiday holiday = Holiday.builder()
 						 .userId(userId)
+						 .roomId(roomId)
 						 .startDay(startDay)
 						 .endDay(endDay)
 						 .dateCount(1)

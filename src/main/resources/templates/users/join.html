@@ -66,13 +66,13 @@
 			
 		})
 		
-		//Id중복확인
 		$(document).ready(function(){	
     		//중복확인 여부
     		var checkDuplicate = false; 		
     		//중복여부
     		var isDuplicatedId = true;
     		
+		//Id중복확인
     		$("#join-idInput").on("input", function(){
     			//입력이 바뀌면 중복체크를 다시해야함 , 중복확인과정 초기화
     		
@@ -152,8 +152,7 @@
 				return;
 			}
 			
-			//팀원일때,,,
-			if(position == "팀원") {
+			if(position == "팀원"){
 				if(roomName == ""){
 					alert("참여할 방 이름을 적어주세요.");
 					return;
@@ -165,70 +164,90 @@
 				roomName = $("#join-roomName").val();
 				roomPassword = $("#join-roomPw").val();
 				
-				//있는 방인지 여부 확인
+				new Promise((succ, fail) => {
+					//방 중복인지 확인, 확인이 되어야 가입가능
+					$.ajax({
+						type:"post"
+						,url : "/room/duplicate-room"
+						,data : {"roomName" : roomName, "roomPw" : roomPassword}
+						,success : function(data){
+							if(data.isDuplicate == true){
+								succ("방있음");
+							} else {
+								fail("그런방 없어요");
+							}
+						}
+						,error : function(){
+							fail("방 중복여부 오류");
+						}
+					})
+				}).then((arg) => {
+					//데이터 넘기기
+					let formData = new FormData();
+					formData.append("join-idInput", id);
+					formData.append("join-checkPwInput", Checkpassword);
+					formData.append("join-userName", name);
+					formData.append("profile", imgFile);
+					formData.append("position", position);
+					formData.append("join-roomName", roomName);
+					formData.append("join-roomPw", roomPassword);
+					
+					$.ajax({
+						type:"post"
+						,url :"/user/join"
+						,data:formData
+						,enctype:"multiplart/form-data"
+						,processData:false
+		    			,contentType:false
+		    			,success:function(data){
+		    				if(arg == "방있음") {
+		    					location.href = "/user/before-apply-view";
+		    					alert("팀원 회원가입 성공!");
+		    				} else {
+		    					alert("팀원 회원가입 실패!");
+		    				}
+		    			}
+						,error : function(){
+							alert("팀원 회원가입 에러!");
+						}
+					})	
+				})
+				.catch((error) => {
+					alert(error);
+				})
+			}
+			if(position == "팀장"){
+				let formData = new FormData();
+				formData.append("join-idInput", id);
+				formData.append("join-checkPwInput", Checkpassword);
+				formData.append("join-userName", name);
+				formData.append("profile", imgFile);
+				formData.append("position", position);
+				formData.append("join-roomName", roomName);
+				formData.append("join-roomPw", roomPassword);
+					
 				$.ajax({
 					type:"post"
-					,url:"/room/duplicate-room"
-					,data:{"roomName" : roomName, "roomPw" : roomPassword}
-					,success:function(data){
-						if(data.isDuplicate == true) {
-							checkIsRoom = true;
-							alert("가입가능");	
-							return;
-						} else {
-							checkIsRoom = false;
-							alert("가입불가.");
-							return;
-						}
-					}, error:function(){
-						alert("방 중복여부 확인 에러!");
-					}
+					,url :"/user/join"
+					,data:formData
+					,enctype:"multiplart/form-data"
+					,processData:false
+		    		,contentType:false
+		    		,success:function(data){
+		    			if(data.result == "success"){
+		    				location.href="/user/login-view";
+	    					alert("팀장 회원가입 성공!");
+		    			} else {
+		    				alert("팀장 회원가입 실패!");
+		    			}
+		    		},error : function(){
+		    			alert("팀장 회원가입 에러!");
+		    		}
 				})
-				
-			//팀장일때,,,
-			} else {
-				roomName = null;
-				roomPassword = null;
-				checkIsRoom = true;
 			}
-			
-			if(checkIsRoom == false) {
-				alert("존재하지 않는 방을 입력하셨습니다.");
-				return;
-			}
-			//데이터 넘기기
-			let formData = new FormData();
-			formData.append("join-idInput", id);
-			formData.append("join-checkPwInput", Checkpassword);
-			formData.append("join-userName", name);
-			formData.append("profile", imgFile);
-			formData.append("position", position);
-			formData.append("join-roomName", roomName);
-			formData.append("join-roomPw", roomPassword);
-			
-			$.ajax({
-				type:"post"
-				,url :"/user/join"
-				,data:formData
-				,enctype:"multiplart/form-data"
-				,processData:false
-    			,contentType:false
-    			,success:function(data){
-    				if(data.result == "success" && checkIsRoom == true && position == "팀원"){
-    					location.href="/user/before-apply-view";
-    				} 
-    				else if(data.result == "success" && checkIsRoom == true && position == "팀장") {
-    					location.href="/leader/login-view"
-    				}
-    				else {
-    					alert("회원가입 실패!");
-    				}
-				} ,error:function(){
-					alert("회원가입 에러!");
-    			}
-			})
-			
-			$.ajax({
+		})
+	})
+			/* $.ajax({
 				 type: "post"
 				,url: "/user/apply"
 				,data : {"roomName" : roomName , "roomPassword" : roomPassword}
@@ -241,10 +260,10 @@
 				}, error : function(){
 					alert("미승인 객체 조회 에러!");
 				}
-			})
+			}) */
 			
 			
-		})
-	})
+	/* 	})
+	}) */
 	</script>
 </html>
