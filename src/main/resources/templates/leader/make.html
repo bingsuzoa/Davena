@@ -37,7 +37,6 @@
 	
 	<script layout:fragment="script">
 		$(".BtnMakeRoom").on('click',function(){
-			isDuplicate = true;
 			let roomName = $("#roomName").val();
 			let roomPw = $("#roomPw").val();
 			
@@ -50,39 +49,43 @@
 				return;
 			}
 			
-			$.ajax({
-				type:"post"
-				,url:"/room/make"
-				,data:{"roomName" : roomName, "roomPw" : roomPw}
-				,success:function(data){
-					if(data.result =="success"){
-						isDuplicate = false;
-						location.href="/leader/all-detail-view";
-					} else {
-						alert("방만들기 실패!");
+			new Promise((succ, fail) =>{
+				$.ajax({
+					type:"post"
+					,url : "/room/make"
+					,data : {"roomName" : roomName, "roomPw" : roomPw}
+					,success : function(data) {
+						if(data.result == "success") {
+							succ(data);
+							console.log(data);
+						} else {
+							succ(data);
+							console.log(data);
+						}
 					}
-				},error:function(){
-					alert("방만들기 에러!");
-				}
-			})
-			
-			if(isDuplicate = true){
+					,error : function(){
+						fail(error);
+						console.log("promiese 에러")
+					}
+				});
+			}).then((arg) => {
 				$.ajax({
 					type:"post"
 					,url:"/user/join/update"
 					,data:{"roomName" : roomName, "roomPassword" : roomPw}
-					,success: function(data){
-						if(data.result =="success") {
-							locion.reload();
+					,success:function(data){
+						if(data.result == "success"){
+							location.href="/leader/all-detail-view";
 							alert("팀장 객체 업데이트 성공!");
 						} else {
 							alert("팀장 객체 업데이트 실패!");
 						}
-					}, error : function() {
+					}
+					,error : function(){
 						alert("팀장 객체 업데이트 에러!");
 					}
-				})	
-			}
+				})
+			})
 		})
 	</script>
 </html>
