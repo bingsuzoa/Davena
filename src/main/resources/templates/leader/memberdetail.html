@@ -23,6 +23,7 @@
       			,locale : 'ko'
       			,selectable : false
       			,droppable : true
+      			,displayEventTime: false
       			,headerToolbar: {
          	 		start:'title'
           			,center:''
@@ -43,11 +44,12 @@
      		 				,url : "/holiday/detail/all"
      		 				,data :{"startDate" : startDate, "endDate" : endDate}
      		 				,success : function(data) {
-     		 					alert("성공")
      		 					successCallback(data);
      		 				}
      		 			})
      		 		}
+     		 		,color : '#FFE6EB'
+     		 		,textColor: '#5a5a5a'
      		 	}]
     		});
     		calendar.render();

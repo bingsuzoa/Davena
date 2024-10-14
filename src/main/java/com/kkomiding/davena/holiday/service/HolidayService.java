@@ -89,8 +89,11 @@ public class HolidayService {
 		
 		for(Holiday holiday : holidayByRoomList) {
 			
+			int id = holiday.getUserId();
+			User holidayUser = userService.getUser(id);
+			
 			PersonalSchedule allSchedule = PersonalSchedule.builder()
-										   .title(user.getName())
+										   .title(holidayUser.getName())
 										   .start(holiday.getStartDay())
 										   .end(holiday.getEndDay())
 										   .holidayId(holiday.getId())
