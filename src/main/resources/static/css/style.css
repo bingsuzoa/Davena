@@ -464,8 +464,16 @@ a {
     border-radius: 20px 20px 0px 0px;
 }
 
+/* 달력넘기는 버튼 */
 
-/* 툴바의 버튼 */
+.fc .fc-button {
+	appearance : none;
+	background-color: transparent;
+    color: #000000;
+    border: none;
+    font-size: 14px;
+}
+
 .fc .fc-toolbar-chunk .fc-button {
     background-color: transparent;
     color: #000000;
@@ -473,30 +481,18 @@ a {
     font-size: 14px;
 }
 
-/* 툴바 사용 불가 버튼 스타일 */
-.fc .fc-toolbar-chunk .fc-button:disabled {
-    color: #e8e8e8;
-}
-/* 툴바 사용 불가 버튼 hover 시 스타일 주지 않기 */
-.fc .fc-toolbar-chunk .fc-button:disabled:hover {
-    background-color: transparent;
-}
-
 /* 툴바 버튼 포커스 시 그림자 제거 */
 .fc .fc-toolbar-chunk .fc-button:focus {
     box-shadow: none;
+    border-color : none;
 }
 
 /* 툴바 버튼 hover 시 배경색 변경 */
 .fc .fc-toolbar-chunk .fc-button:hover {
     background-color:#FFF0F5;;
+    border : none;
 }
 
-/* 날짜변경 화살표 아이콘 */
-.fc .fc-button-primary span {
-    font-weight: 500;
-    font-size: 28px;
-}
 
 /* 요일의 높이 */
 .fc-theme-standard th {
@@ -533,15 +529,15 @@ a {
     border-radius: 4px;
     font-size: 14px;
 }
+.fc-daygrid-dot-event .fc-event-title {
+	font-weight :normal;
+}	
 
 .fc-daygrid-event-dot {
   display: none;
 }
 
 
-.fc-daygrid-event {
-  border: none;
-}
 
 /******afterapply.htmll******/
 .afterapply-phase {
@@ -807,7 +803,28 @@ a {
 }
 .memberDetail-calendar {
 	width : 800px;
-	margin-left : 80px;
+	margin-left : 20px;
+}
+
+.calendar-colorInfo{
+	display : flex;
+	align-items : end;
+}
+
+#off-infoBox {
+	width:15px;
+	height:15px;
+	background-color : #DCEBFF; 
+	margin-right : 5px;
+	margin-top : 4px;
+}
+
+#holiday-infoBox {
+	width:15px;
+	height:15px;
+	background-color : #FFF56E; 
+	margin-right : 5px;
+	margin-top : 4px;
 }
 /******calendarview.html******/
 .calendar-view-Div {

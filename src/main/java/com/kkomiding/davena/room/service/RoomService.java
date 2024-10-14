@@ -27,13 +27,15 @@ public class RoomService {
 					  ,int userId) {
 				
 		User user = userService.getUser(userId);
+		userService.updateUser(userId, roomName, roomPassword);
 		
 		Room room = Room.builder()
 					.userId(user.getId())
 					.roomName(roomName)
 					.roomPassword(roomPassword)
 					.build();				
-		return roomRepository.save(room);
+		return  roomRepository.save(room);
+
 	}
 	
 	//방 조회해오기

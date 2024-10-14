@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kkomiding.davena.room.domain.Room;
 import com.kkomiding.davena.room.service.RoomService;
+import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;

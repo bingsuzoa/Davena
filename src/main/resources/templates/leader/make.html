@@ -48,44 +48,22 @@
 				alert("방 비밀번호를 적어주세요.");
 				return;
 			}
-			
-			new Promise((succ, fail) =>{
 				$.ajax({
 					type:"post"
 					,url : "/room/make"
 					,data : {"roomName" : roomName, "roomPw" : roomPw}
 					,success : function(data) {
 						if(data.result == "success") {
-							succ(data);
-							console.log(data);
+							console.log("방만들기 및 객체업데이트 성공");
 						} else {
-							succ(data);
-							console.log(data);
+							console.log("방만들기 및 객체업데이트 실패");
 						}
 					}
 					,error : function(){
-						fail(error);
-						console.log("promiese 에러")
+						console.log("방만들기 및 객체업데이트 에러");
 					}
 				});
-			}).then((arg) => {
-				$.ajax({
-					type:"post"
-					,url:"/user/join/update"
-					,data:{"roomName" : roomName, "roomPassword" : roomPw}
-					,success:function(data){
-						if(data.result == "success"){
-							location.href="/leader/all-detail-view";
-							alert("팀장 객체 업데이트 성공!");
-						} else {
-							alert("팀장 객체 업데이트 실패!");
-						}
-					}
-					,error : function(){
-						alert("팀장 객체 업데이트 에러!");
-					}
-				})
-			})
+		
 		})
 	</script>
 </html>
