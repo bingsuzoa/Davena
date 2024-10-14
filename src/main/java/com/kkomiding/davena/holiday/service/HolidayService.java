@@ -75,6 +75,12 @@ public class HolidayService {
 		return personalScheduleList;
 	}
 	
+	public List<Holiday> getAllHolidayList(LocalDateTime startDate
+										  ,LocalDateTime endDate
+										  ,int roomId) {
+		return holidayRepository.findByRoomIdAndStartDayGreaterThanAndEndDayLessThan(roomId, startDate, endDate);
+	}
+	
 	//삭제 -1/2
 	public boolean deleteRequest(int holidayId, int userId) {
 		Optional<Holiday> optionalHoliday = holidayRepository.findByIdAndUserId(holidayId, userId);

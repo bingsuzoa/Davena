@@ -22,6 +22,7 @@
       			initialView: 'dayGridMonth'
       			,locale : 'ko'
       			,selectable : false
+      			,droppable : true
       			,headerToolbar: {
          	 		start:'title'
           			,center:''
@@ -30,6 +31,21 @@
      		 	,dayCellContent:function(e){
       				return e.dayNumberText.replace('일',''); 
       			}
+     		 	,eventSources : [{
+     		 		events : function(info, successCallback) {
+     		 			let startDate = moment(info.start).format("YYYY-MM-DD hh:mm")
+     		 			let endDate = moment(info.end).format("YYYY-MM-DD hh:mm")
+     		 			
+     		 			$.ajax({
+     		 				type:"post"
+     		 				,url : "/holiday/detail/all"
+     		 				,data :{"startDate" : startDate, "endDate" : endDate}
+     		 				,success : function(data) {
+     		 					successCallback(data);
+     		 				}
+     		 			})
+     		 		}
+     		 	}]
     		});
     		calendar.render();
   		});

@@ -16,6 +16,7 @@ import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.service.RoomService;
+import com.kkomiding.davena.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,11 +26,14 @@ public class HolidayRestController {
 	
 	private HolidayService holidayService;
 	private RoomService roomService;
+	private UserService userService;
 	
 	public HolidayRestController(HolidayService holidayService
-								,RoomService roomService) {
+								,RoomService roomService
+								,UserService userSerivce) {
 		this.holidayService = holidayService;
 		this.roomService = roomService;
+		this.userService = userSerivce;
 	}
 
 		
@@ -69,13 +73,16 @@ public class HolidayRestController {
 		return personalScheduleList;	
 	}
 	
+	//방에 있는 사람들의 휴가 신청 현황 조회하기
 	@PostMapping("/detail/all")
-	public List<Holiday> getDetailAll(HttpSession session) {
+	public List<Holiday> getDetailAll(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDate
+									 ,@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDate
+									 ,HttpSession session) {
 		
 		int userId = (Integer)session.getAttribute("userId");
-		int roomId = roomService.getRoomByUserId(userId).getId();
+		int roomId = userService.getUser(userId).getRoomId();
 		
-		return holidayService.findByRoomId(roomId);
+		return holidayService.getAllHolidayList(startDate, endDate, roomId);
 		
 	}
 	

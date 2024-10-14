@@ -14,9 +14,16 @@ public interface HolidayRepository extends JpaRepository<Holiday, Integer>  {
 	
 	public List<Holiday> findByUserId(int userId);
 	
+	
+	//한명의 근무자 휴가리스트 조회
 	public List<Holiday> findByUserIdAndStartDayGreaterThanAndEndDayLessThan(int userId
 																			,LocalDateTime startDate
 																			,LocalDateTime endDate);	
+	
+	//방전체 근무자 휴가리스트 조회
+	public List<Holiday> findByRoomIdAndStartDayGreaterThanAndEndDayLessThan(int roomId
+																			,LocalDateTime startDate
+																			,LocalDateTime endDate);
 	
 	public Optional<Holiday> findByIdAndUserId(int holidayId, int userId);
 	

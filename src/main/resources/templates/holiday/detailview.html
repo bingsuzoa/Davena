@@ -45,8 +45,8 @@
 	      			}
 	    			,eventSources : [{
 	    				events : function(info, successCallback){
-	    						let startDate = info.start;
-	    						let endDate = info.end;
+	    						let startDate = moment(info.start).format("YYYY-MM-DD hh:mm")
+    							let endDate = moment(info.end).format("YYYY-MM-DD hh:mm")
 	    						console.log(startDate)
 	    						console.log(getType(endDate))
 	    	    				
