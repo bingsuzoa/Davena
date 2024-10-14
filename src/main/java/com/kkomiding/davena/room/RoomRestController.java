@@ -32,11 +32,11 @@ public class RoomRestController {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		
-		Room room = roomService.addRoom(roomName, roomPassword, userId);
+		int roomId = roomService.addRoom(roomName, roomPassword, userId);
 		
 		
 		Map<String, String> resultMap = new HashMap<>();
-		if(room != null) { 
+		if(roomId > 0) { 
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");

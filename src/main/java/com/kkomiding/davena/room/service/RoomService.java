@@ -22,19 +22,23 @@ public class RoomService {
 	}
 	
 	//방만들기 
-	public Room addRoom(String roomName
+	public int addRoom(String roomName
 					  ,String roomPassword
 					  ,int userId) {
 				
 		User user = userService.getUser(userId);
-		userService.updateUser(userId, roomName, roomPassword);
 		
 		Room room = Room.builder()
 					.userId(user.getId())
 					.roomName(roomName)
 					.roomPassword(roomPassword)
 					.build();				
-		return  roomRepository.save(room);
+		roomRepository.save(room);
+		 int roomId = room.getId();
+		
+		userService.updateUser(userId, roomId);
+		
+		return roomId;
 
 	}
 	
