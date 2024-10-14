@@ -33,6 +33,8 @@ public class PersonalSchedule {
 	
 	private int holidayId;
 	
+	private String type;
+	
 	private int userId;
 
 }

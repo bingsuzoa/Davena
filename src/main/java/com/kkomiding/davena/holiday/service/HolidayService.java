@@ -67,6 +67,7 @@ public class HolidayService {
 												.start(holiday.getStartDay())
 												.end(holiday.getEndDay())
 												.holidayId(holiday.getId())
+												.type(holiday.getType())
 												.userId(userId)
 												.build();
 			
@@ -97,6 +98,7 @@ public class HolidayService {
 										   .start(holiday.getStartDay())
 										   .end(holiday.getEndDay())
 										   .holidayId(holiday.getId())
+										   .type(holiday.getType())
 										   .userId(userId)
 										   .build();
 			

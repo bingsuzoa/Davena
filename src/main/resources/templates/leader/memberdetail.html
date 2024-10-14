@@ -47,10 +47,20 @@
      		 					successCallback(data);
      		 				}
      		 			})
-     		 		}
-     		 		,color : '#FFE6EB'
-     		 		,textColor: '#5a5a5a'
+     		 		}   		 		
+     		 		,textColor : 'black'
      		 	}]
+     		 	,eventDidMount : function(info) {
+     		 		var offColor = '#DCEBFF';
+     		 		var holidayColor = '#FFF56E';
+     		 		if(info.event.extendedProps.type == '오프') {
+     		 			info.el.style.backgroundColor = offColor;
+     		 			info.el.style.borderColor = offColor;
+     		 		} else if(info.event.extendedProps.type == '연가'){
+     		 			info.el.style.backgroundColor = holidayColor;
+     		 			info.el.style.borderColor = holidayColor;
+     		 		}
+     		 	}
     		});
     		calendar.render();
   		});
