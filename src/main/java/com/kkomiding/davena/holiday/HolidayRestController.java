@@ -99,13 +99,4 @@ public class HolidayRestController {
 		return resultMap;		
 	}
 	
-	//userId, 이번년도, type파라미터
-	@PostMapping("/count")
-	public int getHolidayCount(HttpSession session) {
-			
-		int userId = (Integer)session.getAttribute("userId");
-		int count = holidayService.selectHolidayCount(userId);
-		
-		return count;
-	}
 }
