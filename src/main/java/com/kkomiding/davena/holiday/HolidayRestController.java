@@ -26,14 +26,11 @@ public class HolidayRestController {
 	
 	private HolidayService holidayService;
 	private RoomService roomService;
-	private UserService userService;
 	
 	public HolidayRestController(HolidayService holidayService
-								,RoomService roomService
-								,UserService userSerivce) {
+								,RoomService roomService) {
 		this.holidayService = holidayService;
 		this.roomService = roomService;
-		this.userService = userSerivce;
 	}
 
 		
@@ -75,14 +72,13 @@ public class HolidayRestController {
 	
 	//방에 있는 사람들의 휴가 신청 현황 조회하기
 	@PostMapping("/detail/all")
-	public List<Holiday> getDetailAll(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDate
+	public List<PersonalSchedule> getDetailAll(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDate
 									 ,@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDate
 									 ,HttpSession session) {
 		
 		int userId = (Integer)session.getAttribute("userId");
-		int roomId = userService.getUser(userId).getRoomId();
 		
-		return holidayService.getAllHolidayList(startDate, endDate, roomId);
+		return holidayService.getAllHolidayList(startDate, endDate, userId);
 		
 	}
 	

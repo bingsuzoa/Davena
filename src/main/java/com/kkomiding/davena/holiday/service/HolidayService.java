@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
+import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
 
 @Service
@@ -75,10 +76,30 @@ public class HolidayService {
 		return personalScheduleList;
 	}
 	
-	public List<Holiday> getAllHolidayList(LocalDateTime startDate
+	//전체 근무자 일정 캘린더에 연동하기
+	public List<PersonalSchedule> getAllHolidayList(LocalDateTime startDate
 										  ,LocalDateTime endDate
-										  ,int roomId) {
-		return holidayRepository.findByRoomIdAndStartDayGreaterThanAndEndDayLessThan(roomId, startDate, endDate);
+										  ,int userId) {
+		
+		User user = userService.getUser(userId);
+		int roomId = user.getRoomId();
+		List<Holiday> holidayByRoomList = holidayRepository.findByRoomIdAndStartDayGreaterThanAndEndDayLessThan(roomId, startDate, endDate);
+			
+		List<PersonalSchedule> allScheduleList = new ArrayList<>();
+		
+		for(Holiday holiday : holidayByRoomList) {
+			
+			PersonalSchedule allSchedule = PersonalSchedule.builder()
+										   .title(user.getName())
+										   .start(holiday.getStartDay())
+										   .end(holiday.getEndDay())
+										   .holidayId(holiday.getId())
+										   .userId(userId)
+										   .build();
+			
+			allScheduleList.add(allSchedule);										   
+		}
+		return allScheduleList;
 	}
 	
 	//삭제 -1/2

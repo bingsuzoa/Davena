@@ -35,12 +35,15 @@
      		 		events : function(info, successCallback) {
      		 			let startDate = moment(info.start).format("YYYY-MM-DD hh:mm")
      		 			let endDate = moment(info.end).format("YYYY-MM-DD hh:mm")
+     		 			console.log(info)
+     		 			console.log(endDate)
      		 			
      		 			$.ajax({
      		 				type:"post"
      		 				,url : "/holiday/detail/all"
      		 				,data :{"startDate" : startDate, "endDate" : endDate}
      		 				,success : function(data) {
+     		 					alert("성공")
      		 					successCallback(data);
      		 				}
      		 			})
