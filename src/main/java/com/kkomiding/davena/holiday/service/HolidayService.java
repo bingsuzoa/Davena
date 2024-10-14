@@ -1,6 +1,9 @@
 package com.kkomiding.davena.holiday.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +15,8 @@ import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class HolidayService {
@@ -30,13 +35,17 @@ public class HolidayService {
 		
 		int roomId = userService.getUser(userId).getRoomId();
 		
+		int month = startDay.getMonthValue();
+		
+		
+		
 		Holiday holiday = Holiday.builder()
 						 .userId(userId)
 						 .roomId(roomId)
 						 .startDay(startDay)
 						 .endDay(endDay)
 						 .dateCount(1)
-						 .month(1)
+						 .month(month)
 						 .type(type)
 						 .comment(comment)
 						 .build();
@@ -63,7 +72,7 @@ public class HolidayService {
 		for(Holiday holiday : holidayByUserList) {
 					
 			PersonalSchedule personalSchedule = PersonalSchedule.builder()
-												.title(holiday.getType())
+												.title(holiday.getComment())
 												.start(holiday.getStartDay())
 												.end(holiday.getEndDay())
 												.holidayId(holiday.getId())
@@ -125,5 +134,26 @@ public class HolidayService {
 	
 	public List<Holiday> findByRoomId(int roomId) {
 		return holidayRepository.findByRoomId(roomId);
+	}
+	
+	
+	//내 연가 조회하기
+	public int selectHolidayCount(int userId) {
+		
+		//이번년도로 시작하는것만 조회
+		LocalDateTime currentTime = LocalDateTime.now();
+		int year = currentTime.getYear();
+		String first = year + "-01-01 00:00";
+		String last = year + "-12-31 23:59";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime thisFirstYear = LocalDateTime.parse(first, formatter);
+		LocalDateTime thisLastYear = LocalDateTime.parse(last, formatter);
+		
+		int count = holidayRepository.countByUserIdAndTypeAndStartDayGreaterThanAndEndDayLessThan(userId
+																					 			,"연가"
+																					 			,thisFirstYear
+																					 			,thisLastYear);
+		return count;
+		
 	}
 }

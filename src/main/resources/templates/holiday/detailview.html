@@ -16,6 +16,9 @@
 					<th:block th:replace="~{fragments/navbar :: .low-navbar}"></th:block>
 				</div>
 			</nav>	
+			
+			<th:block th:replace="~{fragments/calendar :: .calendar-colorInfo-detailview}"></th:block>
+			
 			<div class="calendar-detailview">
 				<div id="calendar"></div>
 			</div>
@@ -37,6 +40,7 @@
 	      			,initialView: 'dayGridMonth'
 	      			,locale : 'ko'
 	      			,selectable : false
+	      			,displayEventTime: false
 	      			,droppable : true
 	      			,headerToolbar: {
 	         	 		start:'title'
@@ -60,7 +64,19 @@
 	    	    					}	
 	    	    				})
 	    				}
+	    				,textColor : 'black'
 	    			}]
+	    			,eventDidMount : function(info) {
+	     		 		var offColor = '#DCEBFF';
+	     		 		var holidayColor = '#FFF56E';
+	     		 		if(info.event.extendedProps.type == '오프') {
+	     		 			info.el.style.backgroundColor = offColor;
+	     		 			info.el.style.borderColor = offColor;
+	     		 		} else if(info.event.extendedProps.type == '연가'){
+	     		 			info.el.style.backgroundColor = holidayColor;
+	     		 			info.el.style.borderColor = holidayColor;
+	     		 		}
+	     		 	}
 	     			,dayCellContent:function(e){
 	      				return e.dayNumberText.replace('일',''); 
 	      			}

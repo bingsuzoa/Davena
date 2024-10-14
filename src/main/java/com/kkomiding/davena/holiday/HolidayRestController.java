@@ -1,6 +1,7 @@
 package com.kkomiding.davena.holiday;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,5 +97,15 @@ public class HolidayRestController {
 			resultMap.put("result", "fail");
 		}
 		return resultMap;		
+	}
+	
+	//userId, 이번년도, type파라미터
+	@PostMapping("/count")
+	public int getHolidayCount(HttpSession session) {
+			
+		int userId = (Integer)session.getAttribute("userId");
+		int count = holidayService.selectHolidayCount(userId);
+		
+		return count;
 	}
 }

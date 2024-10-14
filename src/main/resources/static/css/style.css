@@ -571,6 +571,12 @@ a {
 	color:#1478CD;
 	font-size : 18px;
 }
+
+.calendar-colorInfo-detailview{
+	display : flex;
+	align-items : end;
+	margin-bottom : 28px;
+}
 /******leader/login.htmll******/
 
 #makeRoomBtn {
