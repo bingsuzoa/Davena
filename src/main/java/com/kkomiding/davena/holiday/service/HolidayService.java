@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -138,7 +139,7 @@ public class HolidayService {
 	
 	
 	//내 연가 조회하기
-	public int selectHolidayCount(int userId) {
+	public long selectHolidayCount(int userId) {
 		
 		//이번년도로 시작하는것만 조회
 		LocalDateTime currentTime = LocalDateTime.now();
@@ -153,7 +154,24 @@ public class HolidayService {
 																					 			,"연가"
 																					 			,thisFirstYear
 																					 			,thisLastYear);
-		return count;
+		
+		long dateCount = 0;
+		
+		List<Holiday> holidayList = holidayRepository.findByUserIdAndTypeAndStartDayGreaterThanAndEndDayLessThan(userId
+																					 							,"연가"
+																					 							,thisFirstYear
+																					 							,thisLastYear);
+		for(Holiday holiday : holidayList) {
+			LocalDateTime startDay = holiday.getStartDay();
+			LocalDateTime endDay = holiday.getEndDay();
+			LocalDate startDate = startDay.toLocalDate();
+			LocalDate endDate = endDay.toLocalDate();
+			
+			dateCount += startDate.until(endDate, ChronoUnit.DAYS);
+			
+		}
+		
+		return dateCount;
 		
 	}
 }

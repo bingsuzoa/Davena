@@ -40,7 +40,7 @@ public class HolidayController {
 							,Model model) {
 		
 		int userId = (Integer)session.getAttribute("userId");
-		int count = holidayService.selectHolidayCount(userId);
+		long count = holidayService.selectHolidayCount(userId);
 		
 		model.addAttribute("count", count);
 		
