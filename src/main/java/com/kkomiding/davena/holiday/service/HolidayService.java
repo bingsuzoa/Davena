@@ -2,12 +2,13 @@ package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,6 @@ import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class HolidayService {
@@ -138,7 +137,7 @@ public class HolidayService {
 	}
 	
 	
-	//내 연가 조회하기
+	//내가 1년동안 사용한 연가 수 조회하기
 	public long selectHolidayCount(int userId) {
 		
 		//이번년도로 시작하는것만 조회
@@ -149,11 +148,6 @@ public class HolidayService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		LocalDateTime thisFirstYear = LocalDateTime.parse(first, formatter);
 		LocalDateTime thisLastYear = LocalDateTime.parse(last, formatter);
-		
-		int count = holidayRepository.countByUserIdAndTypeAndStartDayGreaterThanAndEndDayLessThan(userId
-																					 			,"연가"
-																					 			,thisFirstYear
-																					 			,thisLastYear);
 		
 		long dateCount = 0;
 		
@@ -167,11 +161,49 @@ public class HolidayService {
 			LocalDate startDate = startDay.toLocalDate();
 			LocalDate endDate = endDay.toLocalDate();
 			
-			dateCount += startDate.until(endDate, ChronoUnit.DAYS);
+			dateCount += startDate.until(endDate, ChronoUnit.DAYS);			
+		}
+		return dateCount;		
+	}
+	
+	//휴가 신청한 사람들 카운트
+	public int selectThisMonth(int userId) {
+		
+		//현재 무슨 월 
+		LocalDateTime currentTime = LocalDateTime.now();
+		String month = currentTime.getMonth().toString();
+		int thisMonth = Integer.parseInt(month);
+		
+		//user의 방id
+		int roomId = userService.getUser(userId).getRoomId();
+		
+		//신청한 사람들의 userId가 적혀있는 set, List
+		Set<Integer> userIdSet = new HashSet<>();
+		List<Integer> userIdList = new ArrayList<>();
+		
+		//방사람들의 이번달 신청현황
+		List<Holiday> thisMonthHolidayList = holidayRepository.findByRoomIdAndMonth(roomId, thisMonth);
+		for(Holiday holiday : thisMonthHolidayList) {
 			
+			userIdSet.add(holiday.getUserId());
 		}
 		
-		return dateCount;
+		for(int i : userIdSet) {
+			userIdList.add(i);
+		}
+		
+		//전체 userList
+		List<Integer> allUserIdList = new ArrayList<>();
+		
+		//방이 같은 사람들의 모든 리스트 조회하기
+		List<User> userListByRoomId = userService.getUserListByRoomId(roomId);
+		
+		for(User user : userListByRoomId) {
+			allUserIdList.add(user.getId());
+		}
+		
+		
+		return userIdList.size();
 		
 	}
 }

@@ -170,5 +170,9 @@ public class UserService {
 		
 		return userRepository.save(user);
 	}
+	
+	public List<User> getUserListByRoomId(int roomId) {
+		return userRepository.findByRoomId(roomId);
+	}
 
 }
