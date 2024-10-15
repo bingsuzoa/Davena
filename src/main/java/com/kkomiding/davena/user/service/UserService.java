@@ -172,7 +172,7 @@ public class UserService {
 	}
 	
 	public List<User> getUserListByRoomId(int roomId) {
-		return userRepository.findByRoomId(roomId);
+		return userRepository.findByRoomIdAndApprove(roomId, "승인");
 	}
 
 }

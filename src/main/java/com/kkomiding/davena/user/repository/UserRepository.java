@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	//User list가져오기
 	public List<User> findByRoomNameAndRoomPasswordAndApproveAndPosition(String roomName, String roomPassword, String approve, String position);
 	
-	public List<User> findByRoomId(int roomId);
+	public List<User> findByRoomIdAndApprove(int roomId, String approve);
 	
 	
 
