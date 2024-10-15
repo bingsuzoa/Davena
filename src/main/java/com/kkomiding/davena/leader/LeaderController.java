@@ -47,13 +47,13 @@ public class LeaderController {
 		String position = userService.getUser(userId).getPosition();
 		List<User> userListByApprove =userService.useRoomInfo(userId);
 
-		Map<String, Integer> resultMap = holidayService.selectThisMonth(userId);
+		Map<String, Object> resultMap = holidayService.selectThisMonth(userId);
 		
 		
-		model.addAttribute("notApproveUserList" , userListByApprove);
 		model.addAttribute("position", position);
 		model.addAttribute("allCount", resultMap.get("allCount"));
 		model.addAttribute("applyCount", resultMap.get("applyCount"));
+		model.addAttribute("notApplyUserIdList" , resultMap.get("notApplyUserIdList"));
 		
 		return "leader/alldetail";
 	}

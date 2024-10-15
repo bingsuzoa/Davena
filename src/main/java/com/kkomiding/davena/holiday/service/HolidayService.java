@@ -170,7 +170,7 @@ public class HolidayService {
 	}
 	
 	//휴가 신청한 사람들 카운트
-	public Map<String, Integer> selectThisMonth(int userId) {
+	public Map<String, Object> selectThisMonth(int userId) {
 		
 		//현재 무슨 월 
 		LocalDateTime currentTime = LocalDateTime.now();
@@ -206,10 +206,21 @@ public class HolidayService {
 			allUserIdList.add(user.getId());
 		}
 		
+		//신청안한사람 현황 조회하기
+		List<String> notApplyUserIdList = new ArrayList<>();
+		for(int i = 0; i < allUserIdList.size(); i++) {
+			if(!userIdList.contains(allUserIdList.get(i))){
+				int notApplyId = allUserIdList.get(i);
+				String name = userService.getUser(notApplyId).getName();
+				notApplyUserIdList.add(name);
+			}
+		}
 		
-		Map<String, Integer> resultMap = new HashMap<>();
+		
+		Map<String, Object> resultMap = new HashMap<>();
 			resultMap.put("allCount", allUserIdList.size());
 			resultMap.put("applyCount", userIdList.size());
+			resultMap.put("notApplyUserIdList", notApplyUserIdList);
 			
 		return resultMap;
 	}

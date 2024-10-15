@@ -670,9 +670,13 @@ a {
 	width : 350px;
 	color : #505050;
 }
-#unComplete-name {
+.unComplete-name-div {
 	margin-top : 20px;
 	color : #000000;	
+	display : flex;
+}
+.unComplete-name {
+	margin-right : 10px;
 }
 
 /******* modal 시작 **********/
