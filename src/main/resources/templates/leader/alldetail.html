@@ -24,6 +24,7 @@
 				<div id="request-detail-board">
 					<div id="request-detail-board-content">	
 						<div th:text="|간호사 총 팀원 : ${allCount}명|"></div>
+						<th:black id="allCount" th:value ="${applyCount}"></th:black>
 						<hr>
 						<div th:text="|미완료 : ${allCount-applyCount}명|"></div>
 						<div id="unComplete-name">권미경 박수현 이은희 사과 메론</div>
@@ -59,6 +60,8 @@
 	    google.charts.setOnLoadCallback(drawCharts);
 	    
 	    function drawCharts() {
+	    	var count = $("#allCount").val();
+	    	console.log(count);
 		    var data = google.visualization.arrayToDataTable([
 		        ['직군', '완료'],
 		        ['', 8]
