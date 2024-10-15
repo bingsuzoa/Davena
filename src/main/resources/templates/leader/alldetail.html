@@ -23,9 +23,9 @@
 				<p class="request-status-p">리퀘스트 세부내용</p>
 				<div id="request-detail-board">
 					<div id="request-detail-board-content">	
-						<div>간호사 총 팀원 : 13명</div>
+						<div th:text="|간호사 총 팀원 : ${allCount}명|"></div>
 						<hr>
-						<div>미완료 :5명</div>
+						<div th:text="|미완료 : ${allCount-applyCount}명|"></div>
 						<div id="unComplete-name">권미경 박수현 이은희 사과 메론</div>
 						</div>
 					</div>

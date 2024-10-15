@@ -2,11 +2,14 @@ package com.kkomiding.davena.holiday.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -167,12 +170,13 @@ public class HolidayService {
 	}
 	
 	//휴가 신청한 사람들 카운트
-	public int selectThisMonth(int userId) {
+	public Map<String, Integer> selectThisMonth(int userId) {
 		
 		//현재 무슨 월 
 		LocalDateTime currentTime = LocalDateTime.now();
-		String month = currentTime.getMonth().toString();
-		int thisMonth = Integer.parseInt(month);
+		Month month = currentTime.getMonth();
+		int monthValue = month.getValue();
+
 		
 		//user의 방id
 		int roomId = userService.getUser(userId).getRoomId();
@@ -182,7 +186,7 @@ public class HolidayService {
 		List<Integer> userIdList = new ArrayList<>();
 		
 		//방사람들의 이번달 신청현황
-		List<Holiday> thisMonthHolidayList = holidayRepository.findByRoomIdAndMonth(roomId, thisMonth);
+		List<Holiday> thisMonthHolidayList = holidayRepository.findByRoomIdAndMonth(roomId, monthValue);
 		for(Holiday holiday : thisMonthHolidayList) {
 			
 			userIdSet.add(holiday.getUserId());
@@ -203,7 +207,10 @@ public class HolidayService {
 		}
 		
 		
-		return userIdList.size();
-		
+		Map<String, Integer> resultMap = new HashMap<>();
+			resultMap.put("allCount", allUserIdList.size());
+			resultMap.put("applyCount", userIdList.size());
+			
+		return resultMap;
 	}
 }
