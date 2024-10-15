@@ -22,9 +22,8 @@
 			<div class="request-status-detail">
 				<p class="request-status-p">리퀘스트 세부내용</p>
 				<div id="request-detail-board">
-					<div id="request-detail-board-content">	
+					<div id="request-detail-board-content" th:data-apply-count="${applyCount}">	
 						<div th:text="|간호사 총 팀원 : ${allCount}명|"></div>
-						<th:black id="allCount" th:value ="${applyCount}"></th:black>
 						<hr>
 						<div th:text="|미완료 : ${allCount-applyCount}명|"></div>
 						<div id="unComplete-name">권미경 박수현 이은희 사과 메론</div>
@@ -59,23 +58,30 @@
 	 	google.charts.load('current', {'packages':['corechart']});
 	    google.charts.setOnLoadCallback(drawCharts);
 	    
+	   
+	    
 	    function drawCharts() {
-	    	var count = $("#allCount").val();
+	    	var count = $("#request-detail-board-content").data("apply-count");
 	    	console.log(count);
-		    var data = google.visualization.arrayToDataTable([
-		        ['직군', '완료'],
-		        ['', 8]
-		      ]);
-	
-		    var view = new google.visualization.DataView(data);
-		      	view.setColumns([0, 1,
-		    	  {
-		    	  calc: "stringify",
-                  sourceColumn: 1,
-                  type: "string",
-                  role: "annotation",
-                  }
-		      ]);	
+		    
+	    	 var data = new google.visualization.DataTable();
+	         data.addColumn('string', '직군');
+	         data.addColumn('number', '명');
+	         
+	         data.addRows([
+	           ['', count]
+	         ]);
+	 
+	    	
+	    	//차트에 데이터 넣기
+	    	var view = new google.visualization.DataView(data);
+	        view.setColumns([0, 1,
+	                         { calc: "stringify",
+	                           sourceColumn: 1,
+	                           type: "string",
+	                           role: "annotation" }
+	        				]);
+	    	
 		    var options = {
 				   legend: 'none',
 				   title: '',
