@@ -171,6 +171,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 	
+	//전체근무자 휴가신청한 사람 카운트하기위해 '승인'여부 확인필요
 	public List<User> getUserListByRoomId(int roomId) {
 		return userRepository.findByRoomIdAndApprove(roomId, "승인");
 	}

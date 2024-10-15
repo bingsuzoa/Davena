@@ -44,13 +44,17 @@ public class LeaderController {
 						   ,HttpSession session) {
 		
 		int userId =(Integer)session.getAttribute("userId");
+		
+		//여기는 회원가입 승인을 위한 코드입니다.
 		String position = userService.getUser(userId).getPosition();
-		List<User> userListByApprove =userService.useRoomInfo(userId);
+		List<User> notApproveUserList =userService.useRoomInfo(userId);
 
-		Map<String, Object> resultMap = holidayService.selectThisMonth(userId);
-		
-		
 		model.addAttribute("position", position);
+		model.addAttribute("notApproveUserList", notApproveUserList);
+		
+		//여기는 휴가 신청을 안한 명단을 찾기위한 코드입니다.
+		Map<String, Object> resultMap = holidayService.selectThisMonth(userId);
+			
 		model.addAttribute("allCount", resultMap.get("allCount"));
 		model.addAttribute("applyCount", resultMap.get("applyCount"));
 		model.addAttribute("notApplyUserIdList" , resultMap.get("notApplyUserIdList"));
