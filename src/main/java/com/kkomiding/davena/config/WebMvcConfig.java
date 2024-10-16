@@ -1,5 +1,6 @@
 package com.kkomiding.davena.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,11 +21,15 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		PermissionInterceptor interceptor = new PermissionInterceptor();
 		
-		registry.addInterceptor(interceptor)
+		registry.addInterceptor(permissionInterceptor())
 				.addPathPatterns("/**")
 				.excludePathPatterns("/static/**", "/user/logout", "/images/**");
+	}
+	
+	@Bean
+	public PermissionInterceptor permissionInterceptor() {
+		return new PermissionInterceptor();
 	}
 
 }

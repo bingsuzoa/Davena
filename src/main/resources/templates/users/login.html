@@ -8,21 +8,26 @@
 	</header>
 	
 	<section layout:fragment="content" class="mt-3">
-		<div class="idInputDiv">
-			<input type="text" class="idInput form-control" id="idInput" placeholder="아이디">
-		</div>
-		<div class="pwInputDiv">
-			<input type="password" class="pwInput form-control" id="pwInput" placeholder="비밀번호">
-		</div>
-		<div class="loginBtnDiv">
-			<div id="joinBtn"><a href="/user/join-view">회원가입</a></div>
-			<div id="loginBtn">로그인</div>
-		</div>
+		<form id="loginForm">
+			<div class="idInputDiv">
+				<input type="text" class="idInput form-control" id="idInput" placeholder="아이디">
+			</div>
+			<div class="pwInputDiv">
+				<input type="password" class="pwInput form-control" id="pwInput" placeholder="비밀번호">
+			</div>
+			<div class="loginBtnDiv">
+				<div id="joinBtn"><a href="/user/join-view">회원가입</a></div>
+				<button id="loginBtn" type="submit">로그인</button>
+			</div>
+		</form>
 	</section>
 	
 	
 	<script layout:fragment="script">
-		$("#loginBtn").on('click',function(){
+	$(document).ready(function(){	
+		$("#loginForm").on("submit", function(e){
+			e.preventDefault();
+
 			let id = $("#idInput").val();
 			let password = $("#pwInput").val();
 			
@@ -41,12 +46,16 @@
 				,data:{"idInput" : id, "pwInput" : password}
 				,success:function(data){
 					if(data.position == "leader") {
+						position = data.position;
 						location.href="/leader/login-view";
 					}
 					else if(data.position == "member") {
+						position = data.position;
 						if(data.isApprove == "notApprove") {
+							approve = data.isApprove;
 							location.href="/member/before-apply-view";
 						} else {
+							approve = data.isApprove;
 							location.href="/member/after-apply-view";
 						}
 					}
@@ -55,6 +64,7 @@
 				}
 			})
 		})
+	})	
 	</script>
 	
 </html>
