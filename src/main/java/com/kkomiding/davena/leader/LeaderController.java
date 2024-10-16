@@ -28,13 +28,23 @@ public class LeaderController {
 	}
 	
 	@GetMapping("/login-view")
-	public String login() {
+	public String login(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
 		
 		return "leader/login";
 	}
 	
 	@GetMapping("/make-view")
-	public String makeRoom() {
+	public String makeRoom(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
 		
 		return "leader/make";
 	}
@@ -69,7 +79,12 @@ public class LeaderController {
 	}
 	
 	@GetMapping("/work-set-view")
-	public String workySetView() {
+	public String workySetView(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
 		
 		return "leader/worksetview";
 	}

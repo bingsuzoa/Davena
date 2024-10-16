@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kkomiding.davena.holiday.service.HolidayService;
+import com.kkomiding.davena.user.domain.User;
+import com.kkomiding.davena.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -16,13 +18,21 @@ import jakarta.servlet.http.HttpSession;
 public class HolidayController {
 	
 	private HolidayService holidayService;
+	private UserService userService;
 	
-	public HolidayController(HolidayService holidayService) {
+	public HolidayController(HolidayService holidayService
+							,UserService userService) {
 		this.holidayService = holidayService;
+		this.userService = userService;
 	}
 		
 	@GetMapping("/before-apply-view")
-	public String beforeapply() {
+	public String beforeapply(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
 		
 		return "holiday/beforeapply";
 	}
@@ -39,20 +49,31 @@ public class HolidayController {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		long count = holidayService.selectHolidayCount(userId);
+		User user = userService.getUser(userId);
 		
+		model.addAttribute("user",user);	
 		model.addAttribute("count", count);
 		
 		return "holiday/detailview";
 	}
 	
 	@GetMapping("/member-detail-view")
-	public String memberDetailView() {
+	public String memberDetailView(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
+		
 		
 		return "leader/memberdetail";
 	}
 	
 	@GetMapping("/calendar-view")
-	public String calendarView() {
+	public String calendarView(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
 		
 		return "leader/calendarview";
 	}

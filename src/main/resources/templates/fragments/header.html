@@ -4,11 +4,10 @@
 	
 	<header class="miniheader">
 		<a href="/member/after-apply-view">Davena</a>
-		<div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto"></div>
+		<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto" th:src="${user.profile}">
 			<div class="dropdown-menu" id="profile-dropdown-menu">
-				<a class="dropdown-item" href="">계정 관리</a>	
-				<a class="dropdown-item" href="">휴가신청내역 조회</a>	
-				<a class="dropdown-item" href="">휴가신청현황 조회</a>	
+				<a class="dropdown-item" th:text="|${user.name}님|">권미경님</a>	
+				<a class="dropdown-item" href="">계정관리</a>	
 				<a class="dropdown-item" href="/user/logout">로그아웃</a>	
 			</div>	
 	</header>
@@ -39,9 +38,10 @@
 	
 	<header class="rightheader">
 		<p>Davena</p>
-		<div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto"></div>
+		<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto" th:src="${user.profile}">
 			<div class="dropdown-menu" id="profile-dropdown-menu">
-				<a class="dropdown-item" href="">계정 관리</a>	
+				<a class="dropdown-item" th:text="|${user.name}님|">권미경님</a>	
+				<a class="dropdown-item" href="">계정관리</a>	
 				<a class="dropdown-item" href="/user/logout">로그아웃</a>	
 			</div>	
 	</header>

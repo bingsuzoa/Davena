@@ -56,26 +56,6 @@ public class UserRestController {
 		return resultMap;
 	}
 	
-//	@PostMapping("/join/update")
-//	public Map<String, String> update(@RequestParam("roomName") String roomName
-//									 ,@RequestParam("roomPassword") String roomPassword
-//									 ,HttpSession session){
-//		
-//		int userId = (Integer)session.getAttribute("userId");
-//		
-//		User user = userService.updateUser(userId, roomName, roomPassword);
-//		
-//		Map<String, String> resultMap = new HashMap<>();
-//		
-//		if(user != null) {
-//			resultMap.put("result", "success");
-//		} else {
-//			resultMap.put("result", "fail");
-//		}
-//		return resultMap;		
-//	}
-	
-	
 	//Id 중복확인
 	@GetMapping("/duplicate-id")
 	public Map<String, Boolean> selectLoginId(@RequestParam("join-idInput") String loginId) {
