@@ -74,16 +74,5 @@ public class LeaderController {
 		return "leader/worksetview";
 	}
 	
-	@GetMapping("/member-detail-view")
-	public String memberDetailView() {
-		
-		return "leader/memberdetail";
-	}
-	
-	@GetMapping("/calendar-view")
-	public String calendarView() {
-		
-		return "leader/calendarview";
-	}
 
 }

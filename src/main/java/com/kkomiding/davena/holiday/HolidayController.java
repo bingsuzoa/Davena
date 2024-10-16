@@ -11,7 +11,6 @@ import com.kkomiding.davena.holiday.service.HolidayService;
 import jakarta.servlet.http.HttpSession;
 
 
-
 @Controller
 @RequestMapping("/holiday")
 public class HolidayController {
@@ -21,8 +20,7 @@ public class HolidayController {
 	public HolidayController(HolidayService holidayService) {
 		this.holidayService = holidayService;
 	}
-	
-	
+		
 	@GetMapping("/before-apply-view")
 	public String beforeapply() {
 		
@@ -45,5 +43,17 @@ public class HolidayController {
 		model.addAttribute("count", count);
 		
 		return "holiday/detailview";
+	}
+	
+	@GetMapping("/member-detail-view")
+	public String memberDetailView() {
+		
+		return "leader/memberdetail";
+	}
+	
+	@GetMapping("/calendar-view")
+	public String calendarView() {
+		
+		return "leader/calendarview";
 	}
 }

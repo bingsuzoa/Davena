@@ -2,41 +2,27 @@ package com.kkomiding.davena.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 	
-	
-	@GetMapping("/login-view")
+	//공통
+	@GetMapping("/user/login-view")
 	public String login() {
 		
 		return "users/login";
 	}
 	
-	@GetMapping("/before-apply-view")
-	public String afterjoin() {
-		
-		return "users/beforeapply";
-	}
-	
-	@GetMapping("/after-apply-view")
-	public String afterlogin() {
-		
-		return "users/afterapply";
-	}
-	
-	@GetMapping("/join-view")
+	@GetMapping("/user/join-view")
 	public String join() {
 		
 		return "users/join";
 	}
-	
-	@GetMapping("/logout")
+		
+	@GetMapping("/user/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("userId");
@@ -45,6 +31,18 @@ public class UserController {
 		return "redirect:/user/login-view";
 	}
 	
+	//팀원만 들어갈 수 있는 페이지
+	@GetMapping("/member/before-apply-view")
+	public String afterjoin() {
+		
+		return "users/beforeapply";
+	}
+	
+	@GetMapping("/member/after-apply-view")
+	public String afterlogin() {
+		
+		return "users/afterapply";
+	}
 	
 
 }
