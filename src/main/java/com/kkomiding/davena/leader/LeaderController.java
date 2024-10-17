@@ -54,6 +54,7 @@ public class LeaderController {
 						   ,HttpSession session) {
 		
 		int userId =(Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
 		
 		//여기는 회원가입 승인을 위한 코드입니다.
 		String position = userService.getUser(userId).getPosition();
@@ -61,6 +62,7 @@ public class LeaderController {
 
 		model.addAttribute("position", position);
 		model.addAttribute("notApproveUserList", notApproveUserList);
+		model.addAttribute("user",user);
 		
 		//여기는 휴가 신청을 안한 명단을 찾기위한 코드입니다.
 		Map<String, Object> resultMap = holidayService.selectThisMonth(userId);

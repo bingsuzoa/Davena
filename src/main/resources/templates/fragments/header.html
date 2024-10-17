@@ -4,12 +4,17 @@
 	
 	<header class="miniheader">
 		<a href="/member/after-apply-view">Davena</a>
-		<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto" th:src="${user.profile}">
+		<th:block th:if="${user.profile != null}">
+			<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto" th:src="${user.profile}">
+		</th:block>
+		<th:block th:if="${user.profile == null}">
+			<div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto"></div>
+		</th:block>
 			<div class="dropdown-menu" id="profile-dropdown-menu">
 				<a class="dropdown-item" th:text="|${user.name}님|">권미경님</a>	
 				<a class="dropdown-item" href="">계정관리</a>	
 				<a class="dropdown-item" href="/user/logout">로그아웃</a>	
-			</div>	
+			</div>
 	</header>
 	
 	<header class="header-synthesis">
@@ -38,7 +43,12 @@
 	
 	<header class="rightheader">
 		<p>Davena</p>
-		<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto" th:src="${user.profile}">
+		<th:block th:if="${user.profile != null}">
+			<img data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto" th:src="${user.profile}">
+		</th:block>
+		<th:block th:if="${user.profile == null}">
+			<div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="profilePhoto"></div>
+		</th:block>
 			<div class="dropdown-menu" id="profile-dropdown-menu">
 				<a class="dropdown-item" th:text="|${user.name}님|">권미경님</a>	
 				<a class="dropdown-item" href="">계정관리</a>	
