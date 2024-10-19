@@ -8,38 +8,32 @@
 	</header>
 	
 	<section layout:fragment="content" class="d-flex justify-content-center">
-	<form action="/auth/joinProc" method="post" modelAttribute="userDto">
+	<form action="/auth/joinProc" method="post" th:object="${userDto}">
 		<div class="join-content mt-4">
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" name="loginId" placeholder="아이디 입력">
-				<span th:text="${valid_loginId}"></span>
+				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" name ="join-idInput" th:field="*{loginId}"placeholder="아이디 입력">
 				<div class="profile-btn col-5" id="check-duplicateBtn">중복확인</div>
 			</div>
-
-			<div class="d-none" id="duplicateText">이미 사용중인 ID입니다. 변경해주세요.</div>
+			<p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></p>
 			<div class="d-none" id="availableText">사용가능한 ID입니다.</div>
-			
+			<div class="d-none" id="duplicateText">사용가능한 ID입니다.</div>
 			
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-PwInput" name="password" placeholder="비밀번호 입력">
-				<span th:text="${valid_password}"></span>
+				<input type="password" class="join-roomInfo form-control" id="join-PwInput" name ="join-PwInput" th:field="*{password}" placeholder="비밀번호 입력">
 			</div>
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-checkPwInput" name="passwordCheck" placeholder="비밀번호 확인">
-				<span th:text="${valid_passwordCheck}"></span>
+				<input type="password" class="join-roomInfo form-control" id="join-checkPwInput" name="join-checkPwInput" th:field="*{passwordCheck}" placeholder="비밀번호 확인">
 			</div>
 
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-6" id="join-userName" name="name" placeholder="이름">
-				<span th:text="${valid_name}"></span>
+				<input type="text" class="join-roomInfo form-control col-6" id="join-userName" name="join-userName" th:field="*{name}"  placeholder="이름">
 				<label for="imgFile" class="profile-btn col-6 p-0">프로필 사진 선택</label>
 				
 				<input type="file" id="imgFile" name="profile" style="display:none">
 			</div>
 			<div class="joinDiv">
 				<div>
-					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택" name="position" value="">
-					<span th:text="${valid_position}"></span>
+					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택"  th:field="*{position}" value="">
 		  			<div class="dropdown-menu">
 		    			<a class="dropdown-item" href="#" value="join-team-leader">팀장</a>
 		    			<a class="dropdown-item" href="#" value="join-team-member">팀원</a>
@@ -48,12 +42,10 @@
 			</div>
 			<div class="joinDiv-room d-none">
 				<div class="joinDiv">
-					<input type="text" class="join-roomInfo form-control" id="join-roomName" name="roomName" placeholder="방 이름">
-					<span th:text="${valid_roomName}"></span>
+					<input type="text" class="join-roomInfo form-control" id="join-roomName" name="join-roomName" th:field="*{roomName}" placeholder="방 이름">
 				</div>
 				<div class="joinDiv">
-					<input type="password" class="join-roomInfo form-control" id="join-roomPw" name="roompassword" placeholder="방 비밀번호🔑">
-					<span th:text="${valid_roomPassword}"></span>
+					<input type="password" class="join-roomInfo form-control" id="join-roomPw" name="join-roomPw" th:field="*{roomPassword}" placeholder="방 비밀번호🔑">
 				</div>
 			</div>
 			<div class="joinDiv d-flex justify-content-end">

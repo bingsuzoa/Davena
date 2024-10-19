@@ -43,5 +43,7 @@ public class UserDto {
 	
 	@PositiveOrZero(message = "방 비밀번호는 숫자만 가능합니다.")
 	private String roomPassword;
+	
+
 
 }

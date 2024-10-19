@@ -1,11 +1,15 @@
 package com.kkomiding.davena.user.service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kkomiding.davena.common.hash.FileManager;
@@ -15,8 +19,6 @@ import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.domain.UserDto;
 import com.kkomiding.davena.user.repository.UserRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -33,15 +35,19 @@ public class UserService {
 		this.roomRepository = roomRepository;
 	}
 	
-	//아이디 중복여부 확인
-	@Transactional
-	public boolean checkLoginIdDuplication(String lognId) {
-		boolean loginIdDuplicate = userRepository.existByLoginId(lognId);
-		return loginIdDuplicate;
-	}
 	
+	//회원가입 유효성 검증
+//	@Transactional(readOnly=true)
+//	public Map<String, String> validateHandling(Errors errors) {
+//		Map<String, String> validatorResult = new HashMap<>();
+//		
+//		for(FieldError error : errors.getFieldErrors()) {
+//			String validKeyName = String.format("valid_%s", error.getField());
+//			validatorResult.put(validKeyName, error.getDefaultMessage());
+//		}
+//		return validatorResult;
+//	}
 	
-	//회원가입
 	public User userJoin(UserDto userDto) throws Exception {
 		
 		String loginId = userDto.getLoginId();
@@ -93,9 +99,11 @@ public class UserService {
 					.build();
 		return userRepository.save(user);
 		}
+		
 	}
+
 	
-	//회원가입, insert
+//	//회원가입, insert
 //	public User addUser(String loginId,String password ,String name
 //					  ,String position
 //					  ,MultipartFile profile
@@ -143,8 +151,6 @@ public class UserService {
 //		}
 //		
 //	}
-	
-	
 	
 	//팀장 방만들면 user객체 update수정
 	public User updateUser(int userId, int roomId) {

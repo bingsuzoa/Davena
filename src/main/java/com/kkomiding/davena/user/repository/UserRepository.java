@@ -22,9 +22,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	public List<User> findByRoomIdAndApprove(int roomId, String approve);
 	
-	boolean existByLoginId(String loginId);
-	
-	
-
-
 }
