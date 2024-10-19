@@ -36,13 +36,13 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		} else {
 			String position = userService.getUser(userId).getPosition();
 			if(position.equals("팀원")) {
-				if(uri.startsWith("/leader") || uri.startsWith("/user")) {
+				if(uri.startsWith("/leader") || uri.equals("/user/login-view")) {
 					response.sendRedirect("/member/after-apply-view");
 					return false;
 				}
 			}
 			else if(position.equals("팀장")) {
-				if(uri.startsWith("/member") || uri.startsWith("/user")) {
+				if(uri.startsWith("/member") || uri.equals("/user/login-view")) {
 					response.sendRedirect("/leader/login-view");
 					return false;
 				}

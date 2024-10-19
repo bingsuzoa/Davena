@@ -13,7 +13,10 @@ import com.kkomiding.davena.common.hash.SaltwithSHAHasingEncoder;
 import com.kkomiding.davena.room.domain.Room;
 import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
+import com.kkomiding.davena.user.domain.UserDto;
 import com.kkomiding.davena.user.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -30,12 +33,25 @@ public class UserService {
 		this.roomRepository = roomRepository;
 	}
 	
+	//아이디 중복여부 확인
+	@Transactional
+	public boolean checkLoginIdDuplication(String lognId) {
+		boolean loginIdDuplicate = userRepository.existByLoginId(lognId);
+		return loginIdDuplicate;
+	}
 	
-	//회원가입, insert
-	public User addUser(String loginId,String password ,String name
-					  ,String position
-					  ,MultipartFile profile
-					  ,String roomName ,String roomPassword) throws Exception {
+	
+	//회원가입
+	public User userJoin(UserDto userDto) throws Exception {
+		
+		String loginId = userDto.getLoginId();
+		MultipartFile profile = userDto.getProfile();
+		String password = userDto.getPasswordCheck();
+		String roomName = userDto.getRoomName();
+		String roomPassword = userDto.getRoomPassword();
+		String position = userDto.getPosition();
+		String name = userDto.getName();
+		
 		//프로필 사진
 		String urlPath = FileManager.saveFile(loginId, profile);
 		
@@ -47,7 +63,7 @@ public class UserService {
 		//roomId찾기
 		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
 		Room room = optionalRoom.orElse(null);
-				
+		
 		if(position.equals("팀원")) {
 			User user = User.builder()
 						.loginId(loginId)
@@ -77,8 +93,58 @@ public class UserService {
 					.build();
 		return userRepository.save(user);
 		}
-		
 	}
+	
+	//회원가입, insert
+//	public User addUser(String loginId,String password ,String name
+//					  ,String position
+//					  ,MultipartFile profile
+//					  ,String roomName ,String roomPassword) throws Exception {
+//		//프로필 사진
+//		String urlPath = FileManager.saveFile(loginId, profile);
+//		
+//		//Hashing
+//		Map<String,String> saltAndPw = salting.setSaltPw(loginId, password);
+//		String salt = saltAndPw.get("salt");
+//		String encryptpassword = saltAndPw.get("saltedPassword");
+//		
+//		//roomId찾기
+//		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
+//		Room room = optionalRoom.orElse(null);
+//				
+//		if(position.equals("팀원")) {
+//			User user = User.builder()
+//						.loginId(loginId)
+//						.password(encryptpassword)
+//						.salt(salt)
+//						.name(name)
+//						.profile(urlPath)
+//						.position(position)
+//						.roomId(room.getId())
+//						.roomName(roomName)
+//						.roomPassword(roomPassword)
+//						.approve("미승인")
+//						.build();
+//			return userRepository.save(user);					
+//		} else {
+//			User user = User.builder()
+//					.loginId(loginId)
+//					.password(encryptpassword)
+//					.salt(salt)
+//					.name(name)
+//					.profile(urlPath)
+//					.position(position)
+//					.roomId(0)
+//					.roomName(roomName)
+//					.roomPassword(roomPassword)
+//					.approve("승인")
+//					.build();
+//		return userRepository.save(user);
+//		}
+//		
+//	}
+	
+	
 	
 	//팀장 방만들면 user객체 update수정
 	public User updateUser(int userId, int roomId) {
@@ -176,4 +242,5 @@ public class UserService {
 		return userRepository.findByRoomIdAndApprove(roomId, "승인");
 	}
 
+	
 }

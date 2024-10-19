@@ -1,23 +1,24 @@
 package com.kkomiding.davena.user;
 
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/user")
 @RestController
 public class UserRestController {
@@ -29,32 +30,33 @@ public class UserRestController {
 	}
 	
 	//회원가입
-	@PostMapping("/join")
-	public Map<String, String> join(
-									 @RequestParam("join-idInput") String loginId
-									,@RequestParam("join-checkPwInput") String password
-									,@RequestParam("join-userName") String name
-									,@RequestParam("position") String position
-									,@RequestParam(value="profile", required = false) MultipartFile profile
-									,@RequestParam("join-roomName") String roomName
-									,@RequestParam("join-roomPw") String roomPassword) throws Exception {
-		
-		
-		User user = userService.addUser(loginId, password, name
-										,position
-										,profile
-										,roomName, roomPassword);
-		
-		Map<String, String> resultMap = new HashMap<>();
-		
-		if(user != null) {
-			resultMap.put("result", "success");
-		} else {
-			resultMap.put("result", "fail");
-		}
-		
-		return resultMap;
-	}
+//	@PostMapping("/join")
+//	public Map<String, String> join(
+//									 @Valid @RequestParam("join-idInput") String loginId
+//									,@Valid @RequestParam("join-checkPwInput") String password
+//									,@Valid @RequestParam("join-userName") String name
+//									,@Valid @RequestParam("position") String position
+//									,@RequestParam(value="profile", required = false) MultipartFile profile
+//									,@RequestParam("join-roomName") String roomName
+//									,@RequestParam("join-roomPw") String roomPassword) throws Exception {
+//		
+//		
+//		User newUser = userService.addUser(loginId, password, name
+//										,position
+//										,profile
+//										,roomName, roomPassword);
+//		
+//		Map<String, String> resultMap = new HashMap<>();
+//		
+//		if(newUser != null) {
+//			resultMap.put("result", "success");
+//		} else {
+//			resultMap.put("result", "fail");
+//		}
+//		
+//		return resultMap;
+//	}
+	
 	
 	//Id 중복확인
 	@GetMapping("/duplicate-id")
@@ -101,6 +103,7 @@ public class UserRestController {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userName", user.getName());
+			session.setAttribute("approve", user.getApprove());
 		}
 		return resultMap;
 	}
@@ -126,10 +129,10 @@ public class UserRestController {
 	@PostMapping("/apply/approve")
 	public Map<String, String> changeApprove(@RequestParam("userId") int userId) {
 		
-		User user = userService.changeApprove(userId);
+		String approve = userService.changeApprove(userId).getApprove();
 		
 		Map<String, String> resultMap = new HashMap<>();
-		if(user.getApprove() == "승인") {
+		if(approve.equals("승인")) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");
@@ -140,15 +143,17 @@ public class UserRestController {
 	@PostMapping("/apply/reject")
 	public Map<String, String> rejectApprove(@RequestParam("userId") int userId) {
 		
-		User user = userService.rejectApprove(userId);
+		String approve = userService.rejectApprove(userId).getApprove();
 		
 		Map<String, String> resultMap = new HashMap<>();
-		if(user.getApprove() == "거부") {
+		if(approve.equals("거부")) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");
 		}
 		return resultMap;
 	}
+	
+	//회원가입 검증과정
 	
 }

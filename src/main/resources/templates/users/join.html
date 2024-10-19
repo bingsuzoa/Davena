@@ -8,27 +8,38 @@
 	</header>
 	
 	<section layout:fragment="content" class="d-flex justify-content-center">
+	<form action="/auth/joinProc" method="post" modelAttribute="userDto">
 		<div class="join-content mt-4">
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" placeholder="아이디 입력">
+				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" name="loginId" placeholder="아이디 입력">
+				<span th:text="${valid_loginId}"></span>
 				<div class="profile-btn col-5" id="check-duplicateBtn">중복확인</div>
 			</div>
+
 			<div class="d-none" id="duplicateText">이미 사용중인 ID입니다. 변경해주세요.</div>
 			<div class="d-none" id="availableText">사용가능한 ID입니다.</div>
+			
+			
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-PwInput" placeholder="비밀번호 입력">
+				<input type="password" class="join-roomInfo form-control" id="join-PwInput" name="password" placeholder="비밀번호 입력">
+				<span th:text="${valid_password}"></span>
 			</div>
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-checkPwInput" placeholder="비밀번호 확인">
+				<input type="password" class="join-roomInfo form-control" id="join-checkPwInput" name="passwordCheck" placeholder="비밀번호 확인">
+				<span th:text="${valid_passwordCheck}"></span>
 			</div>
+
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-6" id="join-userName" placeholder="이름">
+				<input type="text" class="join-roomInfo form-control col-6" id="join-userName" name="name" placeholder="이름">
+				<span th:text="${valid_name}"></span>
 				<label for="imgFile" class="profile-btn col-6 p-0">프로필 사진 선택</label>
-				<input type="file" id="imgFile" style="display:none">
+				
+				<input type="file" id="imgFile" name="profile" style="display:none">
 			</div>
 			<div class="joinDiv">
 				<div>
-					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택" value="">
+					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택" name="position" value="">
+					<span th:text="${valid_position}"></span>
 		  			<div class="dropdown-menu">
 		    			<a class="dropdown-item" href="#" value="join-team-leader">팀장</a>
 		    			<a class="dropdown-item" href="#" value="join-team-member">팀원</a>
@@ -37,16 +48,19 @@
 			</div>
 			<div class="joinDiv-room d-none">
 				<div class="joinDiv">
-					<input type="text" class="join-roomInfo form-control" id="join-roomName" placeholder="방 이름">
+					<input type="text" class="join-roomInfo form-control" id="join-roomName" name="roomName" placeholder="방 이름">
+					<span th:text="${valid_roomName}"></span>
 				</div>
 				<div class="joinDiv">
-					<input type="password" class="join-roomInfo form-control" id="join-roomPw" placeholder="방 비밀번호🔑">
+					<input type="password" class="join-roomInfo form-control" id="join-roomPw" name="roompassword" placeholder="방 비밀번호🔑">
+					<span th:text="${valid_roomPassword}"></span>
 				</div>
 			</div>
 			<div class="joinDiv d-flex justify-content-end">
 				<div id="join-accountBtn">계정만들기</div>
 			</div>
 		</div>
+	</form>
 	</section>
 	
 	<script layout:fragment ="script">
@@ -246,23 +260,5 @@
 			}
 		})
 	})
-			/* $.ajax({
-				 type: "post"
-				,url: "/user/apply"
-				,data : {"roomName" : roomName , "roomPassword" : roomPassword}
-				,success : function(data){
-					if(data.result == "success"){
-						alert("미승인 객체 조회 성공!");
-					} else {
-						alert("미승인 객체 조회 실패!");
-					}
-				}, error : function(){
-					alert("미승인 객체 조회 에러!");
-				}
-			}) */
-			
-			
-	/* 	})
-	}) */
 	</script>
 </html>
