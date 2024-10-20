@@ -8,8 +8,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kkomiding.davena.user.domain.User;
@@ -41,25 +42,23 @@ public class UserController {
 	public String join(Model model) {
 		
 		model.addAttribute("userDto", new UserDto());
+	
 		return "users/join";
 	}
 	
-	
 	@PostMapping("/auth/joinProc")
-	public String joinProc(@Valid UserDto userDto, BindingResult bindingResult, Model model) throws Exception {
+	public String joinProc(@Valid @ModelAttribute UserDto userDto, Errors errors, Model model) {
 		
-		if(bindingResult.hasErrors()) {
-
+		if(errors.hasErrors()) {
+			model.addAttribute("userDto", userDto);
+			
+			Map<String, String> validatorResult = userService.validateHandling(errors);
+			for(String key : validatorResult.keySet()) {
+				model.addAttribute(key, validatorResult.get(key));
+			}
 			return "users/join";
 		}
-		
-		if(!userDto.getPassword().equals(userDto.getPasswordCheck())) {
-			bindingResult.rejectValue("password", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-			return "users/join";
-		}
-		
-		userService.userJoin(userDto);
-		String position = userDto.getPosition();
+		String position = userDto.getPositionBtn();
 		if(position.equals("팀장")) {
 			return "leader/login-view";
 		} else {

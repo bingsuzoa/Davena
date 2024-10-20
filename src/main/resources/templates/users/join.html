@@ -8,32 +8,32 @@
 	</header>
 	
 	<section layout:fragment="content" class="d-flex justify-content-center">
-	<form action="/auth/joinProc" method="post" th:object="${userDto}">
+	<form action="/auth/joinProc" method ="post" th:object="${userDto}">
 		<div class="join-content mt-4">
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-7" id="join-idInput" name ="join-idInput" th:field="*{loginId}"placeholder="아이디 입력">
+				<input type="text" class="join-roomInfo form-control col-7" id="join_idInput" name ="join_idInput" th:field="*{join_idInput}"placeholder="아이디 입력">
 				<div class="profile-btn col-5" id="check-duplicateBtn">중복확인</div>
 			</div>
-			<p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></p>
+			<p th:text="${valid_join_idInput}"></p>
 			<div class="d-none" id="availableText">사용가능한 ID입니다.</div>
 			<div class="d-none" id="duplicateText">사용가능한 ID입니다.</div>
 			
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-PwInput" name ="join-PwInput" th:field="*{password}" placeholder="비밀번호 입력">
+				<input type="password" class="join-roomInfo form-control" id="join_PwInput" name ="join_PwInput" placeholder="비밀번호 입력">
 			</div>
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join-checkPwInput" name="join-checkPwInput" th:field="*{passwordCheck}" placeholder="비밀번호 확인">
+				<input type="password" class="join-roomInfo form-control" id="join_checkPwInput" name="join_checkPwInput"placeholder="비밀번호 확인">
 			</div>
 
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-6" id="join-userName" name="join-userName" th:field="*{name}"  placeholder="이름">
+				<input type="text" class="join-roomInfo form-control col-6" id="join_userName" name="join_userName" placeholder="이름">
 				<label for="imgFile" class="profile-btn col-6 p-0">프로필 사진 선택</label>
 				
 				<input type="file" id="imgFile" name="profile" style="display:none">
 			</div>
 			<div class="joinDiv">
 				<div>
-					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택"  th:field="*{position}" value="">
+					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택" name="positionBtn" value="">
 		  			<div class="dropdown-menu">
 		    			<a class="dropdown-item" href="#" value="join-team-leader">팀장</a>
 		    			<a class="dropdown-item" href="#" value="join-team-member">팀원</a>
@@ -42,10 +42,10 @@
 			</div>
 			<div class="joinDiv-room d-none">
 				<div class="joinDiv">
-					<input type="text" class="join-roomInfo form-control" id="join-roomName" name="join-roomName" th:field="*{roomName}" placeholder="방 이름">
+					<input type="text" class="join-roomInfo form-control" id="join_roomName" name="join_roomName"  placeholder="방 이름">
 				</div>
 				<div class="joinDiv">
-					<input type="password" class="join-roomInfo form-control" id="join-roomPw" name="join-roomPw" th:field="*{roomPassword}" placeholder="방 비밀번호🔑">
+					<input type="password" class="join-roomInfo form-control" id="join_roomPw" name="join_roomPw"  placeholder="방 비밀번호🔑">
 				</div>
 			</div>
 			<div class="joinDiv d-flex justify-content-end">
@@ -71,14 +71,15 @@
 			}
 			
 		})
+	
 		
-		$(document).ready(function(){	
+		/* $(document).ready(function(){	
     		//중복확인 여부
     		var checkDuplicate = false; 		
     		//중복여부
-    		var isDuplicatedId = true;
+    		var isDuplicatedId = true; */
     		
-		//Id중복확인
+		/* //Id중복확인
     		$("#join-idInput").on("input", function(){
     			//입력이 바뀌면 중복체크를 다시해야함 , 중복확인과정 초기화
     		
@@ -114,14 +115,14 @@
     					alert("중복확인 에러!");
     				}
     			})
-    		})
-		
+    		}) */
+			
     		//계정만들기
 		$("#join-accountBtn").on('click',function(){
-			let id = $("#join-idInput").val();
-			let password = $("#join-PwInput").val();
-			let Checkpassword = $("#join-checkPwInput").val();
-			let name = $("#join-userName").val();
+			let id = $("#join_idInput").val();
+			let password = $("#join_PwInput").val();
+			let Checkpassword = $("#join_checkPwInput").val();
+			let name = $("#join_userName").val();
 			let imgFile = $("#imgFile")[0].files[0];
 			let position = $("#positionBtn").val();
 			let roomName = null;
@@ -251,6 +252,6 @@
 				})
 			}
 		})
-	})
+	
 	</script>
 </html>
