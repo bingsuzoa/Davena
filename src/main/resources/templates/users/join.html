@@ -24,6 +24,7 @@
 			<div class="validation-text d-none" id="failure-text1">사용가능한 글자 수는 7~12 입니다.</div>
 			<div class="validation-text d-none" id="failure-text2">아이디는 영문,숫자조합만 가능합니다.</div>
 			<div class="validation-text d-none" id="failure-text3">아이디를 입력해주세요.</div>
+			<div class="validation-text d-none" id="failure-id1">아이디 중복확인을 해주세요.</div>
 			
 			<div class="joinDiv">
 				<input type="password" class="join-roomInfo form-control" id="join_PwInput" name ="join_PwInput" placeholder="비밀번호 입력">
@@ -31,6 +32,7 @@
 			
 			<!-- 비밀번호 유효성검사 -->
 			<div class="validation-text d-none" id="failure-text4">비밀번호는 8글자 이상, 영문, 숫자, 특수문자 사용이 필요합니다.</div>
+			<div class="validation-text d-none" id="failure-pw1">비밀번호를 입력해주세요.</div>
 			<div class="availableText d-none" id="availableText4">사용가능한 비밀번호입니다.</div>
 						
 			<div class="joinDiv">
@@ -40,6 +42,7 @@
 			<!-- 비밀번호 일치여부확인 -->
 			<div class="validation-text d-none" id="failure-text5">비밀번호가 서로 일치하지 않습니다.</div>
 			<div class="availableText d-none" id="availableText5">비밀번호가 일치합니다.</div>
+			<div class="validation-text d-none" id="failure-pw2">비밀번호 일치여부를 확인해주세요.</div>
 
 			<div class="joinDiv d-flex">
 				<input type="text" class="join-roomInfo form-control col-6" id="join_userName" name="join_userName"  placeholder="이름">
@@ -48,6 +51,8 @@
 				
 				<input type="file" id="imgFile" name="profile"  style="display:none">
 			</div>
+			
+			<div class="validation-text d-none" id="failure-name1">이름을 입력해주세요.</div>
 			
 			<div class="joinDiv">
 				<div>
@@ -58,6 +63,8 @@
 		  			</div>
 	  			</div>
 			</div>
+			
+			<div class="validation-text d-none" id="failure-position1">직책을 선택해주세요.</div>
 						
 			<div class="joinDiv-room d-none">
 				<div class="joinDiv">
@@ -175,13 +182,14 @@
         			})
         		})    			
     		})
-    		new Promise((succ, fail) => {
+    		
     		//비밀번호 검증
     			$("#join_PwInput").on('keyup', function(){
 					let password = $("#join_PwInput").val();
 				
 					if(password != ""){
 						if(strongPassword(password) == false){
+							$("#availableText4").addClass("d-none");
 							$("#failure-text4").removeClass("d-none");
 							$("#failure-text5").addClass("d-none");
 							return;
@@ -190,42 +198,40 @@
 							$("#availableText4").removeClass("d-none");
 							$("#failure-text4").addClass("d-none");
 							$("#failure-text5").addClass("d-none");
-							succ(password);
 							return;
 						}
 						else {
 							$("#availableText4").addClass("d-none");
 							$("#failure-text4").addClass("d-none");
 							$("#failure-text5").addClass("d-none");
-							succ("비밀번호 유효성 검증 완료")
+							return;
 						}
 					}
     			})
-			}).then((arg) => {
-				//비밀번호 일치여부 확인
-				console.log(arg);
-				$("#join_checkPwInput").on('keyup', function(){
-					let password = $("#join_PwInput").val();
-					let Checkpassword = $("#join_checkPwInput").val();
-					if(isMatch(arg, Checkpassword) == false) {
-						$("#failure-text4").addClass("d-none");
-						$("#failure-text5").removeClass("d-none");
-						$("#availableText5").addClass("d-none");
-						return;
-					} 
-					else if(isMatch(arg, Checkpassword) == true) {
-						$("#failure-text4").addClass("d-none");
-						$("#failure-text5").addClass("d-none");
-						$("#availableText5").removeClass("d-none");
-						return;
-					}
-					else {
-						$("#failure-text4").addClass("d-none");
-						$("#failure-text5").addClass("d-none");
-						$("#availableText5").addClass("d-none");
-					}
-				})
-			})			
+    			//비밀번호 일치여부 확인
+					$("#join_checkPwInput").on('keyup', function(){
+						let password = $("#join_PwInput").val();
+						let Checkpassword = $("#join_checkPwInput").val();
+						if(isMatch(password, Checkpassword) == false) {
+							$("#failure-text4").addClass("d-none");
+							$("#failure-text5").removeClass("d-none");
+							$("#availableText5").addClass("d-none");
+							return;
+						} 
+						else if(isMatch(password, Checkpassword) == true) {
+							$("#failure-text4").addClass("d-none");
+							$("#failure-text5").addClass("d-none");
+							$("#availableText5").removeClass("d-none");
+							return;
+						}
+						else {
+							$("#failure-text4").addClass("d-none");
+							$("#failure-text5").addClass("d-none");
+							$("#availableText5").addClass("d-none");
+							return;
+						}
+					})
+				
     		//계정만들기
 		$("#join-accountBtn").on('click',function(){
 			let id = $("#join_idInput").val();
@@ -238,32 +244,43 @@
 			let roomPassword = null;
 			
 			if(id == ""){
-				alert("아이디를 입력해주세요.");
+				$("#failure-text3").removeClass("d-none");
 				return;
 			}
 			if(!checkDuplicate){
-				alert("아이디 중복확인을 해주세요.");
+				$("#failure-text3").addClass("d-none");
+				$("#failure-id1").removeClass("d-none");
 				return;
 			}
 			if(password == ""){
-				alert("비밀번호를 입력해주세요.");
+				$("#failure-pw1").removeClass("d-none");
+				$("#failure-text3").addClass("d-none");
+				$("#failure-id1").addClass("d-none");
 				return;
 			}
 			if(Checkpassword == ""){
-				alert("비밀번호 확인을 해주세요.")
+				$("#failure-pw2").removeClass("d-none");
+				$("#failure-pw1").addClass("d-none");
+				$("#failure-text3").addClass("d-none");
+				$("#failure-id1").addClass("d-none");
 				return
-			}
-			if(password != Checkpassword){
-				alert("비밀번호가 서로 일치하지 않아요.");
-				return;
 			}
 			
 			if(name == "") {
-				alert("이름을 입력해주세요.");
+				$("#failure-name1").removeClass("d-none");
+				$("#failure-pw2").addClass("d-none");
+				$("#failure-pw1").addClass("d-none");
+				$("#failure-text3").addClass("d-none");
+				$("#failure-id1").addClass("d-none");
 				return;
 			}
 			if(position == ""){
-				alert("직책을 선택해주세요.");
+				$("#failure-position1").removeClass("d-none");
+				$("#failure-name1").addClass("d-none");
+				$("#failure-pw2").addClass("d-none");
+				$("#failure-pw1").addClass("d-none");
+				$("#failure-text3").addClass("d-none");
+				$("#failure-id1").addClass("d-none");
 				return;
 			}
 			
