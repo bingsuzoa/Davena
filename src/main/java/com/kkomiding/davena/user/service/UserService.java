@@ -36,28 +36,11 @@ public class UserService {
 	}
 	
 	
-	//회원가입 유효성 검증
-	@Transactional(readOnly=true)
-	public Map<String, String> validateHandling(Errors errors) {
-		Map<String, String> validatorResult = new HashMap<>();
-		
-		for(FieldError error : errors.getFieldErrors()) {
-			String validKeyName = String.format("valid_%s", error.getField());
-			validatorResult.put(validKeyName, error.getDefaultMessage());
-		}
-		return validatorResult;
-	}
-	
-	public User userJoin(UserDto userDto) throws Exception {
-		
-		String loginId = userDto.getJoin_idInput();
-		MultipartFile profile = userDto.getProfile();
-		String password = userDto.getJoin_checkPwInput();
-		String roomName = userDto.getJoin_roomName();
-		String roomPassword = userDto.getJoin_roomPw();
-		String position = userDto.getPositionBtn();
-		String name = userDto.getJoin_userName();
-		
+//	//회원가입, insert
+	public User addUser(String loginId,String password ,String name
+					  ,String position
+					  ,MultipartFile profile
+					  ,String roomName ,String roomPassword) throws Exception {
 		//프로필 사진
 		String urlPath = FileManager.saveFile(loginId, profile);
 		
@@ -69,7 +52,7 @@ public class UserService {
 		//roomId찾기
 		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
 		Room room = optionalRoom.orElse(null);
-		
+				
 		if(position.equals("팀원")) {
 			User user = User.builder()
 						.loginId(loginId)
@@ -101,56 +84,6 @@ public class UserService {
 		}
 		
 	}
-
-	
-//	//회원가입, insert
-//	public User addUser(String loginId,String password ,String name
-//					  ,String position
-//					  ,MultipartFile profile
-//					  ,String roomName ,String roomPassword) throws Exception {
-//		//프로필 사진
-//		String urlPath = FileManager.saveFile(loginId, profile);
-//		
-//		//Hashing
-//		Map<String,String> saltAndPw = salting.setSaltPw(loginId, password);
-//		String salt = saltAndPw.get("salt");
-//		String encryptpassword = saltAndPw.get("saltedPassword");
-//		
-//		//roomId찾기
-//		Optional<Room> optionalRoom = roomRepository.findByRoomNameAndRoomPassword(roomName, roomPassword);
-//		Room room = optionalRoom.orElse(null);
-//				
-//		if(position.equals("팀원")) {
-//			User user = User.builder()
-//						.loginId(loginId)
-//						.password(encryptpassword)
-//						.salt(salt)
-//						.name(name)
-//						.profile(urlPath)
-//						.position(position)
-//						.roomId(room.getId())
-//						.roomName(roomName)
-//						.roomPassword(roomPassword)
-//						.approve("미승인")
-//						.build();
-//			return userRepository.save(user);					
-//		} else {
-//			User user = User.builder()
-//					.loginId(loginId)
-//					.password(encryptpassword)
-//					.salt(salt)
-//					.name(name)
-//					.profile(urlPath)
-//					.position(position)
-//					.roomId(0)
-//					.roomName(roomName)
-//					.roomPassword(roomPassword)
-//					.approve("승인")
-//					.build();
-//		return userRepository.save(user);
-//		}
-//		
-//	}
 	
 	//팀장 방만들면 user객체 update수정
 	public User updateUser(int userId, int roomId) {

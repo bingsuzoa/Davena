@@ -1,6 +1,5 @@
 package com.kkomiding.davena.user.domain;
 
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -20,7 +19,7 @@ public class UserDto {
 
 	
 	@NotBlank(message = "닉네임을 입력해주세요.")
-	@Pattern(regexp = "^[a-z0-9]{4,20}$", message = "아이디는 영어 소문자와 숫자만 사용하여 4~20자리여야 합니다.")
+	@Pattern(regexp = "^[a-z0-9]{7,20}$", message = "아이디는 영어 소문자와 숫자만 사용하여 7~20자리여야 합니다.")
 	private String join_idInput;
 	
 	@NotBlank(message = "비밀번호를 입력해주세요.")
@@ -33,7 +32,6 @@ public class UserDto {
 	@NotBlank(message = "이름을 입력해주세요.")
 	private String join_userName;
 	
-	private MultipartFile profile;
 	
 	@NotBlank(message = "직책을 선택해주세요.")
 	private String positionBtn;

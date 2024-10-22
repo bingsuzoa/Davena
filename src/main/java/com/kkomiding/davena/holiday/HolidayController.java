@@ -38,7 +38,12 @@ public class HolidayController {
 	}
 	
 	@GetMapping("/after-apply-view")
-	public String afterapply() {
+	public String afterapply(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
 		
 		return "holiday/afterapply";
 	}

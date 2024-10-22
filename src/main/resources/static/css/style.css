@@ -246,7 +246,7 @@ a:hover {
 
 /*********회원가입*******/
 /******join.html******/
-#duplicateText {
+.validation-text {
 	margin-left : 10px;
 	margin-top : 3px;
 	font-size : 14px;
@@ -254,7 +254,7 @@ a:hover {
 }
 
 
-#availableText {
+.availableText {
 	margin-left : 10px;
 	margin-top : 3px;
 	font-size : 14px;

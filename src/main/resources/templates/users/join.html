@@ -8,29 +8,47 @@
 	</header>
 	
 	<section layout:fragment="content" class="d-flex justify-content-center">
-	<form action="/auth/joinProc" method ="post" th:object="${userDto}">
 		<div class="join-content mt-4">
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-7" id="join_idInput" name ="join_idInput" th:field="*{join_idInput}"placeholder="아이디 입력">
+				<input type="text" class="join-roomInfo form-control col-7" 
+						id="join_idInput" name ="join_idInput"  placeholder="아이디 입력">
 				<div class="profile-btn col-5" id="check-duplicateBtn">중복확인</div>
 			</div>
-			<p th:text="${valid_join_idInput}"></p>
-			<div class="d-none" id="availableText">사용가능한 ID입니다.</div>
-			<div class="d-none" id="duplicateText">사용가능한 ID입니다.</div>
+	
+	
+			<!-- 유효성검사 -->
+			<!-- Id 유효성검사 -->
+			<div class="availableText d-none" id="availableText1">사용가능한 ID입니다.</div>
+			<div class="availableText d-none" id="availableText2">사용가능한 ID조건입니다. 중복확인을 해주세요.</div>
+			<div class="validation-text d-none" id="duplicateText">이미 사용중인 ID입니다.</div>
+			<div class="validation-text d-none" id="failure-text1">사용가능한 글자 수는 7~12 입니다.</div>
+			<div class="validation-text d-none" id="failure-text2">아이디는 영문,숫자조합만 가능합니다.</div>
+			<div class="validation-text d-none" id="failure-text3">아이디를 입력해주세요.</div>
 			
 			<div class="joinDiv">
 				<input type="password" class="join-roomInfo form-control" id="join_PwInput" name ="join_PwInput" placeholder="비밀번호 입력">
 			</div>
+			
+			<!-- 비밀번호 유효성검사 -->
+			<div class="validation-text d-none" id="failure-text4">비밀번호는 8글자 이상, 영문, 숫자, 특수문자 사용이 필요합니다.</div>
+			<div class="availableText d-none" id="availableText4">사용가능한 비밀번호입니다.</div>
+						
 			<div class="joinDiv">
-				<input type="password" class="join-roomInfo form-control" id="join_checkPwInput" name="join_checkPwInput"placeholder="비밀번호 확인">
+				<input type="password" class="join-roomInfo form-control" id="join_checkPwInput" name="join_checkPwInput"  placeholder="비밀번호 확인">
 			</div>
+			
+			<!-- 비밀번호 일치여부확인 -->
+			<div class="validation-text d-none" id="failure-text5">비밀번호가 서로 일치하지 않습니다.</div>
+			<div class="availableText d-none" id="availableText5">비밀번호가 일치합니다.</div>
 
 			<div class="joinDiv d-flex">
-				<input type="text" class="join-roomInfo form-control col-6" id="join_userName" name="join_userName" placeholder="이름">
+				<input type="text" class="join-roomInfo form-control col-6" id="join_userName" name="join_userName"  placeholder="이름">
+				
 				<label for="imgFile" class="profile-btn col-6 p-0">프로필 사진 선택</label>
 				
-				<input type="file" id="imgFile" name="profile" style="display:none">
+				<input type="file" id="imgFile" name="profile"  style="display:none">
 			</div>
+			
 			<div class="joinDiv">
 				<div>
 					<input class="dropdown-toggle" id="positionBtn" type="text" data-toggle="dropdown" aria-expanded="false" placeholder="직책 선택" name="positionBtn" value="">
@@ -40,6 +58,7 @@
 		  			</div>
 	  			</div>
 			</div>
+						
 			<div class="joinDiv-room d-none">
 				<div class="joinDiv">
 					<input type="text" class="join-roomInfo form-control" id="join_roomName" name="join_roomName"  placeholder="방 이름">
@@ -52,7 +71,6 @@
 				<div id="join-accountBtn">계정만들기</div>
 			</div>
 		</div>
-	</form>
 	</section>
 	
 	<script layout:fragment ="script">
@@ -69,54 +87,145 @@
 				$(".joinDiv-room").removeClass("d-none");
 				return;
 			}
-			
 		})
-	
 		
-		/* $(document).ready(function(){	
+		//아이디 : 글자 수 제한
+		function idLength(str){
+			return str.length >= 7 && str.length <= 12;
+		}
+		//아이디 : 영어 또는 숫자만 가능
+		function onlyNumberAndEnglish(str){
+			return /^[A-Za-z0-9][A-Za-z0-9]*$/.test(str);
+		}
+		//비밀번호 : 8글자이상, 영문, 숫자, 특수문자 사용
+		function strongPassword(str) {
+			  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(str);
+		}
+		//비밀번호 : 일치여부
+		function isMatch(password1, password2) {
+			  return password1 == password2;
+		}
+			
+		$(document).ready(function(){	
     		//중복확인 여부
     		var checkDuplicate = false; 		
     		//중복여부
-    		var isDuplicatedId = true; */
-    		
-		/* //Id중복확인
-    		$("#join-idInput").on("input", function(){
-    			//입력이 바뀌면 중복체크를 다시해야함 , 중복확인과정 초기화
-    		
-    			checkDuplicate = false;
-    			isDuplicatedId = true;
-    			$("#availableText").addClass("d-none");
-    			$("#duplicateText").addClass("d-none");
-    		})
-    		$("#check-duplicateBtn").on('click',function(){
-    			let id = $("#join-idInput").val();
-    			if(id == "") {
-    				alert("아이디를 입력하세요.");
-    				return;
-    			}
-    			
-    			$.ajax({
-    				type:"get"
-    				,url:"/user/duplicate-id"
-    				,data:{"join-idInput" : id}
-    				,success:function(data){
-    					if(data.isDuplicate == true){
-    						checkDuplicate = true;
-    						isDuplicatedId = true;
-    						$("#duplicateText").removeClass("d-none");
-    						$("#availableText").addClass("d-none");
-    					} else {
-    						checkDuplicate = true;
-    						isDuplicatedId = false;
-    						$("#duplicateText").addClass("d-none");
-    						$("#availableText").removeClass("d-none");
-    					}
-    				}, error:function(){
-    					alert("중복확인 에러!");
-    				}
+    		var isDuplicatedId = true; 
+    
+    		//아이디 검증
+    		new Promise((succ, fail) => {
+    			$("#join_idInput").on('keyup', function(){
+        			let loginId = $("#join_idInput").val();
+        			if(loginId != ""){
+        				if(idLength(loginId) == false){
+        					$("#failure-text1").removeClass("d-none");
+        					$("#failure-text2").addClass("d-none");
+        					$("#availableText2").addClass("d-none");
+        				}
+        				else if(onlyNumberAndEnglish(loginId) == false){
+        					$("#failure-text1").addClass("d-none");
+        					$("#failure-text2").removeClass("d-none");
+        					$("#availableText2").addClass("d-none");
+        				}
+        				else if(idLength(loginId) == true && onlyNumberAndEnglish(loginId) == true){
+        					$("#availableText2").removeClass("d-none");
+        					$("#failure-text1").addClass("d-none");
+        					$("#failure-text2").addClass("d-none");
+        					succ("유효성 검증 완료");
+        				}
+        				else {
+        					$("#failure-text1").addClass("d-none");
+        					$("#failure-text2").addClass("d-none");
+        					$("#availableText2").addClass("d-none");
+        				}
+        			}    			
     			})
-    		}) */
-			
+    		}).then((arg) => {
+    			console.log(arg);
+    			//Id중복확인
+        		$("#join_idInput").on("input", function(){			
+        			//입력이 바뀌면 중복체크를 다시해야함 , 중복확인과정 초기화
+        			checkDuplicate = false;
+        			isDuplicatedId = true;
+        		})
+        		
+        		$("#check-duplicateBtn").on('click',function(){
+        			let loginId = $("#join_idInput").val();
+        			
+        			$.ajax({
+        				type:"get"
+        				,url:"/user/duplicate-id"
+        				,data:{"join_idInput" : loginId}
+        				,success:function(data){
+        					if(data.isDuplicate == true){
+        						checkDuplicate = true;
+        						isDuplicatedId = true;
+        						$("#duplicateText").removeClass("d-none");
+        						$("#availableText1").addClass("d-none");
+        					} else {
+        						checkDuplicate = true;
+        						isDuplicatedId = false;
+        						$("#duplicateText").addClass("d-none");
+        						$("#availableText1").removeClass("d-none");
+        						$("#availableText2").addClass("d-none");
+        					}
+        				}, error:function(){
+        					alert("중복확인 에러!");
+        				}
+        			})
+        		})    			
+    		})
+    		new Promise((succ, fail) => {
+    		//비밀번호 검증
+    			$("#join_PwInput").on('keyup', function(){
+					let password = $("#join_PwInput").val();
+				
+					if(password != ""){
+						if(strongPassword(password) == false){
+							$("#failure-text4").removeClass("d-none");
+							$("#failure-text5").addClass("d-none");
+							return;
+						} 
+						else if(strongPassword(password) == true){	
+							$("#availableText4").removeClass("d-none");
+							$("#failure-text4").addClass("d-none");
+							$("#failure-text5").addClass("d-none");
+							succ(password);
+							return;
+						}
+						else {
+							$("#availableText4").addClass("d-none");
+							$("#failure-text4").addClass("d-none");
+							$("#failure-text5").addClass("d-none");
+							succ("비밀번호 유효성 검증 완료")
+						}
+					}
+    			})
+			}).then((arg) => {
+				//비밀번호 일치여부 확인
+				console.log(arg);
+				$("#join_checkPwInput").on('keyup', function(){
+					let password = $("#join_PwInput").val();
+					let Checkpassword = $("#join_checkPwInput").val();
+					if(isMatch(arg, Checkpassword) == false) {
+						$("#failure-text4").addClass("d-none");
+						$("#failure-text5").removeClass("d-none");
+						$("#availableText5").addClass("d-none");
+						return;
+					} 
+					else if(isMatch(arg, Checkpassword) == true) {
+						$("#failure-text4").addClass("d-none");
+						$("#failure-text5").addClass("d-none");
+						$("#availableText5").removeClass("d-none");
+						return;
+					}
+					else {
+						$("#failure-text4").addClass("d-none");
+						$("#failure-text5").addClass("d-none");
+						$("#availableText5").addClass("d-none");
+					}
+				})
+			})			
     		//계정만들기
 		$("#join-accountBtn").on('click',function(){
 			let id = $("#join_idInput").val();
@@ -167,8 +276,8 @@
 					alert("방 비밀번호를 입력해주세요.");
 					return
 				}
-				roomName = $("#join-roomName").val();
-				roomPassword = $("#join-roomPw").val();
+				roomName = $("#join_roomName").val();
+				roomPassword = $("#join_roomPw").val();
 				
 				new Promise((succ, fail) => {
 					//방 중복인지 확인, 확인이 되어야 가입가능
@@ -190,13 +299,13 @@
 				}).then((arg) => {
 					//데이터 넘기기
 					let formData = new FormData();
-					formData.append("join-idInput", id);
-					formData.append("join-checkPwInput", Checkpassword);
-					formData.append("join-userName", name);
+					formData.append("join_idInput", id);
+					formData.append("join_checkPwInput", Checkpassword);
+					formData.append("join_userName", name);
 					formData.append("profile", imgFile);
 					formData.append("position", position);
-					formData.append("join-roomName", roomName);
-					formData.append("join-roomPw", roomPassword);
+					formData.append("join_roomName", roomName);
+					formData.append("join_roomPw", roomPassword);
 					
 					$.ajax({
 						type:"post"
@@ -224,13 +333,13 @@
 			}
 			if(position == "팀장"){
 				let formData = new FormData();
-				formData.append("join-idInput", id);
-				formData.append("join-checkPwInput", Checkpassword);
-				formData.append("join-userName", name);
+				formData.append("join_idInput", id);
+				formData.append("join_checkPwInput", Checkpassword);
+				formData.append("join_userName", name);
 				formData.append("profile", imgFile);
 				formData.append("position", position);
-				formData.append("join-roomName", roomName);
-				formData.append("join-roomPw", roomPassword);
+				formData.append("join_roomName", roomName);
+				formData.append("join_roomPw", roomPassword);
 					
 				$.ajax({
 					type:"post"
@@ -240,11 +349,16 @@
 					,processData:false
 		    		,contentType:false
 		    		,success:function(data){
-		    			if(data.result == "success"){
-		    				location.href="/user/login-view";
-	    					alert("팀장 회원가입 성공!");
+		    			console.log(data);
+		    			if(data.result == "hasError"){
+		    				location.href="/user/join-view";
+	    					alert(data);
+		    			}
+		    			else if(data.result == "success"){
+		    				location.href="/leader/login-view";
+		    				alert("팀장 회원가입 성공!");
 		    			} else {
-		    				alert("팀장 회원가입 실패!");
+		    				alert("팀장 회원가입 실패");
 		    			}
 		    		},error : function(){
 		    			alert("팀장 회원가입 에러!");
@@ -252,6 +366,6 @@
 				})
 			}
 		})
-	
+	})
 	</script>
 </html>

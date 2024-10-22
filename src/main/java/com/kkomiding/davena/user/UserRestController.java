@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,38 +36,39 @@ public class UserRestController {
 		this.userService = userService;
 	}
 	
+	
 	//회원가입
-//	@PostMapping("/join")
-//	public Map<String, String> join(
-//									 @RequestParam("join-idInput") String loginId
-//									,@RequestParam("join-checkPwInput") String password
-//									,@RequestParam("join-userName") String name
-//									,@RequestParam("position") String position
-//									,@RequestParam(value="profile", required = false) MultipartFile profile
-//									,@RequestParam("join-roomName") String roomName
-//									,@RequestParam("join-roomPw") String roomPassword) throws Exception {
-//	
-//		
-//		User newUser = userService.addUser(loginId, password, name
-//										,position
-//										,profile
-//										,roomName, roomPassword);
-//		
-//		Map<String, String> resultMap = new HashMap<>();
-//		
-//		if(newUser != null) {
-//			resultMap.put("result", "success");
-//		} else {
-//			resultMap.put("result", "fail");
-//		}
-//		
-//		return resultMap;
-//	}
+	@PostMapping("/join")
+	public Map<String, String> join(
+									 @RequestParam("join_idInput") String loginId
+									,@RequestParam("join_checkPwInput") String password
+									,@RequestParam("join_userName") String name
+									,@RequestParam("position") String position
+									,@RequestParam(value="profile", required = false) MultipartFile profile
+									,@RequestParam("join_roomName") String roomName
+									,@RequestParam("join_roomPw") String roomPassword) throws Exception {
+	
+		
+		User newUser = userService.addUser(loginId, password, name
+										,position
+										,profile
+										,roomName, roomPassword);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(newUser != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+	}
 	
 	
 	//Id 중복확인
 	@GetMapping("/duplicate-id")
-	public Map<String, Boolean> selectLoginId(@RequestParam("join-idInput") String loginId) {
+	public Map<String, Boolean> selectLoginId(@RequestParam("join_idInput") String loginId) {
 		
 		User user = userService.getLoginId(loginId);
 		
