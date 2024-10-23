@@ -89,6 +89,7 @@ public class HolidayService {
 		return personalScheduleList;
 	}
 	
+	
 	//전체 근무자 일정 캘린더에 연동하기
 	public List<PersonalSchedule> getAllHolidayList(LocalDateTime startDate
 										  ,LocalDateTime endDate
@@ -224,4 +225,15 @@ public class HolidayService {
 			
 		return resultMap;
 	}
+	
+		//외상센터의 이번달 휴가목록 가져오기
+		public List<Holiday> getHolidayListByUserId(int userId){
+			
+			int roomId = userService.getUser(userId).getRoomId();
+			
+			LocalDate now = LocalDate.now();
+			int month = now.getMonthValue();
+			
+			return holidayRepository.findByRoomIdAndMonth(roomId, month);
+		}
 }

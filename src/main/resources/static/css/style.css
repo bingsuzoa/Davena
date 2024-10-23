@@ -841,6 +841,9 @@ a {
 	margin-top : 4px;
 }
 /******calendarview.html******/
+.table {
+	margin-top : 50px;
+}
 .calendar-view-Div {
 	width :800px;
 	margin-top : 40px;

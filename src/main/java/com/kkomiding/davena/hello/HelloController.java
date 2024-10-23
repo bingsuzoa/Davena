@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HelloController {
 	
 	
+	
 	@ResponseBody
 	@RequestMapping("/hello")
 	public String hello() {
@@ -15,19 +16,19 @@ public class HelloController {
 	}
 	
 	
-	@ResponseBody
-	@RequestMapping("/schedule")
-	public String[][] schedule() {
-		
-		String [][] schedule = new String[31][10];
-		
-		for(int i = 0; i < schedule.length; i++) {
-			for(int j = 0; j < schedule[i].length; j++) {
-				schedule[i][j] = "Day";
-			}
-		}
-		return schedule;
-
-	}
+//	@ResponseBody
+//	@RequestMapping("/schedule")
+//	public String[][] schedule() {
+//		
+//		String [][] schedule = new String[31][10];
+//		
+//		for(int i = 0; i < schedule.length; i++) {
+//			for(int j = 0; j < schedule[i].length; j++) {
+//				schedule[i][j] = "Day";
+//			}
+//		}
+//		return schedule;
+//
+//	}
 
 }

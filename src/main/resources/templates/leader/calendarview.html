@@ -8,14 +8,33 @@
 		<th:block th:replace="~{fragments/header :: .header-synthesis}"></th:block>
 	</header>
 	<section layout:fragment="content">
-		<div class="calendar-view-Div">
-			<div class="calendar-content">
-				 <div id='calendar'></div>
-			</div>
-		</div>
+		<table class="table text-center">
+			<thead>
+				<tr th:with="${lastDay} = lastDay">
+					<th> </th>
+					<th:block th:each="i:${#numbers.sequence(1, lastDay)}">
+						<th th:text="${i}"></th>
+					</th:block>
+				</tr>			
+			</thead>
+			<tbody>
+				<tr th:each="name : ${nameList}">
+					<td th:text="${name}"></td>
+				</tr>
+			</tbody>
+		</table>
 	</section>
 	
 	<script layout:fragment="script">
-		
+	
+		const schedule = [];
+		for(let i = 0; i < 10; i++){
+			const lines = [];
+			for(let j = 0; j < 31; j++){
+				lines.push("day");
+			}
+			schedule.push(lines);
+		}
+		console.log(schedule);
 	</script>
 </html>

@@ -14,5 +14,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 	
 	public Optional<Room> findById(int roomId);
 	
+	public int countById(int roomId);
+	
 
 }
