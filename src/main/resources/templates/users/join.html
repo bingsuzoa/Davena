@@ -154,6 +154,9 @@
         			//입력이 바뀌면 중복체크를 다시해야함 , 중복확인과정 초기화
         			checkDuplicate = false;
         			isDuplicatedId = true;
+        			$("#duplicateText").addClass("d-none");
+					$("#availableText1").addClass("d-none");
+					$("#availableText2").addClass("d-none");
         		})
         		
         		$("#check-duplicateBtn").on('click',function(){
@@ -169,13 +172,15 @@
         						isDuplicatedId = true;
         						$("#duplicateText").removeClass("d-none");
         						$("#availableText1").addClass("d-none");
-        					} else {
+        					} 
+        					else  {
         						checkDuplicate = true;
         						isDuplicatedId = false;
         						$("#duplicateText").addClass("d-none");
         						$("#availableText1").removeClass("d-none");
         						$("#availableText2").addClass("d-none");
         					}
+ 
         				}, error:function(){
         					alert("중복확인 에러!");
         				}

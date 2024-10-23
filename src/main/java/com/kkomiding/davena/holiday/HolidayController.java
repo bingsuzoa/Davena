@@ -79,6 +79,9 @@ public class HolidayController {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		User user = userService.getUser(userId);
+		model.addAttribute("user",user);
+		
+		
 		
 		return "leader/calendarview";
 	}

@@ -13,5 +13,21 @@ public class HelloController {
 	public String hello() {
 		return "hello world";
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/schedule")
+	public String[][] schedule() {
+		
+		String [][] schedule = new String[31][10];
+		
+		for(int i = 0; i < schedule.length; i++) {
+			for(int j = 0; j < schedule[i].length; j++) {
+				schedule[i][j] = "Day";
+			}
+		}
+		return schedule;
+
+	}
 
 }
