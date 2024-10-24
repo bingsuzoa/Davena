@@ -2,19 +2,13 @@ package com.kkomiding.davena.holiday;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.repository.RoomRepository;
@@ -109,6 +103,8 @@ public class HolidayController {
 		//table생성에 필요한 정보 전달
 		List<ScheduleTable> scheduleTableList = holidayService.getHolidayListByUserId(userId);
 		model.addAttribute("scheduleTableList",scheduleTableList);
+		
+		
 		
 		return "leader/calendarview";
 	}

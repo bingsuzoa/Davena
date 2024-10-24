@@ -14,9 +14,9 @@
 			<div class="set-workCount">
 				<p>근무 수 설정</p>
 				<div class="set-Div-write">설정한 인원 수 만큼 근무장소에서 근무합니다.</div>
-				<input class="set-Div-input form-control" id="set-workCount-input1" placeholder="D근무 수">
-				<input class="set-Div-input form-control" id="set-workCount-input2" placeholder="E근무 수">
-				<input class="set-Div-input form-control" id="set-workCount-input3" placeholder="N근무 수">
+				<input class="set-Div-input form-control" id="set-workCount-input-1" value="" placeholder="D근무 수">
+				<input class="set-Div-input form-control" id="set-workCount-input-2" value="" placeholder="E근무 수">
+				<input class="set-Div-input form-control" id="set-workCount-input-3" value="" placeholder="N근무 수">
 			</div>
 			<div class="set-team">
 				<p>팀 간호 설정</p>
@@ -52,20 +52,20 @@
 	  					<div class="dropdown-menu">
 	    					<div class="form-check">
 	    						<div class="team-item">
-	    							<input type="checkbox" class="form-check-input" id="name1">
-	    							<label class="form-check-label" for="name1">권미경</label>
+	    							<input type="checkbox" class="form-check-input" id="name5">
+	    							<label class="form-check-label" for="name5">권미경</label>
 	    						</div>
 	    						<div class="team-item">
-	    							<input type="checkbox" class="form-check-input" id="name2">
-	    							<label class="form-check-label" for="name2">박수현</label>
+	    							<input type="checkbox" class="form-check-input" id="name6">
+	    							<label class="form-check-label" for="name6">박수현</label>
 	    						</div>
 	    						<div class="team-item">
-	    							<input type="checkbox" class="form-check-input" id="name3">
-	    							<label class="form-check-label" for="name3">이은희</label>
+	    							<input type="checkbox" class="form-check-input" id="name7">
+	    							<label class="form-check-label" for="name7">이은희</label>
 	    						</div>
 	    						<div class="team-item">
-	    							<input type="checkbox" class="form-check-input" id="name4">
-	    							<label class="form-check-label" for="name4">김메론</label>
+	    							<input type="checkbox" class="form-check-input" id="name8">
+	    							<label class="form-check-label" for="name8">김메론</label>
 	    						</div>
 	    					</div>
 	  					</div>
@@ -76,4 +76,25 @@
 		</div> 
 	</div>
 	</section>      
+	
+	<script layout:fragment="script">
+		$("#set-Btn").on('click', function(){
+			let Dduty = $("#set-workCount-input-1").val();
+			let Eduty = $("#set-workCount-input-2").val();
+			let Nduty = $("#set-workCount-input-3").val();
+			
+			$.ajax({
+				type:"post"
+				,url:"/holiday/random"
+				,data: {"Dduty" : Dduty, "Eduty" : Eduty, "Nduty" : Nduty}
+				,success : function(){
+					alert("랜덤근무표 가져오기 성공!");
+				}
+				,error : function(){
+					alert("랜덤근무표 가져오기 에러!");
+				}
+			})
+		})
+		
+	</script>
 </html>

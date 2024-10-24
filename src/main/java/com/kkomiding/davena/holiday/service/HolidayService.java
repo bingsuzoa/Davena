@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -21,17 +22,22 @@ import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
+import com.kkomiding.davena.work.domain.Work;
+import com.kkomiding.davena.work.repository.WorkRepository;
 
 @Service
 public class HolidayService {
 	
 	private HolidayRepository holidayRepository;
 	private UserService userService;
+	private WorkRepository workRepository;
 	
 	public HolidayService(HolidayRepository holidayRepository
-						 ,UserService userService) {
+						 ,UserService userService
+						 ,WorkRepository workRepository) {
 		this.holidayRepository = holidayRepository;
 		this.userService = userService;
+		this.workRepository = workRepository;
 	}
 	
 	public Holiday insertRequest(LocalDateTime startDay, LocalDateTime endDay
@@ -261,4 +267,37 @@ public class HolidayService {
 			
 		return resultMap;
 	}
+	
+		public List<String> getWorkArr(int Dduty, int Eduty, int Nduty) {
+			List<String> workList = new ArrayList<>();
+			int index[] = new int[Dduty + Eduty + Nduty];
+			
+			List<String> randomWorkList = new ArrayList<>();
+			
+			for(int i = 0; i < Dduty; i++) {
+				workList.add("Day");
+			}
+			for(int i = 0; i < Eduty; i++) {
+				workList.add("Eve");
+			}
+			for(int i = 0; i < Nduty; i++) {
+				workList.add("Night");
+			}
+			
+			Random rand = new Random();
+		
+			for(int i = 0; i < workList.size(); i++) {
+				index[i] = rand.nextInt(workList.size());
+				for(int j = 0; j < i; j++) {
+					if(index[i] == index[j]) {
+						i--;
+					}
+				}
+			}
+			for(int i = 0; i< index.length; i++) {
+				randomWorkList.add(workList.get(index[i]));
+			}
+			
+			return randomWorkList;
+		}
 }

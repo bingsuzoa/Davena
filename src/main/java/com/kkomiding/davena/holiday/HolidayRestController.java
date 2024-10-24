@@ -105,4 +105,14 @@ public class HolidayRestController {
 		return holidayService.getHolidayListByUserId(userId);
 	}
 	
+	@PostMapping("/random")
+	public List<String> randomList(@RequestParam("Dduty") int Dduty
+			  					  ,@RequestParam("Eduty") int Eduty
+			  					  ,@RequestParam("Nduty") int Nduty){
+		
+		
+		//1일 근무표배열 생성
+		return holidayService.getWorkArr(Dduty, Eduty, Nduty);
+	}
+	
 }

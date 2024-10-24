@@ -841,6 +841,12 @@ a {
 	margin-top : 4px;
 }
 /******calendarview.html******/
+.header-synthesis > a {
+	text-decoration : none;
+	font-family: serif;
+	font-size : 50px;
+}
+
 .table {
 	margin-top : 50px;
 }
