@@ -844,6 +844,13 @@ a {
 .table {
 	margin-top : 50px;
 }
+#th-off {
+	color : #FF4646;
+}
+#th-work {
+	color : #464646;
+}
+
 .calendar-view-Div {
 	width :800px;
 	margin-top : 40px;

@@ -20,54 +20,18 @@
 			<tbody>
 				<tr th:each="scheduleTable : ${scheduleTableList}">
 					<td th:text="${scheduleTable.name}"></td>
+					<th:block th:each="i:${#numbers.sequence(1, lastDay)}">
+						<th th:if="${i} >= ${scheduleTable.start} and 
+								   ${i} <= ${scheduleTable.end}" th:text ="off" id="th-off"></th>
+						<th th:unless="${i} >= ${scheduleTable.start} and 
+								   ${i} <= ${scheduleTable.end}" th:text ="근무" id="th-work"></th>		   
+					</th:block>
 				</tr>
 			</tbody>
 		</table>
 	</section>
 	
 	<script layout:fragment="script">
-		$(document).ready(function(){
-			var table = document.getElementById('scheduleTable');
-			var rowList = table.rows;
-			var cellCount = table.rows[0].cells.length;
-			console.log(cellCount);
-			
-			var holidayArr = [];
-			
-			new Promise((succ, fail) => {
-				$.ajax({
-					type:"post"
-					,url:"/holiday/calendar"
-					,success : function(data){								
-						for(var i = 0; i < data.length; i++){
-							holidayArr.push(data[i]);
-							succ(holidayArr);
-						}
-					}
-					,error : function(){
-						alert("이번달 휴가 목록 조회 에러!")
-					}
-				})	
-				
-			}).then((arg) => {				
-				for(var i = 1; i < cellCount; i++){
-					for(var j = 1; j < rowList.length; j++){
-						var date = rowList[0].cells[i].innerHTML;
-						var name = rowList[j].cells[0].innerHTML;
-						
-						for(var k = 0; k < arg.length; i++){
-							var holidayName = arg[k].name;
-							var start = arg[k].start;
-							var end = arg[k].end;
-							
-							if(name == holidayName && start <= date 
-									&& date <= end){
-								rowList[j].cell[i].push("연가")
-							}
-						}	
-					}
-				}	
-			})
-		})
+		
 	</script>
 </html>
