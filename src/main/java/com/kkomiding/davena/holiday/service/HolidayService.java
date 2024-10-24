@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
+import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
@@ -88,6 +89,40 @@ public class HolidayService {
 		
 		return personalScheduleList;
 	}
+	
+	//ScheduleTable Dto외상센터의 이번달 휴가목록 가져오기
+	public List<ScheduleTable> getHolidayListByUserId(int userId){
+		User user = userService.getUser(userId);
+		int roomId = user.getRoomId();
+		
+		LocalDate now = LocalDate.now();
+		int month = now.getMonthValue();
+		
+		List<ScheduleTable> scheduleTableList = new ArrayList<>();
+		
+		//외상센터의 이번달 휴가목록을 가져오세요.(roomId, 이번달)
+		List<Holiday> holidayList = holidayRepository.findByRoomIdAndMonth(roomId, month);
+		for(Holiday holiday : holidayList) {
+			String name = userService.getUser(holiday.getId()).getName();
+			
+			LocalDateTime start = holiday.getStartDay();
+			int startDay = start.getDayOfMonth();
+			
+			LocalDateTime end = holiday.getEndDay();
+			int endDay = end.getDayOfMonth();
+			
+			ScheduleTable scheduleTable = ScheduleTable.builder()
+										 .holidayId(holiday.getId())
+										 .roomId(roomId)
+										 .name(name)
+										 .start(startDay)
+										 .end(endDay)
+										 .build();
+			
+			scheduleTableList.add(scheduleTable);
+		}
+		return scheduleTableList;
+	}			
 	
 	
 	//전체 근무자 일정 캘린더에 연동하기
@@ -225,15 +260,4 @@ public class HolidayService {
 			
 		return resultMap;
 	}
-	
-		//외상센터의 이번달 휴가목록 가져오기
-		public List<Holiday> getHolidayListByUserId(int userId){
-			
-			int roomId = userService.getUser(userId).getRoomId();
-			
-			LocalDate now = LocalDate.now();
-			int month = now.getMonthValue();
-			
-			return holidayRepository.findByRoomIdAndMonth(roomId, month);
-		}
 }

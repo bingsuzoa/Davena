@@ -1,7 +1,6 @@
 package com.kkomiding.davena.holiday;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
+import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.service.RoomService;
-import com.kkomiding.davena.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -97,6 +96,13 @@ public class HolidayRestController {
 			resultMap.put("result", "fail");
 		}
 		return resultMap;		
+	}
+	
+	@PostMapping("/calendar")
+	public List<ScheduleTable> calendarList(HttpSession session){
+		int userId = (Integer)session.getAttribute("userId");
+		
+		return holidayService.getHolidayListByUserId(userId);
 	}
 	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kkomiding.davena.holiday.domain.Holiday;
+import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
@@ -95,39 +96,19 @@ public class HolidayController {
 		
 		model.addAttribute("user",user);
 		
+		//방인원 수 전달 
 		int count = roomRepository.countById(user.getRoomId());
+		model.addAttribute("count", count);
 		
 		//월의 마지막날짜 구하기
 		LocalDate now = LocalDate.now();
 		LocalDate lastDate = now.withDayOfMonth(now.lengthOfMonth());
 		int lastDay = lastDate.getDayOfMonth();
-		
-				
-		Map<String, Object> holidayMap = new HashMap<>();
-		List<String> nameList = new ArrayList<>();
-		//외상센터의 이번달 휴가목록을 가져오세요.(roomId, 이번달)
-		List<Holiday> holidayList = holidayService.getHolidayListByUserId(userId);
-		for(Holiday holiday : holidayList) {
-			String name = userService.getUser(holiday.getUserId()).getName();
-			holidayMap.put("name", name);
-			nameList.add(name);
-			
-			LocalDateTime start = holiday.getStartDay();
-			int startDay = start.getDayOfMonth();
-			holidayMap.put("startDay", startDay);
-			
-			LocalDateTime end = holiday.getEndDay();
-			int endDay = end.getDayOfMonth();
-			holidayMap.put("endDay", endDay);
-			
-		}
-		//외상센터 휴가목록 map 
-		model.addAttribute("holidayMap", holidayMap);
-		model.addAttribute("nameList", nameList);
-		//방인원 수 전달 
-		model.addAttribute("count", count);
-		//월의 마지막날짜 전달
 		model.addAttribute("lastDay", lastDay);
+		
+		//table생성에 필요한 정보 전달
+		List<ScheduleTable> scheduleTableList = holidayService.getHolidayListByUserId(userId);
+		model.addAttribute("scheduleTableList",scheduleTableList);
 		
 		return "leader/calendarview";
 	}
