@@ -14,6 +14,8 @@ import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
+import com.kkomiding.davena.work.domain.Work;
+import com.kkomiding.davena.work.service.WorkService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,13 +27,16 @@ public class HolidayController {
 	private HolidayService holidayService;
 	private UserService userService;
 	private RoomRepository roomRepository;
+	private WorkService workService;
 	
 	public HolidayController(HolidayService holidayService
 							,UserService userService
-							,RoomRepository roomRepository) {
+							,RoomRepository roomRepository
+							,WorkService workService) {
 		this.holidayService = holidayService;
 		this.userService = userService;
 		this.roomRepository = roomRepository;
+		this.workService = workService;
 	}
 		
 	@GetMapping("/before-apply-view")
@@ -104,7 +109,8 @@ public class HolidayController {
 		List<ScheduleTable> scheduleTableList = holidayService.getHolidayListByUserId(userId);
 		model.addAttribute("scheduleTableList",scheduleTableList);
 		
-		
+		List<Work> workList = workService.getWorkList();
+		model.addAttribute("workList", workList);
 		
 		return "leader/calendarview";
 	}

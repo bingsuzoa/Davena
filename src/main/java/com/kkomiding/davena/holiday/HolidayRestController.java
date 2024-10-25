@@ -17,6 +17,7 @@ import com.kkomiding.davena.holiday.dto.PersonalSchedule;
 import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.service.RoomService;
+import com.kkomiding.davena.work.domain.Work;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -106,13 +107,20 @@ public class HolidayRestController {
 	}
 	
 	@PostMapping("/random")
-	public List<String> randomList(@RequestParam("Dduty") int Dduty
+	public Map<String, String> randomList(@RequestParam("Dduty") int Dduty
 			  					  ,@RequestParam("Eduty") int Eduty
 			  					  ,@RequestParam("Nduty") int Nduty){
 		
 		
 		//1일 근무표배열 생성
-		return holidayService.getWorkArr(Dduty, Eduty, Nduty);
+		List<Work> workAllList = holidayService.getWorkArr(Dduty, Eduty, Nduty);
+		Map<String, String> resultMap = new HashMap<>();
+		if(workAllList != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;		
 	}
 	
 }

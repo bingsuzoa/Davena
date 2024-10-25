@@ -87,8 +87,12 @@
 				type:"post"
 				,url:"/holiday/random"
 				,data: {"Dduty" : Dduty, "Eduty" : Eduty, "Nduty" : Nduty}
-				,success : function(){
-					alert("랜덤근무표 가져오기 성공!");
+				,success : function(data){
+					if(data.result == "success"){
+						alert("랜덤 근무표 가져오기 성공!");
+					} else {
+						alert("랜던 근무표 가져오기 실패!");
+					}
 				}
 				,error : function(){
 					alert("랜덤근무표 가져오기 에러!");

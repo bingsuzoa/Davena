@@ -110,23 +110,44 @@ x<!DOCTYPE html>
 	    		
 	    		//승인
 	    		$(".modal-approveBtn").on('click',function(){
-	    		
-		    		$.ajax({
-		    			 type:"post"
-		    			,url: "/user/apply/approve"
-		    			,data:{"userId" : id}
-		    			,success:function(data){
-		    				console.log(data)
-		    				if(data.result == "success"){
-		    					$("#userName" + id).addClass("d-none");
-		    					location.reload();
-		    				} else {
-		    					alert("승인실패!");
-		    				}
-		    			},error:function(){
-		    				alert("승인에러!");
-		    			}
-		    		})
+	    			
+	    			new Promise((succ, fail) => {
+	    				$.ajax({
+			    			 type:"post"
+			    			,url: "/user/apply/approve"
+			    			,data:{"userId" : id}
+			    			,success:function(data){
+			    				console.log(data)
+			    				if(data.result == "success"){
+			    					$("#userName" + id).addClass("d-none");
+			    					location.reload();
+			    					succ(id);
+			    				} else {
+			    					alert("승인실패!");
+			    				}
+			    			},error:function(){
+			    				alert("승인에러!");
+			    			}
+			    		})
+	    				
+	    			}).then((arg) => {
+	    				console.log(arg)
+	    				$.ajax({
+	    					type:"post"
+	    					,url:"/work/insert/id"
+	    					,data:{"userId" : arg}
+	    					,success:function(data){
+	    						if(data.result == "success"){
+	    							alert("work userId 주입 성공")
+	    						} else {
+	    							alert("work userId 주입 실패")
+	    						}
+	    					}
+	    					,eror : function(){
+	    						alert("work userId 주입 에러")
+	    					}
+	    				})
+	    			})		
 		    	})
 	   			
 	   			//거부

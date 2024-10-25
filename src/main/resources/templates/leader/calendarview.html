@@ -23,10 +23,8 @@
 					<th:block th:each="i:${#numbers.sequence(1, lastDay)}">
 						<th th:if="${i} >= ${scheduleTable.start} and 
 								   ${i} <= ${scheduleTable.end}" th:text ="off" id="th-off"></th>
-		
-							<th th:unless="${i} >= ${scheduleTable.start} and 
-									   ${i} <= ${scheduleTable.end}" th:text ="근무" id="th-work"></th>
-	 
+						<th th:unless="${i} >= ${scheduleTable.start} and 
+								   ${i} <= ${scheduleTable.end}" th:text ="근무" id="th-work"></th>
 					</th:block>
 				</tr>
 			</tbody>

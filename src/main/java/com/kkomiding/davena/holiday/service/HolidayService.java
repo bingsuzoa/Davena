@@ -127,6 +127,8 @@ public class HolidayService {
 										 .build();
 			
 			scheduleTableList.add(scheduleTable);
+		
+			
 		}
 		return scheduleTableList;
 	}			
@@ -268,7 +270,8 @@ public class HolidayService {
 		return resultMap;
 	}
 	
-		public List<String> getWorkArr(int Dduty, int Eduty, int Nduty) {
+		//1일차 랜덤으로 db에 넣기
+		public List<Work> getWorkArr(int Dduty, int Eduty, int Nduty) {
 			List<String> workList = new ArrayList<>();
 			int index[] = new int[Dduty + Eduty + Nduty];
 			
@@ -298,6 +301,17 @@ public class HolidayService {
 				randomWorkList.add(workList.get(index[i]));
 			}
 			
-			return randomWorkList;
+			List<Work> workAllList = workRepository.findAll();
+			for(int i = 0; i < randomWorkList.size(); i++) {				
+				for(Work work : workAllList) {
+					work = work.toBuilder()
+								.day1(randomWorkList.get(i))
+								.updatedAt(LocalDateTime.now())
+								.build();
+					workRepository.save(work);
+					i++;
+				}
+			}
+			return workAllList;
 		}
 }
