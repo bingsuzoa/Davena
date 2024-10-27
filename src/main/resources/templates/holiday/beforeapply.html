@@ -107,16 +107,14 @@
  	 	 		})
  			})	 	 		 		
  	 	}).then((arg) => {
- 	 			let type = arg.type
- 	 			let startDay = arg.startDay
- 	 			let endDay = arg.endDay
- 	 			let holidayId = arg.id
- 	 			let userId = arg.userId
- 	 			
  	 			$.ajax({
  	 				type:"post"
  	 				,url:"/work/insert"
- 	 				,data:{"type" : type, "startDay" : startDay, "endDay" : endDay, "holidayId" : holidayId, "userId" : userId}
+ 	 				,data:{"type" : arg.type
+ 	 					  ,"startDay" : arg.startDay
+ 	 					  ,"endDay" : arg.endDay
+ 	 					  ,"holidayId" : arg.id
+ 	 					  ,"userId" : arg.userId}
  	 				,success:function(data){
  	 					if(data.result == "success"){
  	 						alert("work table 저장완료")
@@ -127,7 +125,6 @@
  	 					alert("work table 저장에러")
  	 				}
  	 			})
- 	 		
  	 	})
   		
  	 

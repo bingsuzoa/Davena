@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,8 +27,8 @@ public class WorkRestController {
 	
 	@PostMapping("/insert")
 	public Map<String, String> insertUserId(@RequestParam("type") String type
-										   ,@RequestParam("startDay") LocalDateTime startDay
-										   ,@RequestParam("endDay") LocalDateTime endDay
+										   ,@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDay
+										   ,@RequestParam("endDay")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDay
 										   ,@RequestParam("holidayId") int holidayId
 										   ,@RequestParam("userId") int userId){
 		

@@ -46,7 +46,7 @@ public class WorkService {
 	
 		
 		Optional<Work> optionalWork = workRepository.findByUserId(userId);
-		Work work = optionalWork.orElse(null);
+		Work work =  optionalWork.orElse(null);
 		
 		//날짜데이터 내가 원하는 타입에 맞게 수정하기
 		int start = startDay.getDayOfMonth();
@@ -56,9 +56,9 @@ public class WorkService {
 		work.setHolidayId(holidayId);
 		work.setDay(start, end, type);
 		work.setUpdatedAt(LocalDateTime.now());
-		workRepository.save(work);
+		Work newWork = workRepository.save(work);
 		
-		return work;
+		return newWork;
 	
 		
 		
