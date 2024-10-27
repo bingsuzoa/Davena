@@ -6,10 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,12 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kkomiding.davena.user.domain.User;
-import com.kkomiding.davena.user.domain.UserDto;
 import com.kkomiding.davena.user.service.UserService;
+import com.kkomiding.davena.work.service.WorkService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -31,9 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRestController {
 	
 	private UserService userService;
+	private WorkService workService;
 	
-	public UserRestController(UserService userService) {
+	public UserRestController(UserService userService
+							 ,WorkService workService) {
 		this.userService = userService;
+		this.workService = workService;
 	}
 	
 	
@@ -53,10 +52,12 @@ public class UserRestController {
 										,position
 										,profile
 										,roomName, roomPassword);
+	
 		
 		Map<String, String> resultMap = new HashMap<>();
 		
 		if(newUser != null) {
+			workService.insertUserId(newUser.getId());
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");

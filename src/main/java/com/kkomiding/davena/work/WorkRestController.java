@@ -29,10 +29,9 @@ public class WorkRestController {
 	public Map<String, String> insertUserId(@RequestParam("type") String type
 										   ,@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDay
 										   ,@RequestParam("endDay")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDay
-										   ,@RequestParam("holidayId") int holidayId
 										   ,@RequestParam("userId") int userId){
 		
-		Work work = workService.getWork(type, startDay, endDay, holidayId, userId);
+		Work work = workService.getWork(type, startDay, endDay, userId);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		

@@ -31,9 +31,6 @@ public class Work {
 	@Column(name="userId")
 	private int userId;
 	
-	@Column(name="holidayId")
-	private int holidayId;
-	
 	private String day1;	
 	private String day2;
 	private String day3;
@@ -78,13 +75,6 @@ public class Work {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-	
-	public int getHolidayId() {
-		return holidayId;
-	}
-	public void setHolidayId(int holidayId) {
-		this.holidayId = holidayId;
 	}
 	
 	public void setDay(int start, int end, String type) {

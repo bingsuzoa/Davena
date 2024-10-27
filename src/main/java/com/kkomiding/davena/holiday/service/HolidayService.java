@@ -23,7 +23,6 @@ import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
 import com.kkomiding.davena.work.domain.Work;
-import com.kkomiding.davena.work.dto.WorkDto;
 import com.kkomiding.davena.work.repository.WorkRepository;
 
 @Service

@@ -1,6 +1,8 @@
 package com.kkomiding.davena.work.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +43,6 @@ public class WorkService {
 	public Work getWork(String type
 					   ,LocalDateTime startDay
 					   ,LocalDateTime endDay
-					   ,int holidayId
 					   ,int userId) {
 	
 		
@@ -50,10 +51,19 @@ public class WorkService {
 		
 		//날짜데이터 내가 원하는 타입에 맞게 수정하기
 		int start = startDay.getDayOfMonth();
-		int end = endDay.getDayOfMonth();
+		
+		//마지막날짜 다음달로 넘어가는 경우가 있으니깐; 
+		int end = 0;
+		LocalDate localDate = endDay.toLocalDate().minusMonths(1);	
+		YearMonth month = YearMonth.from(localDate);
+		LocalDate endDate = month.atEndOfMonth();	
+		if(endDay.getDayOfMonth() == 1) {
+			end = endDate.getDayOfMonth();
+		} else {			
+			end = endDay.getDayOfMonth()-1;
+		}
 		
 		//workentity저장하기
-		work.setHolidayId(holidayId);
 		work.setDay(start, end, type);
 		work.setUpdatedAt(LocalDateTime.now());
 		Work newWork = workRepository.save(work);
