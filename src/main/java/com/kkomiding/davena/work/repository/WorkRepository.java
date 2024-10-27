@@ -9,7 +9,9 @@ import com.kkomiding.davena.work.domain.Work;
 
 public interface WorkRepository extends JpaRepository<Work, Integer> {
 	
-	public List<Work> findAll();
 
 	public Optional<Work> findByUserId(int userId);
+	
+	public List<Work> findByRoomId(int roomId);
+	
 }

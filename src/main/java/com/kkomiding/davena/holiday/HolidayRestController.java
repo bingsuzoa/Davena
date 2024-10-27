@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
-import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.room.service.RoomService;
 import com.kkomiding.davena.work.domain.Work;
@@ -99,28 +98,6 @@ public class HolidayRestController {
 		return resultMap;		
 	}
 	
-	@PostMapping("/calendar")
-	public List<ScheduleTable> calendarList(HttpSession session){
-		int userId = (Integer)session.getAttribute("userId");
-		
-		return holidayService.getHolidayListByUserId(userId);
-	}
 	
-	@PostMapping("/random")
-	public Map<String, String> randomList(@RequestParam("Dduty") int Dduty
-			  					  ,@RequestParam("Eduty") int Eduty
-			  					  ,@RequestParam("Nduty") int Nduty){
-		
-		
-		//1일 근무표배열 생성
-		List<Work> workAllList = holidayService.getWorkArr(Dduty, Eduty, Nduty);
-		Map<String, String> resultMap = new HashMap<>();
-		if(workAllList != null) {
-			resultMap.put("result", "success");
-		} else {
-			resultMap.put("result", "fail");
-		}
-		return resultMap;		
-	}
 	
 }

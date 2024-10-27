@@ -20,12 +20,37 @@
 			<tbody>
 				<tr th:each="scheduleTable : ${scheduleTableList}">
 					<td th:text="${scheduleTable.name}"></td>
-					<th:block th:each="i:${#numbers.sequence(1, lastDay)}">
-						<th th:if="${i} >= ${scheduleTable.start} and 
-								   ${i} <= ${scheduleTable.end}" th:text ="off" id="th-off"></th>
-						<th th:unless="${i} >= ${scheduleTable.start} and 
-								   ${i} <= ${scheduleTable.end}" th:text ="근무" id="th-work"></th>
-					</th:block>
+					<td th:text="${scheduleTable.day1}"></td>
+					<td th:text="${scheduleTable.day2}"></td>
+					<td th:text="${scheduleTable.day3}"></td>
+					<td th:text="${scheduleTable.day4}"></td>
+					<td th:text="${scheduleTable.day5}"></td>
+					<td th:text="${scheduleTable.day6}"></td>
+					<td th:text="${scheduleTable.day7}"></td>
+					<td th:text="${scheduleTable.day8}"></td>
+					<td th:text="${scheduleTable.day9}"></td>
+					<td th:text="${scheduleTable.day10}"></td>
+					<td th:text="${scheduleTable.day11}"></td>
+					<td th:text="${scheduleTable.day12}"></td>
+					<td th:text="${scheduleTable.day13}"></td>
+					<td th:text="${scheduleTable.day14}"></td>
+					<td th:text="${scheduleTable.day15}"></td>
+					<td th:text="${scheduleTable.day16}"></td>
+					<td th:text="${scheduleTable.day17}"></td>
+					<td th:text="${scheduleTable.day18}"></td>
+					<td th:text="${scheduleTable.day19}"></td>
+					<td th:text="${scheduleTable.day20}"></td>
+					<td th:text="${scheduleTable.day21}"></td>
+					<td th:text="${scheduleTable.day22}"></td>
+					<td th:text="${scheduleTable.day23}"></td>
+					<td th:text="${scheduleTable.day24}"></td>
+					<td th:text="${scheduleTable.day25}"></td>
+					<td th:text="${scheduleTable.day26}"></td>
+					<td th:text="${scheduleTable.day27}"></td>
+					<td th:text="${scheduleTable.day28}"></td>
+					<td th:text="${scheduleTable.day29}"></td>
+					<td th:text="${scheduleTable.day30}"></td>
+					<td th:text="${scheduleTable.day31}"></td>
 				</tr>
 			</tbody>
 		</table>

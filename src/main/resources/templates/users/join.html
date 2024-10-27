@@ -354,37 +354,46 @@
 				})
 			}
 			if(position == "팀장"){
-				let formData = new FormData();
-				formData.append("join_idInput", id);
-				formData.append("join_checkPwInput", Checkpassword);
-				formData.append("join_userName", name);
-				formData.append("profile", imgFile);
-				formData.append("position", position);
-				formData.append("join_roomName", roomName);
-				formData.append("join_roomPw", roomPassword);
-					
-				$.ajax({
-					type:"post"
-					,url :"/user/join"
-					,data:formData
-					,enctype:"multiplart/form-data"
-					,processData:false
-		    		,contentType:false
-		    		,success:function(data){
-		    			console.log(data);
-		    			if(data.result == "hasError"){
-		    				location.href="/user/join-view";
-	    					alert(data);
-		    			}
-		    			else if(data.result == "success"){
-		    				location.href="/leader/login-view";
-		    				alert("팀장 회원가입 성공!");
-		    			} else {
-		    				alert("팀장 회원가입 실패");
-		    			}
-		    		},error : function(){
-		    			alert("팀장 회원가입 에러!");
-		    		}
+				new Promise((succ, fail) => {
+					let formData = new FormData();
+					formData.append("join_idInput", id);
+					formData.append("join_checkPwInput", Checkpassword);
+					formData.append("join_userName", name);
+					formData.append("profile", imgFile);
+					formData.append("position", position);
+					formData.append("join_roomName", roomName);
+					formData.append("join_roomPw", roomPassword);
+						
+					$.ajax({
+						type:"post"
+						,url :"/user/join"
+						,data:formData
+						,enctype:"multiplart/form-data"
+						,processData:false
+			    		,contentType:false
+			    		,success:function(data){
+							succ(data.success);	
+			    			location.href="/leader/login-view";			    			
+			    		},error : function(){
+			    			fail(data.fail);
+			    			alert("팀장 회원가입 에러!");
+			    		}
+					})
+				}).then((arg) => {
+					$.ajax({
+						type:"post"
+						,url:"/work/insert/id"
+						,data:{"userId" : arg}
+						,success:function(data){
+							if(data.result == "success"){
+								alert("work userId 입력성공")
+							} else {
+								alert("work userId 입력실패")
+							}
+						},error : function(){
+							alert("work userId 입력에러");
+						}
+					})
 				})
 			}
 		})

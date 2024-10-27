@@ -2,6 +2,7 @@ package com.kkomiding.davena.work;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kkomiding.davena.work.domain.Work;
 import com.kkomiding.davena.work.service.WorkService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/work")
 @RestController
@@ -25,8 +28,26 @@ public class WorkRestController {
 	}
 
 	
-	@PostMapping("/insert")
-	public Map<String, String> insertUserId(@RequestParam("type") String type
+	@PostMapping("/insert/id")
+	public Map<String, String> insertUserId(@RequestParam("userId") int userId){
+		
+		Work work = workService.insertUserId(userId);
+		
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(work != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+	}
+	
+	
+	@PostMapping("/insert/holiday")
+	public Map<String, String> insertHoliday(@RequestParam("type") String type
 										   ,@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDay
 										   ,@RequestParam("endDay")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDay
 										   ,@RequestParam("userId") int userId){
@@ -43,5 +64,24 @@ public class WorkRestController {
 		
 		return resultMap;
 		
+	}
+	
+	@PostMapping("/random/day1")
+	public Map<String, String> randomList(@RequestParam("Dduty") int Dduty
+										 ,@RequestParam("Eduty") int Eduty
+										 ,@RequestParam("Nduty") int Nduty
+										 ,HttpSession session){
+		
+		int userId = (Integer)session.getAttribute("userId");
+		
+		//1일 근무표배열 생성
+		List<Work> workAllList = workService.getWorkArr(Dduty, Eduty, Nduty, userId);
+		Map<String, String> resultMap = new HashMap<>();
+		if(workAllList != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;		
 	}
 }

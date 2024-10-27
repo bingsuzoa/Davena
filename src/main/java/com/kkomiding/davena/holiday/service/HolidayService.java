@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.dto.PersonalSchedule;
-import com.kkomiding.davena.holiday.dto.ScheduleTable;
 import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
@@ -98,43 +97,6 @@ public class HolidayService {
 		
 		return personalScheduleList;
 	}
-	
-	
-	//ScheduleTable Dto외상센터의 이번달 휴가목록 가져오기
-	public List<ScheduleTable> getHolidayListByUserId(int userId){
-		User user = userService.getUser(userId);
-		int roomId = user.getRoomId();
-		
-		LocalDate now = LocalDate.now();
-		int month = now.getMonthValue();
-		
-		List<ScheduleTable> scheduleTableList = new ArrayList<>();
-		
-		//외상센터의 이번달 휴가목록을 가져오세요.(roomId, 이번달)
-		List<Holiday> holidayList = holidayRepository.findByRoomIdAndMonth(roomId, month);
-		for(Holiday holiday : holidayList) {
-			String name = userService.getUser(holiday.getId()).getName();
-			
-			LocalDateTime start = holiday.getStartDay();
-			int startDay = start.getDayOfMonth();
-			
-			LocalDateTime end = holiday.getEndDay();
-			int endDay = end.getDayOfMonth();
-			
-			ScheduleTable scheduleTable = ScheduleTable.builder()
-										 .holidayId(holiday.getId())
-										 .roomId(roomId)
-										 .name(name)
-										 .start(startDay)
-										 .end(endDay)
-										 .build();
-			
-			scheduleTableList.add(scheduleTable);
-		
-			
-		}
-		return scheduleTableList;
-	}			
 	
 	
 	//전체 근무자 일정 캘린더에 연동하기
@@ -293,48 +255,4 @@ public class HolidayService {
 		return resultMap;
 	}
 	
-		//1일차 랜덤으로 db에 넣기
-		public List<Work> getWorkArr(int Dduty, int Eduty, int Nduty) {
-			List<String> workList = new ArrayList<>();
-			int index[] = new int[Dduty + Eduty + Nduty];
-			
-			List<String> randomWorkList = new ArrayList<>();
-			
-			for(int i = 0; i < Dduty; i++) {
-				workList.add("Day");
-			}
-			for(int i = 0; i < Eduty; i++) {
-				workList.add("Eve");
-			}
-			for(int i = 0; i < Nduty; i++) {
-				workList.add("Night");
-			}
-			
-			Random rand = new Random();
-		
-			for(int i = 0; i < workList.size(); i++) {
-				index[i] = rand.nextInt(workList.size());
-				for(int j = 0; j < i; j++) {
-					if(index[i] == index[j]) {
-						i--;
-					}
-				}
-			}
-			for(int i = 0; i< index.length; i++) {
-				randomWorkList.add(workList.get(index[i]));
-			}
-			
-			List<Work> workAllList = workRepository.findAll();
-			for(int i = 0; i < randomWorkList.size(); i++) {				
-				for(Work work : workAllList) {
-					work = work.toBuilder()
-								.day1(randomWorkList.get(i))
-								.updatedAt(LocalDateTime.now())
-								.build();
-					workRepository.save(work);
-					i++;
-				}
-			}
-			return workAllList;
-		}
 }

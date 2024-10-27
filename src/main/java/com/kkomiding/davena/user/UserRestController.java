@@ -38,7 +38,7 @@ public class UserRestController {
 	
 	//회원가입
 	@PostMapping("/join")
-	public Map<String, String> join(
+	public Map<String, Integer> join(
 									 @RequestParam("join_idInput") String loginId
 									,@RequestParam("join_checkPwInput") String password
 									,@RequestParam("join_userName") String name
@@ -54,13 +54,12 @@ public class UserRestController {
 										,roomName, roomPassword);
 	
 		
-		Map<String, String> resultMap = new HashMap<>();
+		Map<String, Integer> resultMap = new HashMap<>();
 		
 		if(newUser != null) {
-			workService.insertUserId(newUser.getId());
-			resultMap.put("result", "success");
+			resultMap.put("success", newUser.getId());
 		} else {
-			resultMap.put("result", "fail");
+			resultMap.put("fail", -1);
 		}
 		
 		return resultMap;

@@ -8,6 +8,8 @@ import com.kkomiding.davena.room.domain.Room;
 import com.kkomiding.davena.room.repository.RoomRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
+import com.kkomiding.davena.work.domain.Work;
+import com.kkomiding.davena.work.repository.WorkRepository;
 
 @Service
 public class RoomService {

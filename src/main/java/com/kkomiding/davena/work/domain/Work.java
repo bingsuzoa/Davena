@@ -31,6 +31,9 @@ public class Work {
 	@Column(name="userId")
 	private int userId;
 	
+	@Column(name="roomId")
+	private int roomId;
+	
 	private String day1;	
 	private String day2;
 	private String day3;
@@ -75,6 +78,112 @@ public class Work {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public int getRoomId() {
+		return roomId;
+	}
+	
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+	
+	public void setDay(int date, String type) {
+		switch(date) {
+		case 1 :
+			this.day1 = type;
+			break;
+		case 2 :
+			this.day2 = type;	
+			break;
+		case 3 :
+			this.day3 = type;		
+			break;
+		case 4 :
+			this.day4 = type;	
+			break;
+		case 5 :
+			this.day5 = type;
+			break;
+		case 6 :
+			this.day6 = type;
+			break;
+		case 7 :
+			this.day7 = type;
+			break;
+		case 8 :
+			this.day8 = type;
+			break;
+		case 9 :
+			this.day9 = type;
+			break;
+		case 10:
+			this.day10 = type;
+			break;
+		case 11:
+			this.day11 = type;
+			break;
+		case 12 :
+			this.day12 = type;		
+			break;
+		case 13 :
+			this.day13 = type;	
+			break;
+		case 14 :
+			this.day14 = type;	
+			break;
+		case 15 :
+			this.day15 = type;	
+			break;
+		case 16 :
+			this.day16 = type;
+			break;
+		case 17 :
+			this.day17 = type;
+			break;
+		case 18 :
+			this.day18 = type;
+			break;
+		case 19 :
+			this.day19 = type;
+			break;
+		case 20:
+			this.day20 = type;
+			break;
+		case 21 :
+			this.day21 = type;
+			break;
+		case 22 :
+			this.day22 = type;
+			break;
+		case 23 :
+			this.day23 = type;	
+			break;
+		case 24 :
+			this.day24 = type;	
+			break;
+		case 25 :
+			this.day25 = type;
+			break;
+		case 26 :
+			this.day26 = type;
+			break;
+		case 27 :
+			this.day27 = type;
+			break;
+		case 28 :
+			this.day28 = type;
+			break;
+		case 29 :
+			this.day29 = type;
+			break;
+		case 30:
+			this.day30 = type;	
+			break;
+		case 31:
+			this.day31 = type;
+			break;
+			
+		}
 	}
 	
 	public void setDay(int start, int end, String type) {
@@ -172,6 +281,52 @@ public class Work {
 			this.day31 = type;
 		}
 	}
+	
+	
+	public String getDay(int a) {
+		String day = null;
+		
+		switch(a) {
+		
+		case 1: day = day1;
+		case 2: day = day2;		
+		case 3: day = day3;
+		case 4: day = day4;
+		case 5: day = day5;
+		case 6: day = day6;
+		case 7: day = day7;
+		case 8: day = day8;
+		case 9: day = day9;
+		
+		case 10: day = day10;
+		case 11: day = day11;
+		case 12: day = day12;		
+		case 13: day = day13;
+		case 14: day = day14;
+		case 15: day = day15;
+		case 16: day = day16;
+		case 17: day = day17;
+		case 18: day = day18;
+		case 19: day = day19;
+		
+		case 20: day = day20;	
+		case 21: day = day21;
+		case 22: day = day22;		
+		case 23: day = day23;
+		case 24: day = day24;
+		case 25: day = day25;
+		case 26: day = day26;
+		case 27: day = day27;
+		case 28: day = day28;
+		case 29: day = day29;
+		
+		case 30: day = day30;
+		case 31: day = day31;
+		
+		}
+		return day;
+	}
+	
 	
 	public String getDay1() {
 		return day1;
