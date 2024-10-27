@@ -3,6 +3,7 @@ package com.kkomiding.davena.holiday.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -171,7 +172,27 @@ public class HolidayService {
 		Optional<Holiday> optionalHoliday = holidayRepository.findByIdAndUserId(holidayId, userId);
 		Holiday holiday = optionalHoliday.orElse(null);
 		
+		Optional<Work> optionalWork = workRepository.findByUserId(userId);
+		Work work =  optionalWork.orElse(null);
+			
 		if(holiday != null) {
+			LocalDateTime startDay = holiday.getStartDay();
+			LocalDateTime endDay = holiday.getEndDay();
+			int start = startDay.getDayOfMonth();
+			int end = 0;
+			
+			LocalDate localDate = endDay.toLocalDate().minusMonths(1);	
+			YearMonth month = YearMonth.from(localDate);
+			LocalDate endDate = month.atEndOfMonth();		
+			if(endDay.getDayOfMonth() == 1) {
+				end = endDate.getDayOfMonth();
+			} else {			
+				end = endDay.getDayOfMonth()-1;
+			}
+			
+			work.setDay(start, end, null);
+			work.setUpdatedAt(LocalDateTime.now());
+			workRepository.save(work);			
 			holidayRepository.deleteByIdAndUserId(holidayId, userId);
 			return true;
 		} else {
