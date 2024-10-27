@@ -23,6 +23,7 @@ import com.kkomiding.davena.holiday.repository.HolidayRepository;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
 import com.kkomiding.davena.work.domain.Work;
+import com.kkomiding.davena.work.dto.WorkDto;
 import com.kkomiding.davena.work.repository.WorkRepository;
 
 @Service
@@ -40,6 +41,7 @@ public class HolidayService {
 		this.workRepository = workRepository;
 	}
 	
+	//휴가 신청할때 workdto에도 저장되도록 만들기
 	public Holiday insertRequest(LocalDateTime startDay, LocalDateTime endDay
 								,String type, String comment, int userId) {
 		
@@ -59,8 +61,9 @@ public class HolidayService {
 						 .type(type)
 						 .comment(comment)
 						 .build();
-						 		
 		return holidayRepository.save(holiday);		
+	
+
 	}
 	
 	public List<Holiday> selectByUserId(int userId){

@@ -66,44 +66,70 @@
 	  		$('.requestMenuBtn').attr('value', $(this).text());
  	 	})
  	 	
- 	 	$("#vacApplyBtn").on('click', function(){
-     	 	 		let startDay = $("#request-start-date").val();
-     	 	 		let endDay = $("#request-end-date").val();
-     	 	 		let type = $(".requestMenuBtn").val();
-     	 	 		let comment = $("#requestReason").val();
-     	 	 		
-     	 	 		if(startDay == ""){
-     	 	 			alert("휴가 시작일자가 설정되지 않았습니다.");
-     	 	 			return;
-     	 	 		}
-     	 	 		
-     	 	 		if(endDay == ""){
-     	 	 			alert("휴가 종료일자가 설정되지 않았습니다.");
-     	 	 			return;
-     	 	 		}
-     	 	 		if(type == ""){
-     	 	 			alert("휴가 종류가 설정되지 않았습니다.");
-     	 	 			return;
-     	 	 		}
-     	 	 		if(comment == ""){
-     	 	 			alert("휴가 사유가 설정되지 않았습니다.");
-     	 	 			return;
-     	 	 		}
-     	 	 		
-     	 	 		$.ajax({
-     	 	 			type:"post"
-     	 	 			,url:"/holiday/apply"
-     	 	 			,data:{"startDay" : startDay, "endDay" : endDay, "type" : type, "comment" : comment}
-     	 	 			,success:function(data){
-     	 	 				if(data.result == "success"){
-     	 	 					location.href="/holiday/after-apply-view";
-     	 	 				} else {
-     	 	 					alert("휴가 신청 실패");
-     	 	 				}
-     	 	 			},error:function() {
-     	 	 				alert("휴가신청에러!");
-     	 	 			}
-     	 	 		})
-     	})
+ 	 	
+ 	 	new Promise((succ, fail) => {
+ 	 		
+ 	 		$("#vacApplyBtn").on('click', function(){
+ 	 	 		let startDay = $("#request-start-date").val();
+ 	 	 		let endDay = $("#request-end-date").val();
+ 	 	 		let type = $(".requestMenuBtn").val();
+ 	 	 		let comment = $("#requestReason").val();
+ 	 	 		
+ 	 	 		if(startDay == ""){
+ 	 	 			alert("휴가 시작일자가 설정되지 않았습니다.");
+ 	 	 			return;
+ 	 	 		}
+ 	 	 		
+ 	 	 		if(endDay == ""){
+ 	 	 			alert("휴가 종료일자가 설정되지 않았습니다.");
+ 	 	 			return;
+ 	 	 		}
+ 	 	 		if(type == ""){
+ 	 	 			alert("휴가 종류가 설정되지 않았습니다.");
+ 	 	 			return;
+ 	 	 		}
+ 	 	 		if(comment == ""){
+ 	 	 			alert("휴가 사유가 설정되지 않았습니다.");
+ 	 	 			return;
+ 	 	 		}
+ 	 	 		
+ 	 	 		$.ajax({
+ 	 	 			type:"post"
+ 	 	 			,url:"/holiday/apply"
+ 	 	 			,data:{"startDay" : startDay, "endDay" : endDay, "type" : type, "comment" : comment}
+ 	 	 			,success:function(data){
+ 	 	 				succ(data.success)
+ 	 	 				location.href="/holiday/after-apply-view";
+ 	 	 			} ,error:function() {
+ 	 	 				fail(data.fail)
+ 	 	 				alert("휴가신청에러!");
+ 	 	 			}
+ 	 	 		})
+ 			})	 	 		 		
+ 	 	}).then((arg) => {
+ 	 			let type = arg.type
+ 	 			let startDay = arg.startDay
+ 	 			let endDay = arg.endDay
+ 	 			let holidayId = arg.id
+ 	 			let userId = arg.userId
+ 	 			
+ 	 			$.ajax({
+ 	 				type:"post"
+ 	 				,url:"/work/insert"
+ 	 				,data:{"type" : type, "startDay" : startDay, "endDay" : endDay, "holidayId" : holidayId, "userId" : userId}
+ 	 				,success:function(data){
+ 	 					if(data.result == "success"){
+ 	 						alert("work table 저장완료")
+ 	 					} else {
+ 	 						alert("work table 저장실패")
+ 	 					}
+ 	 				}, error : function(){
+ 	 					alert("work table 저장에러")
+ 	 				}
+ 	 			})
+ 	 		
+ 	 	})
+  		
+ 	 
     </script>
 </html>

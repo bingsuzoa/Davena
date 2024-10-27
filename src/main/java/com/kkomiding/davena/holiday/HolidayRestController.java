@@ -36,7 +36,7 @@ public class HolidayRestController {
 
 		
 	@PostMapping("/apply")
-	public Map<String,String> addRequest(
+	public Map<String, Object> addRequest(
 			 @RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDay
 			,@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDay
 			,@RequestParam("type") String type
@@ -47,12 +47,12 @@ public class HolidayRestController {
 		
 		Holiday holiday = holidayService.insertRequest(startDay, endDay, type, comment, userId);
 		
-		Map<String, String> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		if(holiday != null) {
-			resultMap.put("result", "success");
+			resultMap.put("success", holiday);
 		} else {
-			resultMap.put("result", "fail");
+			resultMap.put("fail", -1);
 		}
 		
 		return resultMap;

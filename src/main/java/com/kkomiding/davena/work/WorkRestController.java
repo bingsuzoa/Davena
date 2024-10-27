@@ -1,5 +1,6 @@
 package com.kkomiding.davena.work;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,14 @@ public class WorkRestController {
 	}
 
 	
-	@PostMapping("/insert/id")
-	public Map<String, String> insertUserId(@RequestParam("userId") int userId){
+	@PostMapping("/insert")
+	public Map<String, String> insertUserId(@RequestParam("type") String type
+										   ,@RequestParam("startDay") LocalDateTime startDay
+										   ,@RequestParam("endDay") LocalDateTime endDay
+										   ,@RequestParam("holidayId") int holidayId
+										   ,@RequestParam("userId") int userId){
 		
-		Work work = workService.insertUserId(userId);
+		Work work = workService.getWork(type, startDay, endDay, holidayId, userId);
 		
 		Map<String, String> resultMap = new HashMap<>();
 		

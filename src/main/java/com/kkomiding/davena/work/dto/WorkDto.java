@@ -56,99 +56,99 @@ public class WorkDto {
 		this.holidayId = holidayId;
 	}
 	
-	public void setDay(int start, int end, String holiday) {
+	public void setDay(int start, int end, String type) {
 		if(start <= 1 && 1 <= end) {
-			this.day1 = holiday;
+			this.day1 = type;
 		}
 		if(start <= 2 && 2 <= end) {
-			this.day2 = holiday;
+			this.day2 = type;
 		}
 		if(start <= 3 && 3 <= end) {
-			this.day3 = holiday;
+			this.day3 = type;
 		}
 		if(start <= 4 && 4 <= end) {
-			this.day4 = holiday;
+			this.day4 = type;
 		}
 		if(start <= 5 && 5 <= end) {
-			this.day5 = holiday;
+			this.day5 = type;
 		}
 		if(start <= 6 && 6 <= end) {
-			this.day6 = holiday;
+			this.day6 = type;
 		}
 		if(start <= 7 && 7 <= end) {
-			this.day7 = holiday;
+			this.day7 = type;
 		}
 		if(start <= 8 && 8 <= end) {
-			this.day8 = holiday;
+			this.day8 = type;
 		}
 		if(start <= 9 && 9 <= end) {
-			this.day9 = holiday;
+			this.day9 = type;
 		}
 		if(start <= 10 && 10 <= end) {
-			this.day10 = holiday;
+			this.day10 = type;
 		}
 		if(start <= 11 && 11 <= end) {
-			this.day11 = holiday;
+			this.day11 = type;
 		}
 		if(start <= 12 && 12 <= end) {
-			this.day12 = holiday;
+			this.day12 = type;
 		}
 		if(start <= 13 && 13 <= end) {
-			this.day13 = holiday;
+			this.day13 = type;
 		}
 		if(start <= 14 && 14 <= end) {
-			this.day14 = holiday;
+			this.day14 = type;
 		}
 		if(start <= 15 && 15 <= end) {
-			this.day15 = holiday;
+			this.day15 = type;
 		}
 		if(start <= 16 && 16 <= end) {
-			this.day16 = holiday;
+			this.day16 = type;
 		}
 		if(start <= 17 && 17 <= end) {
-			this.day17 = holiday;
+			this.day17 = type;
 		}
 		if(start <= 18 && 18 <= end) {
-			this.day18 = holiday;
+			this.day18 = type;
 		}
 		if(start <= 19 && 19 <= end) {
-			this.day19 = holiday;
+			this.day19 = type;
 		}
 		if(start <= 20 && 20 <= end) {
-			this.day20 = holiday;
+			this.day20 = type;
 		}
 		if(start <= 21 && 21 <= end) {
-			this.day21 = holiday;
+			this.day21 = type;
 		}
 		if(start <= 22 && 22 <= end) {
-			this.day22 = holiday;
+			this.day22 = type;
 		}
 		if(start <= 23 && 23 <= end) {
-			this.day23 = holiday;
+			this.day23 = type;
 		}
 		if(start <= 24 && 24 <= end) {
-			this.day24 = holiday;
+			this.day24 = type;
 		}
 		if(start <= 25 && 25 <= end) {
-			this.day25 = holiday;
+			this.day25 = type;
 		}
 		if(start <= 26 && 26 <= end) {
-			this.day26 = holiday;
+			this.day26 = type;
 		}
 		if(start <= 27 && 27 <= end) {
-			this.day27 = holiday;
+			this.day27 = type;
 		}
 		if(start <= 28 && 28 <= end) {
-			this.day28 = holiday;
+			this.day28 = type;
 		}
 		if(start <= 29 && 29 <= end) {
-			this.day29 = holiday;
+			this.day29 = type;
 		}
 		if(start <= 30 && 30 <= end) {
-			this.day30 = holiday;
+			this.day30 = type;
 		}
 		if(start <= 31 && 31 <= end) {
-			this.day31 = holiday;
+			this.day31 = type;
 		}
 	}
 	

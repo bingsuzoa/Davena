@@ -36,29 +36,30 @@ public class WorkService {
 		return workRepository.findAll();
 	}
 	
-	public Work getWork(int userId
-						,LocalDateTime startDate
-						,LocalDateTime endDate) {
+	
+	//휴가 신청하면 work table에 저장하기
+	public Work getWork(String type
+					   ,LocalDateTime startDay
+					   ,LocalDateTime endDay
+					   ,int holidayId
+					   ,int userId) {
 	
 		
 		Optional<Work> optionalWork = workRepository.findByUserId(userId);
 		Work work = optionalWork.orElse(null);
 		
 		//날짜데이터 내가 원하는 타입에 맞게 수정하기
-		int start = startDate.getDayOfMonth();
-		int end = endDate.getDayOfMonth();
-
+		int start = startDay.getDayOfMonth();
+		int end = endDay.getDayOfMonth();
 		
-		//신청한 휴가일을 넣는다.
-		String column = "";
-		for(int i = start; i <= end; i++) {
-				column = "day" + i;
-				work = work.toBuilder()
-							.column("off")
-							.build();
-					
-		}
+		//workentity저장하기
+		work.setHolidayId(holidayId);
+		work.setDay(start, end, type);
+		work.setUpdatedAt(LocalDateTime.now());
+		workRepository.save(work);
 		
+		return work;
+	
 		
 		
 	}
