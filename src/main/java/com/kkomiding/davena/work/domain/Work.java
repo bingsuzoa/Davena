@@ -288,40 +288,102 @@ public class Work {
 		
 		switch(a) {
 		
-		case 1: day = day1;
-		case 2: day = day2;		
-		case 3: day = day3;
-		case 4: day = day4;
-		case 5: day = day5;
-		case 6: day = day6;
-		case 7: day = day7;
-		case 8: day = day8;
-		case 9: day = day9;
+		case 1: 
+			day = day1;
+			break;
+		case 2: 
+			day = day2;	
+			break;
+		case 3: 
+			day = day3;
+			break;
+		case 4: 
+			day = day4;
+			break;
+		case 5: 
+			day = day5;
+			break;
+		case 6: 
+			day = day6;
+			break;
+		case 7: 
+			day = day7;
+			break;
+		case 8: 
+			day = day8;
+			break;
+		case 9: 
+			day = day9;
+			break;
 		
-		case 10: day = day10;
-		case 11: day = day11;
-		case 12: day = day12;		
-		case 13: day = day13;
-		case 14: day = day14;
-		case 15: day = day15;
-		case 16: day = day16;
-		case 17: day = day17;
-		case 18: day = day18;
-		case 19: day = day19;
+		case 10: 
+			day = day10;
+			break;
+		case 11: 
+			day = day11;
+			break;
+		case 12: 
+			day = day12;
+			break;
+		case 13: 
+			day = day13;
+			break;
+		case 14: 
+			day = day14;
+			break;
+		case 15: 
+			day = day15;
+			break;
+		case 16: 
+			day = day16;
+			break;
+		case 17: 
+			day = day17;
+			break;
+		case 18: 
+			day = day18;
+			break;
+		case 19: 
+			day = day19;
+			break;
 		
-		case 20: day = day20;	
-		case 21: day = day21;
-		case 22: day = day22;		
-		case 23: day = day23;
-		case 24: day = day24;
-		case 25: day = day25;
-		case 26: day = day26;
-		case 27: day = day27;
-		case 28: day = day28;
-		case 29: day = day29;
+		case 20: 
+			day = day20;
+			break;
+		case 21: 
+			day = day21;
+			break;
+		case 22: 
+			day = day22;
+			break;
+		case 23: 
+			day = day23;
+			break;
+		case 24: 
+			day = day24;
+			break;
+		case 25: 
+			day = day25;
+			break;
+		case 26: 
+			day = day26;
+			break;
+		case 27: 
+			day = day27;
+			break;
+		case 28: 
+			day = day28;
+			break;
+		case 29: 
+			day = day29;
+			break;
 		
-		case 30: day = day30;
-		case 31: day = day31;
+		case 30: 
+			day = day30;
+			break;
+		case 31: 
+			day = day31;
+			break;
 		
 		}
 		return day;
