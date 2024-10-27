@@ -47,12 +47,16 @@ public class WorkService {
 		//날짜데이터 내가 원하는 타입에 맞게 수정하기
 		int start = startDate.getDayOfMonth();
 		int end = endDate.getDayOfMonth();
+
 		
 		//신청한 휴가일을 넣는다.
 		String column = "";
 		for(int i = start; i <= end; i++) {
-				column = "day" + i;  
-				
+				column = "day" + i;
+				work = work.toBuilder()
+							.column("off")
+							.build();
+					
 		}
 		
 		
