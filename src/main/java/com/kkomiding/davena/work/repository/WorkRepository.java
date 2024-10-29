@@ -14,4 +14,6 @@ public interface WorkRepository extends JpaRepository<Work, Integer> {
 	
 	public List<Work> findByRoomId(int roomId);
 	
+	public int countByRoomId(int roomId);
+	
 }

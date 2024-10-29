@@ -56,19 +56,23 @@
 		</table>
 	</section>
 	
-	<script layout:fragment="script">
-		function td_value(){
+	<script layout:fragment="script">	
+	
+		function tag_value(){
 			var table = document.getElementById('scheduleTable');
 			var rowList = table.rows;
-			for(var i = 1; i < rowList.length; i++){
+			
+			for(i = 1; i < rowList.length; i++){
 				var row = rowList[i];
-				var tdsNum = row.childElementCount;
-				
-				for(var j = 0; j <tdsNum; j++){
-					if(this.cell[j].innerHTML.contains("불가")){
-						alert("불가");
+					var tdsNum = row.childElementCount;
+					
+					for(var j = 0; j < tdsNum; j++){
+						var row_value = this.cells[j].innerHTML;
+						console.log(row_value);
+						if(row_value.contains("불가")){
+							alert("불가");
+						}
 					}
-				}
 			}
 		}
 		
