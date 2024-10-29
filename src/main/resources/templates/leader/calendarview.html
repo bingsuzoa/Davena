@@ -57,6 +57,20 @@
 	</section>
 	
 	<script layout:fragment="script">
+		function td_value(){
+			var table = document.getElementById('scheduleTable');
+			var rowList = table.rows;
+			for(var i = 1; i < rowList.length; i++){
+				var row = rowList[i];
+				var tdsNum = row.childElementCount;
+				
+				for(var j = 0; j <tdsNum; j++){
+					if(this.cell[j].innerHTML.contains("불가")){
+						alert("불가");
+					}
+				}
+			}
+		}
 		
 	</script>
 </html>

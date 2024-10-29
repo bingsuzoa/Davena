@@ -224,28 +224,28 @@ public class WorkService {
 					//day2 : 아무것도 없을때 + 전날 eve -> day 불가
 						else if(setDayWork.getDay1().equals("Eve")) {
 							String duty = que2.peek();
-							if(duty.equals("Day")) {
-							que2.offer(que2.peek());
-							que2.remove();
-							} else {
+							while(duty.equals("Day")) {
+								que2.offer(que2.peek());
+								que2.remove();		
+								continue;
+							}
 							setDayWork.setDay(2, que2.peek());
 							workRepository.save(setDayWork);
 							que.offer(que2.peek());
 							que2.remove();
-							}
 						}
 						//day2 : 아무것도 없을때 + 전날 night -> eve, day 불가
-						else if(setDayWork.getDay1().equals("Night") || setDayWork.getDay1().equals("Nig")) {
+						else if(setDayWork.getDay1().equals("Nig")) {
 							String duty = que2.peek();
-							if(duty.equals("Day") || duty.equals("Eve")) {
+							while(duty.equals("Day") || duty.equals("Eve")) {
 								que2.offer(que2.peek());
 								que2.remove();
-							} else {
-								setDayWork.setDay(2, que2.peek());
-								workRepository.save(setDayWork);
-								que.offer(que2.peek());
-								que2.remove();
+								continue;
 							}
+							setDayWork.setDay(2, que2.peek());
+							workRepository.save(setDayWork);
+							que.offer(que2.peek());
+							que2.remove();
 						}
 						//day2 : 연가나 오프인경우 -> continue
 					} else {
@@ -258,31 +258,30 @@ public class WorkService {
 								que.offer(que2.peek());
 								que2.remove();
 							}
-						//day2 : 아무것도 없을때 + 전날 eve -> day 불가
+						//day2 : 근무표가 이미 작성되어있어 수정되야함 + 전날 eve -> day 불가
 							else if(setDayWork.getDay1().equals("Eve")) {
 								String duty = que2.peek();
-								if(duty.equals("Day")) {
-								que2.offer(que2.peek());
-								que2.remove();
-								} else {
+								while(duty.equals("Day")) {
+									que2.offer(que2.peek());
+									que2.remove();
+									continue;
+								}
 								setDayWork.setDay(2, que2.peek());
 								workRepository.save(setDayWork);
 								que.offer(que2.peek());
 								que2.remove();
-								}
 							}
-							//day2 : 아무것도 없을때 + 전날 night -> eve, day 불가
-							else if(setDayWork.getDay1().equals("Night") || setDayWork.getDay1().equals("Nig")) {
+							//day2 : 근무표가 이미 작성되어있어 수정되야함 + 전날 night -> eve, day 불가
+							else if(setDayWork.getDay1().equals("Nig")) {
 								String duty = que2.peek();
-								if(duty.equals("Day") || duty.equals("Eve")) {
-									que2.offer(que2.peek());
-									que2.remove();
-								} else {
-									setDayWork.setDay(2, que2.peek());
-									workRepository.save(setDayWork);
-									que.offer(que2.peek());
-									que2.remove();
+								while(duty.equals("Day") || duty.equals("Eve")) {
+								que2.offer(que2.peek());
+								que2.remove();
 								}
+								setDayWork.setDay(2, que2.peek());
+								workRepository.save(setDayWork);
+								que.offer(que2.peek());
+								que2.remove();		
 							}
 						}
 					}	
@@ -290,7 +289,12 @@ public class WorkService {
 			
 
 				//day3~ , 전날 + 전전날 근무표에 따라 근무제한 조건이 있음
+					String check = "";
 					for(int i = 3; i <= endDay; i++) {
+						if(check.contains("불가")) {
+							break;
+						}
+						check = "";
 						for(Work work : findByRoomIdList) {
 							//저장할 work행 가져오기
 							Optional<Work> optionalWork = workRepository.findByUserId(work.getUserId());
@@ -317,27 +321,29 @@ public class WorkService {
 								else if(setDayWork.getDay(i-1).equals("Eve")) {
 									//day 올수없음
 									if(i%2 != 0) {
-										String duty = que.peek();
-										if(duty.equals("Day")) {
+										while(que.peek().equals("Day")) {
 											que.offer(que.peek());
 											que.remove();
-										} else {
-											setDayWork.setDay(i, que.peek());
-											workRepository.save(setDayWork);
-											que2.offer(que.peek());
-											que.remove();
+											if(!que.peek().equals("Day")) {
+												break;
+											}
 										}
+										setDayWork.setDay(i, que.peek());
+										workRepository.save(setDayWork);
+										que2.offer(que.peek());
+										que.remove();	
 									} else {
-										String duty = que2.peek();
-										if(duty.equals("Day")) {
+										while(que2.peek().equals("Day")) {
 											que2.offer(que2.peek());
-											que2.remove();
-										} else {
-											setDayWork.setDay(i, que2.peek());
-											workRepository.save(setDayWork);
-											que.offer(que2.peek());
-											que2.remove();
-										}
+											que2.remove();		
+											if(!que2.peek().equals("Day")) {
+												break;
+											}
+										}	
+										setDayWork.setDay(i, que2.peek());
+										workRepository.save(setDayWork);
+										que.offer(que2.peek());
+										que2.remove();							
 									}
 								}
 								// 전날 night
@@ -349,29 +355,46 @@ public class WorkService {
 										workRepository.save(setDayWork);
 									} else {
 									//나이트 2개 연속 아닌경우
-										if(i%2 != 0) {
-											String duty = que.peek();
-											if(duty.equals("Eve") || duty.equals("Day")) {
-												que.offer(que.peek());
-												que.remove();
-											} else {
+										//만약 que안에 nig가 없으면?
+										if(i % 2 != 0) {
+											if(que.contains("Nig") == true) {
+												while(que.peek().equals("Day") || que.peek().equals("Eve")) {
+													que.offer(que.peek());
+													que.remove();
+													if(!que.peek().equals("Day") && !que.peek().equals("Eve")) {
+														break;
+													}
+												}
 												setDayWork.setDay(i, que.peek());
 												workRepository.save(setDayWork);
 												que2.offer(que.peek());
-												que.remove();
-											}
-										} else {
-											String duty = que2.peek();
-											if(duty.equals("Eve") || duty.equals("Day")) {
-												que2.offer(que2.peek());
 												que2.remove();
 											} else {
+												setDayWork.setDay(i, "N불가");
+												workRepository.save(setDayWork);
+												check = "N불가";
+												break;
+											}
+										} else {
+											if(que2.contains("Nig") == true) {
+												while(que2.peek().equals("Day") || que2.peek().equals("Eve")) {
+													que2.offer(que2.peek());
+													que2.remove();		
+													if(!que2.peek().equals("Day") && !que2.peek().equals("Eve")) {
+														break;
+													}
+												}
 												setDayWork.setDay(i, que2.peek());
 												workRepository.save(setDayWork);
 												que.offer(que2.peek());
 												que2.remove();
+											} else {
+												setDayWork.setDay(i, "N불가");
+												workRepository.save(setDayWork);
+												check = "N불가";
+												break;
 											}
-										}	
+										} 
 									}
 								}
 							} else  {
@@ -397,27 +420,29 @@ public class WorkService {
 									else if(setDayWork.getDay(i-1).equals("Eve")) {
 										//day 올수없음
 										if(i%2 != 0) {
-											String duty = que.peek();
-											if(duty.equals("Day")) {
+											while(que.peek().equals("Day")) {
 												que.offer(que.peek());
 												que.remove();
-											} else {
-												setDayWork.setDay(i, que.peek());
-												workRepository.save(setDayWork);
-												que2.offer(que.peek());
-												que.remove();
+												if(!que.peek().equals("Day")) {
+													break;
+												}
 											}
+											setDayWork.setDay(i, que.peek());
+											workRepository.save(setDayWork);
+											que2.offer(que.peek());
+											que.remove();	
 										} else {
-											String duty = que2.peek();
-											if(duty.equals("Day")) {
+											while(que2.peek().equals("Day")) {
 												que2.offer(que2.peek());
-												que2.remove();
-											} else {
-												setDayWork.setDay(i, que2.peek());
-												workRepository.save(setDayWork);
-												que.offer(que2.peek());
-												que2.remove();
-											}
+												que2.remove();		
+												if(!que2.peek().equals("Day")) {
+													break;
+												}
+											}	
+											setDayWork.setDay(i, que2.peek());
+											workRepository.save(setDayWork);
+											que.offer(que2.peek());
+											que2.remove();							
 										}
 									}
 									// 전날 night
@@ -429,36 +454,51 @@ public class WorkService {
 											workRepository.save(setDayWork);
 										} else {
 										//나이트 2개 연속 아닌경우
-											if(i%2 != 0) {
-												String duty = que.peek();
-												if(duty.equals("Eve") || duty.equals("Day")) {
-													que.offer(que.peek());
-													que.remove();
-												} else {
+											if(i % 2 != 0) {
+												if(que.contains("Nig") == true) {
+													while(que.peek().equals("Day") || que.peek().equals("Eve")) {
+														que.offer(que.peek());
+														que.remove();
+														if(!que.peek().equals("Day") && !que.peek().equals("Eve")) {
+															break;
+														}
+													}
 													setDayWork.setDay(i, que.peek());
 													workRepository.save(setDayWork);
 													que2.offer(que.peek());
-													que.remove();
-												}
-											} else {
-												String duty = que2.peek();
-												if(duty.equals("Eve") || duty.equals("Day")) {
-													que2.offer(que2.peek());
 													que2.remove();
 												} else {
+													setDayWork.setDay(i, "N불가");
+													workRepository.save(setDayWork);
+													check = "N불가";
+													break;
+												}
+											} else {
+												if(que2.contains("Nig") == true) {
+													while(que2.peek().equals("Day") || que2.peek().equals("Eve")) {
+														que2.offer(que2.peek());
+														que2.remove();		
+														if(!que2.peek().equals("Day") && !que2.peek().equals("Eve")) {
+															break;
+														}
+													}
 													setDayWork.setDay(i, que2.peek());
 													workRepository.save(setDayWork);
 													que.offer(que2.peek());
 													que2.remove();
+												} else {
+													setDayWork.setDay(i, "N불가");
+													workRepository.save(setDayWork);
+													check = "N불가";
+													break;
 												}
-											}	
-										}
+											} 
+										}	
 									}
 								}
 							}	
 						}
-					}
-		
+					}		
 		return findByRoomIdList;
 	}	
 }
