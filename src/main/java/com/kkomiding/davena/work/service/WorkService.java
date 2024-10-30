@@ -13,6 +13,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.kkomiding.davena.holiday.domain.Holiday;
 import com.kkomiding.davena.holiday.service.HolidayService;
 import com.kkomiding.davena.user.domain.User;
 import com.kkomiding.davena.user.service.UserService;
@@ -27,12 +28,14 @@ public class WorkService {
 	
 	private WorkRepository workRepository;
 	private UserService userService;
+	private HolidayService holidayService;
 	
 	public WorkService(WorkRepository workRepository
 					  ,HolidayService holidayService
 					  ,UserService userService) {
 		this.workRepository = workRepository;
 		this.userService = userService;
+		this.holidayService = holidayService;
 	}
 
 	
@@ -83,6 +86,88 @@ public class WorkService {
 		Work newWork = workRepository.save(work);
 		
 		return newWork;		
+	}
+	
+	public List<Work> resetWorkTable(int userId) {
+		int roomId = userService.getUser(userId).getRoomId();
+		
+		List<Work> workList = workRepository.findByRoomId(roomId);
+		List<Work> madeList = new ArrayList<>();
+		for(Work work : workList) {
+			Work resetWork = workRepository.findById(work.getId()).orElse(null);
+			resetWork = resetWork.toBuilder()
+							.day1(null)
+							.day2(null)
+							.day3(null)
+							.day4(null)
+							.day5(null)
+							.day6(null)
+							.day7(null)
+							.day8(null)
+							.day9(null)
+							.day10(null)
+							.day11(null)
+							.day12(null)
+							.day13(null)
+							.day14(null)
+							.day15(null)
+							.day16(null)
+							.day17(null)
+							.day18(null)
+							.day19(null)
+							.day20(null)
+							.day21(null)
+							.day22(null)
+							.day23(null)
+							.day24(null)
+							.day25(null)
+							.day26(null)
+							.day27(null)
+							.day28(null)
+							.day29(null)
+							.day30(null)
+							.day31(null)
+							.build();
+//			madeList.add(workRepository.save(resetWork));	
+			workRepository.save(resetWork);
+		}
+		for(Work work : workList) {
+			Work resetWork = workRepository.findById(work.getId()).orElse(null);
+			int workUserId = work.getUserId();
+			List<Holiday> myHolidayList = holidayService.getListByUserIdAndMonth(workUserId);
+			for(Holiday holiday : myHolidayList) {
+				
+				LocalDateTime startDay = holiday.getStartDay();
+				LocalDateTime endDay = holiday.getEndDay();
+				String type = holiday.getType();			
+				
+				//날짜데이터 내가 원하는 타입에 맞게 수정하기
+				int start = startDay.getDayOfMonth();
+				
+				//마지막날짜 다음달로 넘어가는 경우가 있으니깐; 
+				int end = 0;
+				LocalDate localDate = endDay.toLocalDate().minusMonths(1);	
+				YearMonth month = YearMonth.from(localDate);
+				LocalDate endDate = month.atEndOfMonth();	
+				if(endDay.getDayOfMonth() == 1) {
+					end = endDate.getDayOfMonth();
+				} else {			
+					end = endDay.getDayOfMonth()-1;
+				}
+				
+				//workentity저장하기
+				resetWork.setDay(start, end, type);
+				resetWork.setUpdatedAt(LocalDateTime.now());
+				madeList.add(workRepository.save(resetWork));	
+				
+			}
+			
+			resetWork = resetWork.toBuilder()
+							
+							.build();
+			madeList.add(workRepository.save(resetWork));			
+		}
+		return madeList;
 	}
 	
 	
@@ -214,11 +299,11 @@ public class WorkService {
 							que.offer(que.peek());
 							que.remove();
 							if(que.peek().equals("Off")) {
-								que2.offer(que.peek());
-								que.remove();
 								break;
 							}
 						}
+						que2.offer(que.peek());
+						que.remove();
 					}
 				}
 				//day1 : 그다음 null에는 아무거나 넣기
@@ -257,9 +342,7 @@ public class WorkService {
 								que2.offer(que2.peek());
 								que2.remove();
 								//임시 리스트삭제
-								List<String> list = new ArrayList<>(Arrays.asList(practice));
-								list.clear();
-								practice = list.toArray(new String[list.size()]);
+								Arrays.fill(practice, null);
 								//queue 합치기
 								while(que.peek() != null) {
 									que2.offer(que.peek());
@@ -288,9 +371,7 @@ public class WorkService {
 							que.offer(que2.peek());
 							que2.remove();
 							//임시 리스트삭제
-							List<String> list = new ArrayList<>(Arrays.asList(practice));
-							list.clear();
-							practice = list.toArray(new String[list.size()]);
+							Arrays.fill(practice, null);
 							//queue 합치기
 							while(que.peek() != null) {
 								que2.offer(que.peek());
@@ -320,9 +401,7 @@ public class WorkService {
 						que2.offer(que2.peek());
 						que2.remove();
 						//임시 리스트삭제
-						List<String> list = new ArrayList<>(Arrays.asList(practice));
-						list.clear();
-						practice = list.toArray(new String[list.size()]);
+						Arrays.fill(practice, null);
 						//queue 합치기
 						while(que.peek() != null) {
 							que2.offer(que.peek());
@@ -360,84 +439,164 @@ public class WorkService {
 				}
 				workIndex++;
 			}
+			//임시 리스트삭제
+			Arrays.fill(practice, null);
 			
 
 				//day3~ 
 			for(int i = 3; i <= endDay; i++) {
-				for(int k = 0; k < findByRoomIdList.size(); k++) {
-					//저장할 work행 가져오기
-					Work setDayWork = findByRoomIdList.get(k);
-					
-					//null부터 처리
-					if(setDayWork.getDay(i) == null) {
-						//무조건 오프줘야할때 - 전날, 전전날 Nig 2개일때
-						if(setDayWork.getDay(i-1).equals("Nig") && setDayWork.getDay(i-2).equals("Nig")) {
+				boolean checkHoliday = false;
+				
+				while(checkHoliday == false) {
+					for(int k = 0; k < findByRoomIdList.size(); k++) {
+						//저장할 work행 가져오기
+						Work setDayWork = findByRoomIdList.get(k);
+						
+						//null부터 처리
+						if(setDayWork.getDay(i) == null) {
+							//무조건 오프줘야할때 - 전날, 전전날 Nig 2개일때
+							if(setDayWork.getDay(i-1).equals("Nig") && setDayWork.getDay(i-2).equals("Nig")) {
+								if(i%2 != 0) {
+									while(!que.peek().equals("Off")) {
+										que.offer(que.peek());
+										que.remove();		
+										if(que.peek().equals("Off")) {
+											break;
+										}
+									}
+									practice[k] = que.peek();
+									nextPractice[k] = practice[k];
+									que2.offer(que.peek());
+									que.remove();
+								} else {
+									while(!que2.peek().equals("Off")) {
+										que2.offer(que2.peek());
+										que2.remove();		
+										if(que2.peek().equals("Off")) {
+											break;
+										}
+									}
+									practice[k] = que.peek();
+									nextPractice[k] = practice[k];
+									que2.offer(que.peek());
+									que.remove();
+								}
+							} else {
+								continue;
+							}
+						//null 아닐때
+							//무조건 오프줘야할때 - 오프나 연가 신청해놨을 때
+						} else if(setDayWork.getDay(i).equals("Off") ||setDayWork.getDay(i).equals("연가") 
+								||setDayWork.getDay(i).equals("오프")) {
 							if(i%2 != 0) {
 								while(!que.peek().equals("Off")) {
 									que.offer(que.peek());
-									que.remove();		
+									que.remove();
 									if(que.peek().equals("Off")) {
-										practice[k] = que.peek();
-										nextPractice[k] = practice[k];
-										que2.offer(que.peek());
-										que.remove();
 										break;
 									}
 								}
+								practice[k] = setDayWork.getDay(i);
+								que2.offer(que.peek());
+								que.remove();
 							} else {
 								while(!que2.peek().equals("Off")) {
 									que2.offer(que2.peek());
-									que2.remove();		
+									que2.remove();
 									if(que2.peek().equals("Off")) {
-										practice[k] = que2.peek();
-										nextPractice[k] = practice[k];
-										que.offer(que2.peek());
-										que2.remove();
 										break;
 									}
 								}
-							}
-						} else {
-							continue;
-						}
-					//null 아닐때
-						//무조건 오프줘야할때 - 오프나 연가 신청해놨을 때
-					} else if(setDayWork.getDay(i).equals("Off") ||setDayWork.getDay(i).equals("연가") 
-							||setDayWork.getDay(i).equals("오프")) {
-						if(i%2 != 0) {
-							while(!que.peek().equals("Off")) {
-								que.offer(que.peek());
-								que.remove();
-								if(que.peek().equals("Off")) {
-									practice[k] = que.peek();
-									que2.offer(que.peek());
-									que.remove();
-									break;
-								}
-							}
-						} else {
-							while(!que2.peek().equals("Off")) {
-								que2.offer(que2.peek());
+								practice[k] = setDayWork.getDay(i);
+								que.offer(que2.peek());
 								que2.remove();
-								if(que2.peek().equals("Off")) {
-									practice[k] = que2.peek();
-									que.offer(que2.peek());
-									que2.remove();
-									break;
-								}
 							}
 						}
 					}
+					checkHoliday = true;
 				}
 				
+					
 				for(int k = 0; k < findByRoomIdList.size(); k++) {
+					
+					//false면 다시 위에서 랜덤 돌려야함
+					if(checkHoliday == false) {
+						for(int	l = 0; l < findByRoomIdList.size(); l++) {
+							//저장할 work행 가져오기
+							Work setDayWork = findByRoomIdList.get(l);
+							
+							//null부터 처리
+							if(setDayWork.getDay(i) == null) {
+								//무조건 오프줘야할때 - 전날, 전전날 Nig 2개일때
+								if(setDayWork.getDay(i-1).equals("Nig") && setDayWork.getDay(i-2).equals("Nig")) {
+									if(i%2 != 0) {
+										while(!que.peek().equals("Off")) {
+											que.offer(que.peek());
+											que.remove();		
+											if(que.peek().equals("Off")) {
+												break;
+											}
+										}
+										practice[l] = que.peek();
+										nextPractice[l] = practice[l];
+										que2.offer(que.peek());
+										que.remove();
+									} else {
+										while(!que2.peek().equals("Off")) {
+											que2.offer(que2.peek());
+											que2.remove();		
+											if(que2.peek().equals("Off")) {
+												break;
+											}
+										}
+										practice[l] = que.peek();
+										nextPractice[l] = practice[l];
+										que2.offer(que.peek());
+										que.remove();
+									}
+								} else {
+									continue;
+								}
+							//null 아닐때
+								//무조건 오프줘야할때 - 오프나 연가 신청해놨을 때
+							} else if(setDayWork.getDay(i).equals("Off") ||setDayWork.getDay(i).equals("연가") 
+									||setDayWork.getDay(i).equals("오프")) {
+								if(i%2 != 0) {
+									while(!que.peek().equals("Off")) {
+										que.offer(que.peek());
+										que.remove();
+										if(que.peek().equals("Off")) {
+											break;
+										}
+									}
+									practice[l] = setDayWork.getDay(i);
+									que2.offer(que.peek());
+									que.remove();
+								} else {
+									while(!que2.peek().equals("Off")) {
+										que2.offer(que2.peek());
+										que2.remove();
+										if(que2.peek().equals("Off")) {
+											break;
+										}
+									}
+									practice[l] = setDayWork.getDay(i);
+									que.offer(que2.peek());
+									que2.remove();
+								}
+							}
+						}
+						checkHoliday = true;
+					}
+
 					//저장할 work행 가져오기
 					Work setDayWork = findByRoomIdList.get(k);
 					
 					//null부터 처리
 					if(setDayWork.getDay(i) == null) {
 						//전날 Day
-						if(setDayWork.getDay(i-1).equals("Day")) {				
+						if(setDayWork.getDay(i-1).equals("Day") || setDayWork.getDay(i-1).equals("Off")
+								|| setDayWork.getDay(i-1).equals("오프") || setDayWork.getDay(i-1).equals("연가")) {				
 							if(i%2 != 0) {
 								practice[k] = que.peek();
 								que2.offer(que.peek());
@@ -456,9 +615,7 @@ public class WorkService {
 									que.offer(que.peek());
 									que.remove();
 									//임시 리스트삭제
-									List<String> list = new ArrayList<>(Arrays.asList(practice));
-									list.clear();
-									practice = list.toArray(new String[list.size()]);
+									Arrays.fill(practice, null);
 									//queue 합치기
 									while(que2.peek() != null) {
 										que.offer(que2.peek());
@@ -466,6 +623,7 @@ public class WorkService {
 									}
 									//work 다시 처음부터
 									k = 0;
+									checkHoliday = false;
 								//선택지 있을때	
 								} else {
 									while(que.peek().equals("Day")) {
@@ -486,9 +644,7 @@ public class WorkService {
 									que2.offer(que2.peek());
 									que2.remove();
 									//임시 리스트삭제
-									List<String> list = new ArrayList<>(Arrays.asList(practice));
-									list.clear();
-									practice = list.toArray(new String[list.size()]);
+									Arrays.fill(practice, null);
 									//queue 합치기
 									while(que.peek() != null) {
 										que2.offer(que.peek());
@@ -496,6 +652,7 @@ public class WorkService {
 									}
 									//work 다시 처음부터
 									k = 0;
+									checkHoliday = false;
 								//선택지 있을때	
 								} else {
 									while(que2.peek().equals("Day")) {
@@ -512,69 +669,72 @@ public class WorkService {
 							}						
 						//전날 Nig
 						} else if(setDayWork.getDay(i-1).equals("Nig")) {
-							if(i % 2 != 0) {
+							//나이트 연속 2개인경우 : 이미 정해놨음 continue;
+							if(setDayWork.getDay(i-2).equals("Nig")) {
+								continue;
 							//나이트 연속 2개 아닌경우
-								//선택지가 없을때
-								if(!que.contains("Off") && !que.contains("Nig")) {
-									//한번섞어주고
-									que.offer(que.peek());
-									que.remove();
-									//임시 리스트삭제
-									List<String> list = new ArrayList<>(Arrays.asList(practice));
-									list.clear();
-									practice = list.toArray(new String[list.size()]);
-									//queue 합치기
-									while(que2.peek() != null) {
-										que.offer(que2.peek());
-										que2.remove();
-									}
-									//work 다시 처음부터
-									k = 0;
-								//선택지가 있을때	
-								} else {
-									while(!que.peek().equals("Off") && !que.contains("Nig")) {
-										que.offer(que.peek());
-										que.remove();		
-										if(que.peek().equals("Off") || que.contains("Nig")) {
-											break;
-										}
-									}
-									practice[k] = que.peek();
-									que2.offer(que.peek());
-									que.remove();
-								}
 							} else {
-								//선택지가 없을때
-								if(!que2.contains("Off") && !que2.contains("Nig")) {
-									//한번섞어주고
-									que2.offer(que2.peek());
-									que2.remove();
-									//임시 리스트삭제
-									List<String> list = new ArrayList<>(Arrays.asList(practice));
-									list.clear();
-									practice = list.toArray(new String[list.size()]);
-									//queue 합치기
-									while(que.peek() != null) {
+								if(i % 2 != 0) {								
+									//선택지가 없을때
+									if(!que.contains("Off") && !que.contains("Nig")) {
+										//한번섞어주고
+										que.offer(que.peek());
+										que.remove();
+										//임시 리스트삭제
+										Arrays.fill(practice, null);
+										//queue 합치기
+										while(que2.peek() != null) {
+											que.offer(que2.peek());
+											que2.remove();
+										}
+										//work 다시 처음부터
+										k = 0;
+										checkHoliday = false;
+										//선택지가 있을때
+									} else {
+										while(!que.peek().equals("Off") && !que.contains("Nig")) {
+											que.offer(que.peek());
+											que.remove();		
+											if(que.peek().equals("Off") || que.contains("Nig")) {
+												break;
+											}
+										}
+										practice[k] = que.peek();
 										que2.offer(que.peek());
 										que.remove();
 									}
-									//work 다시 처음부터
-									k = 0;
-								//선택지가 있을때	
 								} else {
-									while(!que2.peek().equals("Off") && !que2.contains("Nig")) {
+									//선택지가 없을때
+									if(!que2.contains("Off") && !que2.contains("Nig")) {
+										//한번섞어주고
 										que2.offer(que2.peek());
-										que2.remove();		
-										if(que2.peek().equals("Off") || que2.contains("Nig")) {
-											break;
+										que2.remove();
+										//임시 리스트삭제
+										Arrays.fill(practice, null);
+										//queue 합치기
+										while(que.peek() != null) {
+											que2.offer(que.peek());
+											que.remove();
 										}
+										//work 다시 처음부터
+										k = 0;
+										checkHoliday = false;
+										//선택지가 있을때
+									} else {
+										while(!que2.peek().equals("Off") && !que2.contains("Nig")) {
+											que2.offer(que2.peek());
+											que2.remove();		
+											if(que2.peek().equals("Off") || que2.contains("Nig")) {
+												break;
+											}
+										}
+										practice[k] = que2.peek();
+										que.offer(que2.peek());
+										que2.remove();
 									}
-									practice[k] = que2.peek();
-									que.offer(que2.peek());
-									que2.remove();
-								}
+								}	
 							}
-						}
+						}	
 					} else {
 						continue;
 					}
@@ -586,20 +746,22 @@ public class WorkService {
 					Optional<Work> optionalWork2 = workRepository.findByUserId(work2.getUserId());
 					Work setDayWork2 = optionalWork2.orElse(null);
 					
-					for(int j = workIndex2; j < practice.length;) {
+					for(int j = workIndex2; j <findByRoomIdList.size();) {
 						setDayWork2.setDay(i, practice[j]);
 						workRepository.save(setDayWork2);
-						if(nextPractice[j].isEmpty() == false) {
+						if(nextPractice[j] == null) {
+							workIndex2++;
+							break;
+						} else {
 							setDayWork2.setDay(i+1, nextPractice[j]);
+							workRepository.save(setDayWork2);
+							workIndex2++;
+							break;
 						}
-						break;
 					}
-					workIndex2++;
 				}
 				//임시 리스트삭제
-				List<String> nextList = new ArrayList<>(Arrays.asList(nextPractice));
-				nextList.clear();
-				nextPractice = nextList.toArray(new String[nextList.size()]);
+				Arrays.fill(nextPractice, null);
 			}
 
 		return findByRoomIdList;

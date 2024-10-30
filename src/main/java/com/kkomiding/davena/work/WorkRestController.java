@@ -66,6 +66,24 @@ public class WorkRestController {
 		
 	}
 	
+	@PostMapping("/reset")
+	public Map<String, String> deleteWorkTable(HttpSession session){
+		
+		int userId = (Integer)session.getAttribute("userId");
+		List<Work> workList = workService.resetWorkTable(userId);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(workList != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+		
+	}
+	
 	@PostMapping("/random/day1")
 	public Map<String, String> randomList(@RequestParam("Dduty") int Dduty
 										 ,@RequestParam("Eduty") int Eduty

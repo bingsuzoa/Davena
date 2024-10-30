@@ -199,6 +199,17 @@ public class HolidayService {
 		return dateCount;		
 	}
 	
+	//내가 이번달 신청한 휴가현황 가져오기
+	public List<Holiday> getListByUserIdAndMonth(int userId) {
+		
+		//현재 무슨 월 
+		LocalDateTime currentTime = LocalDateTime.now();
+		Month month = currentTime.getMonth();
+		int monthValue = month.getValue();
+		
+		return holidayRepository.findByUserIdAndMonth(userId, monthValue);
+	}
+	
 	//휴가 신청한 사람들 카운트
 	public Map<String, Object> selectThisMonth(int userId) {
 		

@@ -34,6 +34,10 @@ public interface HolidayRepository extends JpaRepository<Holiday, Integer>  {
 	//이번달 holiday신청 개수 조회
 	public List<Holiday> findByRoomIdAndMonth(int roomId, int month);
 	
+	
+	//내가 이번달 신청한 휴가현황
+	public List<Holiday> findByUserIdAndMonth(int userId, int month);
+	
 	public List<Holiday> findByUserIdAndTypeAndStartDayGreaterThanAndEndDayLessThan(int userId
 			 ,String Type
 			 ,LocalDateTime thisFirstYear

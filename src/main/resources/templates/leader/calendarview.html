@@ -18,7 +18,7 @@
 				</tr>			
 			</thead>
 			<tbody>
-				<tr th:each="scheduleTable : ${scheduleTableList}">
+				<tr class="color-changer" th:each="scheduleTable : ${scheduleTableList}">
 					<td th:text="${scheduleTable.name}"></td>
 					<td th:text="${scheduleTable.day1}"></td>
 					<td th:text="${scheduleTable.day2}"></td>
@@ -57,24 +57,12 @@
 	</section>
 	
 	<script layout:fragment="script">	
-	
-		function tag_value(){
-			var table = document.getElementById('scheduleTable');
-			var rowList = table.rows;
-			
-			for(i = 1; i < rowList.length; i++){
-				var row = rowList[i];
-					var tdsNum = row.childElementCount;
-					
-					for(var j = 0; j < tdsNum; j++){
-						var row_value = this.cells[j].innerHTML;
-						console.log(row_value);
-						if(row_value.contains("불가")){
-							alert("불가");
-						}
-					}
+		$(".color-changer").each(function(){
+			if($(this).val() == "Day"){
+				$(this).css('color', 'FF4646');
 			}
-		}
+		})
+	
 		
 	</script>
 </html>

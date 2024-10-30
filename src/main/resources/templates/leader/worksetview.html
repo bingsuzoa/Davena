@@ -83,21 +83,41 @@
 			let Eduty = $("#set-workCount-input-2").val();
 			let Nduty = $("#set-workCount-input-3").val();
 			
-			$.ajax({
-				type:"post"
-				,url:"/work/random/day1"
-				,data: {"Dduty" : Dduty, "Eduty" : Eduty, "Nduty" : Nduty}
-				,success : function(data){
-					if(data.result == "success"){
-						alert("랜덤 근무표 가져오기 성공!");
-					} else {
-						alert("랜던 근무표 가져오기 실패!");
+			new Promise((succ, fail) => {
+				$.ajax({
+					type:"post"
+					,url:"/work/reset"
+					,success:function(data){
+						if(data.result =="success"){
+							console.log("리셋 성공");
+							succ("성공");
+						} else {
+							console.log("리셋 실패");
+							fail("실패");
+						}
+					},error : function(){
+						console.log("리셋 에러");
+						fail("실패");
 					}
-				}
-				,error : function(){
-					alert("랜덤근무표 가져오기 에러!");
-				}
+				})
+			}).then((arg)=>{
+				$.ajax({
+					type:"post"
+					,url:"/work/random/day1"
+					,data: {"Dduty" : Dduty, "Eduty" : Eduty, "Nduty" : Nduty}
+					,success : function(data){
+						if(data.result == "success"){
+							alert("랜덤 근무표 가져오기 성공!");
+						} else {
+							alert("랜던 근무표 가져오기 실패!");
+						}
+					}
+					,error : function(){
+						alert("랜덤근무표 가져오기 에러!");
+					}
+				})
 			})
+	
 		})
 		
 	</script>
