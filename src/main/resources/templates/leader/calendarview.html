@@ -17,52 +17,49 @@
 					</th:block>
 				</tr>			
 			</thead>
-			<tbody>
-				<tr class="color-changer" th:each="scheduleTable : ${scheduleTableList}">
+			<tbody class="color-changer">
+				<tr th:each="scheduleTable : ${scheduleTableList}">
 					<td th:text="${scheduleTable.name}"></td>
-					<td th:text="${scheduleTable.day1}"></td>
-					<td th:text="${scheduleTable.day2}"></td>
-					<td th:text="${scheduleTable.day3}"></td>
-					<td th:text="${scheduleTable.day4}"></td>
-					<td th:text="${scheduleTable.day5}"></td>
-					<td th:text="${scheduleTable.day6}"></td>
-					<td th:text="${scheduleTable.day7}"></td>
-					<td th:text="${scheduleTable.day8}"></td>
-					<td th:text="${scheduleTable.day9}"></td>
-					<td th:text="${scheduleTable.day10}"></td>
-					<td th:text="${scheduleTable.day11}"></td>
-					<td th:text="${scheduleTable.day12}"></td>
-					<td th:text="${scheduleTable.day13}"></td>
-					<td th:text="${scheduleTable.day14}"></td>
-					<td th:text="${scheduleTable.day15}"></td>
-					<td th:text="${scheduleTable.day16}"></td>
-					<td th:text="${scheduleTable.day17}"></td>
-					<td th:text="${scheduleTable.day18}"></td>
-					<td th:text="${scheduleTable.day19}"></td>
-					<td th:text="${scheduleTable.day20}"></td>
-					<td th:text="${scheduleTable.day21}"></td>
-					<td th:text="${scheduleTable.day22}"></td>
-					<td th:text="${scheduleTable.day23}"></td>
-					<td th:text="${scheduleTable.day24}"></td>
-					<td th:text="${scheduleTable.day25}"></td>
-					<td th:text="${scheduleTable.day26}"></td>
-					<td th:text="${scheduleTable.day27}"></td>
-					<td th:text="${scheduleTable.day28}"></td>
-					<td th:text="${scheduleTable.day29}"></td>
-					<td th:text="${scheduleTable.day30}"></td>
-					<td th:text="${scheduleTable.day31}"></td>
+					<td th:text="${scheduleTable.day1}" th:class="${scheduleTable.day1}"></td>
+					<td th:text="${scheduleTable.day2}" th:class="${scheduleTable.day2}"></td>
+					<td th:text="${scheduleTable.day3}" th:class="${scheduleTable.day3}"></td>
+					<td th:text="${scheduleTable.day4}" th:class="${scheduleTable.day4}"></td>
+					<td th:text="${scheduleTable.day5}" th:class="${scheduleTable.day5}"></td>
+					<td th:text="${scheduleTable.day6}" th:class="${scheduleTable.day6}"></td>
+					<td th:text="${scheduleTable.day7}" th:class="${scheduleTable.day7}"></td>
+					<td th:text="${scheduleTable.day8}" th:class="${scheduleTable.day8}"></td>
+					<td th:text="${scheduleTable.day9}" th:class="${scheduleTable.day9}"></td>
+					<td th:text="${scheduleTable.day10}" th:class="${scheduleTable.day10}"></td>
+					<td th:text="${scheduleTable.day11}" th:class="${scheduleTable.day11}"></td>
+					<td th:text="${scheduleTable.day12}" th:class="${scheduleTable.day12}"></td>
+					<td th:text="${scheduleTable.day13}" th:class="${scheduleTable.day13}"></td>
+					<td th:text="${scheduleTable.day14}" th:class="${scheduleTable.day14}"></td>
+					<td th:text="${scheduleTable.day15}" th:class="${scheduleTable.day15}"></td>
+					<td th:text="${scheduleTable.day16}" th:class="${scheduleTable.day16}"></td>
+					<td th:text="${scheduleTable.day17}" th:class="${scheduleTable.day17}"></td>
+					<td th:text="${scheduleTable.day18}" th:class="${scheduleTable.day18}"></td>
+					<td th:text="${scheduleTable.day19}" th:class="${scheduleTable.day19}"></td>
+					<td th:text="${scheduleTable.day20}" th:class="${scheduleTable.day20}"></td>
+					<td th:text="${scheduleTable.day21}" th:class="${scheduleTable.day21}"></td>
+					<td th:text="${scheduleTable.day22}" th:class="${scheduleTable.day22}"></td>
+					<td th:text="${scheduleTable.day23}" th:class="${scheduleTable.day23}"></td>
+					<td th:text="${scheduleTable.day24}" th:class="${scheduleTable.day24}"></td>
+					<td th:text="${scheduleTable.day25}" th:class="${scheduleTable.day25}"></td>
+					<td th:text="${scheduleTable.day26}" th:class="${scheduleTable.day26}"></td>
+					<td th:text="${scheduleTable.day27}" th:class="${scheduleTable.day27}"></td>
+					<td th:text="${scheduleTable.day28}" th:class="${scheduleTable.day28}"></td>
+					<td th:text="${scheduleTable.day29}" th:class="${scheduleTable.day29}"></td>
+					<td th:text="${scheduleTable.day30}" th:class="${scheduleTable.day30}"></td>
+					<td th:text="${scheduleTable.day31}" th:class="${scheduleTable.day31}"></td>
 				</tr>
 			</tbody>
 		</table>
 	</section>
 	
 	<script layout:fragment="script">	
-		$(".color-changer").each(function(){
-			if($(this).val() == "Day"){
-				$(this).css('color', '#FF4646');
-			}
-		})
-	
+		$(".Day").css("color", "#3CA03C");
+		$(".Eve").css("color", "#3296FF");
+		$(".Nig").css("color", "#FF4646");
 		
 	</script>
 </html>
