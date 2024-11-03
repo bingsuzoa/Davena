@@ -43,6 +43,15 @@ public class RoomService {
 		return roomId;
 
 	}
+	//방 만들때 방이름 중복확인
+		public Room checkRoom(String roomName) {
+			
+			Optional<Room> optionalRoom = roomRepository.findByRoomName(roomName);
+			Room room = optionalRoom.orElse(null);
+			
+			return room;
+		}
+		
 	
 	//방 조회해오기
 	public Room getRoom(String roomName, String roomPassword) {

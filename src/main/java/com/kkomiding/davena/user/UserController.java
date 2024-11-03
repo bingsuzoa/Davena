@@ -47,7 +47,13 @@ public class UserController {
 	
 	//팀원만 들어갈 수 있는 페이지
 	@GetMapping("/member/before-apply-view")
-	public String afterjoin() {
+	public String afterjoin(HttpSession session
+							,Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user",user);
 		
 		return "users/beforeapply";
 	}

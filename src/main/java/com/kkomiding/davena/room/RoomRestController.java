@@ -30,7 +30,7 @@ public class RoomRestController {
 	}
 	
 	
-	@PostMapping("make")
+	@PostMapping("/make")
 	public Map<String, String> makeRoom(@RequestParam("roomName") String roomName
 										,@RequestParam("roomPw") String roomPassword
 										,HttpSession session){
@@ -55,18 +55,27 @@ public class RoomRestController {
 		return resultMap;
 	}
 	
-	@PostMapping("duplicate-room")
+	
+	@PostMapping("/duplicate-room")
 	public Map<String, Boolean> duplicateRoom(@RequestParam("roomName") String roomName
-											,@RequestParam("roomPw") String roomPassword){
+											,@RequestParam("roomPw") String roomPassword
+											,HttpSession session){
 		
-		
-		Room room = roomService.getRoom(roomName, roomPassword);
+		int userId = (Integer)session.getAttribute("userId");
+		Room madeRoomByUser = roomService.getRoomByUserId(userId);
+		Room existRoom = roomService.checkRoom(roomName);
 		
 		Map<String, Boolean> resultMap = new HashMap<>();
-		if(room != null) { 
-			resultMap.put("isDuplicate", true);
-		} else {
+		if(madeRoomByUser == null  && existRoom == null) {
 			resultMap.put("isDuplicate", false);
+		} 
+		else if(madeRoomByUser != null  && existRoom == null){
+			resultMap.put("madeRoomByUser", true);
+		}
+		else if(madeRoomByUser == null  && existRoom != null){
+			resultMap.put("existRoom", true);
+		} else {
+			resultMap.put("isDuplicate", true);
 		}
 		
 		return resultMap;

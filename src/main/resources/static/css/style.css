@@ -6,8 +6,7 @@
 }
 
 #form{
-	width:800px;
-	margin-left : 320px;
+	margin-left : 40px;
 
 }
 /*****contents.html******/
@@ -99,13 +98,19 @@ a:hover {
 /*****header.html******/
 .bigTitle {
 	text-align : center;
-	margin-top: 100px;
+	margin-top: 180px;
+}
+.applyTitle {
+	text-align : center;
+	font-family: serif;
+	font-size : 110px;
 }
 .bigTitle > a {
 	text-decoration : none;
 	font-family: serif;
 	font-size : 110px;	
 }
+
 .miniheader {
 	 width:100%;
 	 display: flex;
@@ -227,7 +232,7 @@ a:hover {
 .loginBtnDiv {
 	display: flex;
 	justify-content: end;
-	margin-right : 250px;
+	margin-right : 560px;
 	margin-top: 30px;
 }
 
@@ -321,6 +326,10 @@ a:hover {
 
 
 /******user/afterapply.html******/
+
+.applyTitle-section{
+	margin-top:80px;
+}
 
 .afterjoin-phase {
 	font-size:20px;
@@ -547,7 +556,7 @@ a {
 .afterapply-phase {
 	font-size:20px;
 	line-height:40px;
-	margin-left : 270px;
+	margin-left : 590px;
 }
 .summary-apply-view {
 	text-decoration : none;
@@ -630,6 +639,26 @@ a {
 	margin-right : 20px;
 	margin-bottom : 10px;
 	
+}
+
+.makeRoomBtnDiv {
+	display: flex;
+	justify-content: end;
+	margin-right : 570px;
+	margin-top: 30px;
+}
+#BtnRoomDuplicate {
+	cursor : pointer;
+	font-size : 18px;
+}
+
+#BtnMakeRoom {
+	border : 0;
+	cursor : pointer;
+	background-color: transparent;
+	color:#1478CD;
+	font-size : 18px;
+	margin-left: 20px;
 }
 
 /******alldetail.html******/

@@ -111,6 +111,7 @@ public class UserRestController {
 			HttpSession session = request.getSession();
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userName", user.getName());
+			session.setAttribute("position", user.getPosition());
 			session.setAttribute("approve", user.getApprove());
 		}
 		return resultMap;

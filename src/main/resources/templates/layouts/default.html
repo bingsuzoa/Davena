@@ -9,15 +9,12 @@
 <title>default페이지</title>
 </head>
 <body>
-	<div id="wrap">
-		<div>
-			<th:block layout:fragment="header"></th:block>
-		</div>
+	
 		<div id="form">
-			<th:block th:replace="~{fragments/header :: .bigTitle}"></th:block>
+			<th:block layout:fragment="header"></th:block>
         	<th:block layout:fragment="content"></th:block>       	
         </div>
-	</div>
+
 	
 	<th:block layout:fragment="modal"></th:block>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

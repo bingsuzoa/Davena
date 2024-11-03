@@ -4,7 +4,7 @@
         layout:decorate="~{Layouts/default}">
 
 	<header layout:fragment="header">
-		<th:block th:replace="~{fragments/header :: .rightheader}"></th:block>
+		<th:block th:replace="~{fragments/header :: .bigTitle}"></th:block>
 	</header>
 	
 	<section layout:fragment="content" class="mt-3">
@@ -14,30 +14,55 @@
 		<div class="pwInputDiv">
 			<input type="password" class="pwInput form-control" id="roomPw" placeholder="방 비밀번호🔑">
 		</div>
-		<div class="pwInputDiv">
-			<div data-toggle="modal" data-target="#BtnMakeRoom" class="BtnMakeRoom">방 만들기</div>
+		<div class="makeRoomBtnDiv">
+			<div id="BtnMakeRoom">방 만들기</div>
 		</div>
 	</section>
-	
-	<div layout:fragment="modal">
-		<div class="modal fade" id="BtnMakeRoom">
-  		<div class="modal-dialog modal-dialog-centered">
-  			<div class="modal-content">     		
-     			<div class="modal-body">
-     				<p>같은 방 이름, 비밀번호가 존재합니다.</p>
-      				<p>변경해주세요.</p>
-      			</div>
-      			<div>
-      				<div data-dismiss="modal" class="closeBtn">Close</div>
-      			</div>
-    		</div>
- 		 </div>
-		</div>
-	</div>
+
 	
 	<script layout:fragment="script">
-		$(".BtnMakeRoom").on('click',function(){
-			let roomName = $("#roomName").val();
+	$(document).ready(function(){
+ 		
+   		new Promise((succ, fail) => {
+   			//방 중복여부 확인
+			$("#BtnMakeRoom").on('click',function(){
+				let roomName = $("#roomName").val();
+				let roomPw = $("#roomPw").val();
+				
+				if(roomName == ""){
+					alert("방 이름을 적어주세요.");
+					return;
+				}
+				if(roomPw == ""){
+					alert("방 비밀번호를 적어주세요.");
+					return;
+				}
+				$.ajax({
+					type:"post"
+					,url : "/room/duplicate-room"
+					,data : {"roomName" : roomName, "roomPw" : roomPw}
+					,success : function(data) {
+						if(data.isDuplicate == false) {
+							succ("가입 가능한 방입니다.");						
+						} 
+						else if(data.madeRoomByUser == true){
+							alert("이미 방 1개를 만드셨습니다. 한 Id당 방은 1개만 만들 수 있어요.");
+						}
+						else if(data.existRoom == true){
+							alert("이미 존재하는 방이 있습니다.")
+						}
+						else {
+							alert("방을 만들 수 없어요. 다시 확인해주세요.")
+						}
+					}
+					,error : function(){
+						fail("방 중복확인 에러");
+						checkDuplicateId = true;
+					}
+				})
+	   		})
+   		}).then((arg) => {
+   			let roomName = $("#roomName").val();
 			let roomPw = $("#roomPw").val();
 			
 			if(roomName == ""){
@@ -48,22 +73,23 @@
 				alert("방 비밀번호를 적어주세요.");
 				return;
 			}
-				$.ajax({
-					type:"post"
-					,url : "/room/make"
-					,data : {"roomName" : roomName, "roomPw" : roomPw}
-					,success : function(data) {
-						if(data.result == "success") {
-							console.log("방만들기 및 객체업데이트 성공");
-						} else {
-							console.log("방만들기 및 객체업데이트 실패");
-						}
+
+			$.ajax({
+				type:"post"
+				,url : "/room/make"
+				,data : {"roomName" : roomName, "roomPw" : roomPw}
+				,success : function(data) {
+					if(data.result == "success") {
+						location.href="/leader/login-view"
+					} else {
+						console.log("방만들기실패")
 					}
-					,error : function(){
-						console.log("방만들기 및 객체업데이트 에러");
-					}
-				});
-		
-		})
+				}
+				,error : function(){
+					console.log("방만들기 및 객체업데이트 에러");
+				}
+			});
+   		})
+	})
 	</script>
 </html>

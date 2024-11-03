@@ -25,20 +25,32 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute("userId");
+		String approve = (String) session.getAttribute("approve");
+		String position = (String) session.getAttribute("position");
 		
 		String uri = request.getRequestURI();
 		
 		if(userId == null) {
-			if(uri.startsWith("/leader") || uri.startsWith("/member")) {
+			if(uri.startsWith("/leader") || uri.startsWith("/member")|| uri.startsWith("/holiday")) {
 				response.sendRedirect("/user/login-view");
 				return false;
 			}
 		} else {
-			String position = userService.getUser(userId).getPosition();
 			if(position.equals("팀원")) {
-				if(uri.startsWith("/leader") || uri.equals("/user/login-view")) {
-					response.sendRedirect("/member/after-apply-view");
-					return false;
+				if(approve.equals("승인")) {
+					if(uri.startsWith("/leader") || uri.equals("/user/login-view")) {
+						response.sendRedirect("/member/after-apply-view");
+						return false;
+					}
+				}
+				else if(approve.equals("미승인")) {
+					if(uri.startsWith("/leader")
+					  || uri.startsWith("/holiday")
+					  || uri.equals("/user/login-view")		
+					  || uri.equals("/member/after-apply-view")) {
+						response.sendRedirect("/member/before-apply-view");
+						return false;
+					}
 				}
 			}
 			else if(position.equals("팀장")) {

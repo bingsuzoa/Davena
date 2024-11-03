@@ -2,11 +2,20 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" 
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{Layouts/default}">
-
-	<section layout:fragment="content" class="mt-3">
-		<div class="afterjoin-phase">
-			회원가입 신청이 완료되었습니다!<br>
-			팀장 확인 후 신청이 완료됩니다 :)
+	
+	
+	
+	<header layout:fragment="header">
+		<th:block th:replace="~{fragments/header :: .rightheader}"></th:block>
+	</header>
+	
+	<section layout:fragment="content">
+		<div class="applyTitle-section">
+			<p class="applyTitle">Davena</p>
+			<div class="afterjoin-phase">
+				회원가입 신청이 완료되었습니다!<br>
+				팀장 확인 후 신청이 완료됩니다 :)
+			</div>
 		</div>
 	</section>
 
