@@ -25,6 +25,7 @@ public interface HolidayRepository extends JpaRepository<Holiday, Integer>  {
 																			,LocalDateTime startDate
 																			,LocalDateTime endDate);
 	
+	
 	//한근무자의 연가 개수 조회
 	public int countByUserIdAndTypeAndStartDayGreaterThanAndEndDayLessThan(int userId
 																		 ,String Type

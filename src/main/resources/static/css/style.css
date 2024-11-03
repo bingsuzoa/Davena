@@ -11,7 +11,7 @@
 }
 /*****contents.html******/
 .contents {
-	width : 100vw;
+	margin:0 auto;
 	height: 100vh;
 }
 .contents > header {
@@ -797,8 +797,14 @@ a {
 }
 
 /******worksetview.html******/
-.set-Div {
-	margin-left : 150px;
+.set-workCount {
+	margin-left : 130px;
+	margin-top: 120px;
+}
+
+
+.set-team {
+	margin-left : 200px;
 	margin-top: 120px;
 }
 .set-workCount > p {
@@ -870,6 +876,30 @@ a {
 	margin-top : 4px;
 }
 /******calendarview.html******/
+
+#scheduleTable {
+	table-layout :fixed;
+	border-collapse : collapse;
+	border : 0;
+	width : 100%;
+}
+
+#scheduleTable th:first-child,
+			   td:first-child {
+			   
+	width : 70px;		   
+}
+
+#scheduleTable th,td{			   
+	width : 70px;		   
+}
+
+#scheduleTable td:first-child {
+	font-family : "Rock Salt";
+	width: 50px;
+}
+
+
 .header-synthesis > a {
 	text-decoration : none;
 	font-family: serif;
