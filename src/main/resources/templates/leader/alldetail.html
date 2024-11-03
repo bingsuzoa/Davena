@@ -25,7 +25,7 @@
 					<div id="request-detail-board-content" th:data-apply-count="${applyCount}">	
 						<div th:text="|간호사 총 팀원 : ${allCount}명|"></div>
 						<hr>
-						<div th:text="|미완료 : ${allCount-applyCount}명|"></div>
+						<div th:text="|휴가 신청 미완료 : ${allCount-applyCount}명|"></div>
 						<div class="unComplete-name-div">
 							<th:block th:each = "notApplyUser : ${notApplyUserIdList}">
 								<div class="unComplete-name" th:text="${notApplyUser}"></div>

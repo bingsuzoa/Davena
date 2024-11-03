@@ -365,7 +365,7 @@ public class WorkService {
 								while(que2.peek().equals("Day") || que2.peek().equals("Eve")) {
 									que2.offer(que2.peek());
 									que2.remove();		
-									if(!que2.peek().equals("Day") && que2.peek().equals("Eve")) {
+									if(!que2.peek().equals("Day") && !que2.peek().equals("Eve")) {
 										break;
 									}
 								}
@@ -508,7 +508,7 @@ public class WorkService {
 			
 ////////////////////////day3
 			//day3,4
-			for(int i = 3; i <= 5; i++) {
+			for(int i = 3; i <= 6; i++) {
 				boolean checkHoliday = false;
 				
 				while(checkHoliday == false) {
@@ -561,7 +561,6 @@ public class WorkService {
 									}
 								}
 								practice[k] = que.peek();
-								nextPractice[k] = practice[k];
 								que2.offer(que.peek());
 								que.remove();
 							} else {
@@ -573,20 +572,19 @@ public class WorkService {
 									}
 								}
 								practice[k] = que2.peek();
-								nextPractice[k] = practice[k];
 								que.offer(que2.peek());
 								que2.remove();
 							}
 						}
 						
 					}
-					//제약이 있지만, 오프만 있어야하는 건 아님
+					//제약이 있지만, 오프만 있어야하는 건 아님 - 전날 나이트일때(N, off만가능)
 					for(int k = 0; k < findByRoomIdList.size(); k++) {
 						
 						Work setDayWork = findByRoomIdList.get(k);
 						
 						//null부터 처리
-						if(setDayWork.getDay(i) == null) {
+						if(setDayWork.getDay(i) == null && practice[k] == null) {
 							
 							//전날 나이트 = 무조건 나이트 or 오프줘야할때
 							if(setDayWork.getDay(i-1).equals("Nig") && !setDayWork.getDay(i-2).equals("Nig")) {	
@@ -685,113 +683,129 @@ public class WorkService {
 										que2.remove();
 									}
 								}	
+							} else {
+								continue;
 							}
-							//전날 이브닝 = 나이트 or 오프 or 이브닝줘야할때
-							else if(setDayWork.getDay(i-1).equals("Eve")) {
-								if(i%2 != 0) {
-									//선택지가 아예 없을때
-									if(!que.contains("Nig") && !que.contains("Off") && !que.contains("Eve")) {
-										//임시 리스트삭제
-										Arrays.fill(practice, null);
-										Arrays.fill(nextPractice, null);
-										//queue 합치기
-										while(que2.peek() != null) {
-											que.offer(que2.peek());
-											que2.remove();
-										}
-										//한번 섞어주기
-										List<String> resetList = new ArrayList<>();
-											// queue를 list에 옮겨닮기
-										while(que.peek() != null) {
-											resetList.add(que.peek());
-											que.remove();
-										}
-											// resetList의 index를 무작위로 뽑을거라, index무작위 돌리기
-										for(int j = 0; j < resetList.size(); j++) {
-											index[j] = rand.nextInt(resetList.size());
-											for(int p = 0; p < j; p++) {
-												if(index[j] == index[p]) {
-													j--;
-												}
-											}
-										}
-											// resetList에서 무작위 index값을 불러와서 que2에 다시 저장
-										for(int j = 0; j < index.length; j++) {
-											que.offer(resetList.get(index[j]));
-										}
-										//work 다시 처음부터
-										k = -1;
-										checkHoliday = false;
-									//선택지 있을때	
-									} else {
-										while(que.peek().equals("Day")) {
-											que.offer(que.peek());
-											que.remove();		
-											if(!que.peek().equals("Day")) {
-												break;
-											}
-										}
-										practice[k] = que.peek();
-										que2.offer(que.peek());
-										que.remove();
-									}	
-								} else {
-									//선택지가 아예 없을때
-									if(!que2.contains("Nig") && !que2.contains("Off") && !que2.contains("Eve")) {
-										//임시 리스트삭제
-										Arrays.fill(practice, null);
-										Arrays.fill(nextPractice, null);
-										//queue 합치기
-										while(que.peek() != null) {
-											que2.offer(que.peek());
-											que.remove();
-										}
-										//한번 섞어주기
-										List<String> resetList = new ArrayList<>();
-											// queue를 list에 옮겨닮기
-										while(que2.peek() != null) {
-											resetList.add(que2.peek());
-											que2.remove();
-										}
-											// resetList의 index를 무작위로 뽑을거라, index무작위 돌리기
-										for(int j = 0; j < resetList.size(); j++) {
-											index[j] = rand.nextInt(resetList.size());
-											for(int p = 0; p < j; p++) {
-												if(index[j] == index[p]) {
-													j--;
-												}
-											}
-										}
-											// resetList에서 무작위 index값을 불러와서 que2에 다시 저장
-										for(int j = 0; j < index.length; j++) {
-											que2.offer(resetList.get(index[j]));
-										}
-										//work 다시 처음부터
-										k = -1;
-										checkHoliday = false;
-									//선택지 있을때	
-									} else {
-										while(que2.peek().equals("Day")) {
-											que2.offer(que2.peek());
-											que2.remove();		
-											if(!que2.peek().equals("Day")) {
-												break;
-											}
-										}
-										practice[k] = que2.peek();
+					} else {
+						continue;
+					}
+				}
+					
+				//제약이 있지만, 오프만 있어야하는 건 아님 - 전날 나이트일때(N, off만가능)
+				for(int k = 0; k < findByRoomIdList.size(); k++) {
+					
+					//저장할 work행 가져오기
+					Work setDayWork = findByRoomIdList.get(k);		
+					//null부터 처리
+					if(setDayWork.getDay(i) == null && practice[k] == null) {
+						//전날 이브닝 = 나이트 or 오프 or 이브닝줘야할때
+						if(setDayWork.getDay(i-1).equals("Eve")) {
+							if(i%2 != 0) {
+								//선택지가 아예 없을때
+								if(!que.contains("Nig") && !que.contains("Off") && !que.contains("Eve")) {
+									//임시 리스트삭제
+									Arrays.fill(practice, null);
+									Arrays.fill(nextPractice, null);
+									//queue 합치기
+									while(que2.peek() != null) {
 										que.offer(que2.peek());
 										que2.remove();
-									}	
-								}			
+									}
+									//한번 섞어주기
+									List<String> resetList = new ArrayList<>();
+										// queue를 list에 옮겨닮기
+									while(que.peek() != null) {
+										resetList.add(que.peek());
+										que.remove();
+									}
+										// resetList의 index를 무작위로 뽑을거라, index무작위 돌리기
+									for(int j = 0; j < resetList.size(); j++) {
+										index[j] = rand.nextInt(resetList.size());
+										for(int p = 0; p < j; p++) {
+											if(index[j] == index[p]) {
+												j--;
+											}
+										}
+									}
+										// resetList에서 무작위 index값을 불러와서 que2에 다시 저장
+									for(int j = 0; j < index.length; j++) {
+										que.offer(resetList.get(index[j]));
+									}
+									//work 다시 처음부터
+									k = -1;
+									checkHoliday = false;
+								//선택지 있을때	
+								} else {
+									while(que.peek().equals("Day")) {
+										que.offer(que.peek());
+										que.remove();		
+										if(!que.peek().equals("Day")) {
+											break;
+										}
+									}
+									practice[k] = que.peek();
+									que2.offer(que.peek());
+									que.remove();
+								}	
+							} else {
+								//선택지가 아예 없을때
+								if(!que2.contains("Nig") && !que2.contains("Off") && !que2.contains("Eve")) {
+									//임시 리스트삭제
+									Arrays.fill(practice, null);
+									Arrays.fill(nextPractice, null);
+									//queue 합치기
+									while(que.peek() != null) {
+										que2.offer(que.peek());
+										que.remove();
+									}
+									//한번 섞어주기
+									List<String> resetList = new ArrayList<>();
+										// queue를 list에 옮겨닮기
+									while(que2.peek() != null) {
+										resetList.add(que2.peek());
+										que2.remove();
+									}
+										// resetList의 index를 무작위로 뽑을거라, index무작위 돌리기
+									for(int j = 0; j < resetList.size(); j++) {
+										index[j] = rand.nextInt(resetList.size());
+										for(int p = 0; p < j; p++) {
+											if(index[j] == index[p]) {
+												j--;
+											}
+										}
+									}
+										// resetList에서 무작위 index값을 불러와서 que2에 다시 저장
+									for(int j = 0; j < index.length; j++) {
+										que2.offer(resetList.get(index[j]));
+									}
+									//work 다시 처음부터
+									k = -1;
+									checkHoliday = false;
+								//선택지 있을때	
+								} else {
+									while(que2.peek().equals("Day")) {
+										que2.offer(que2.peek());
+										que2.remove();		
+										if(!que2.peek().equals("Day")) {
+											break;
+										}
+									}
+									practice[k] = que2.peek();
+									que.offer(que2.peek());
+									que2.remove();
+								}	
 							}
-						
 						} else {
 							continue;
 						}
-					}
-					checkHoliday = true;
+					} else {
+						continue;
+					}	
 				}
-
+				checkHoliday = true;
+			}	
+		
+					
 					//빈칸채우기	
 					for(int k = 0; k < findByRoomIdList.size(); k++) {
 						//저장할 work행 가져오기
@@ -867,7 +881,7 @@ public class WorkService {
 
 
 ////////////////////////////////////////////////////day6~
-			for(int i = 6; i <= endDay; i++) {
+			for(int i = 7; i <= endDay; i++) {
 				boolean checkHoliday = false;
 				
 				while(checkHoliday == false) {
@@ -911,7 +925,8 @@ public class WorkService {
 							   && (setDayWork.getDay(i-2).equals("Day") || setDayWork.getDay(i-2).equals("Eve") || setDayWork.getDay(i-2).equals("Nig"))
 							   && (setDayWork.getDay(i-3).equals("Day") || setDayWork.getDay(i-3).equals("Eve") || setDayWork.getDay(i-3).equals("Nig"))
 							   && (setDayWork.getDay(i-4).equals("Day") || setDayWork.getDay(i-4).equals("Eve") || setDayWork.getDay(i-4).equals("Nig"))
-							   && (setDayWork.getDay(i-5).equals("Day") || setDayWork.getDay(i-5).equals("Eve") || setDayWork.getDay(i-5).equals("Nig"))){
+							   && (setDayWork.getDay(i-5).equals("Day") || setDayWork.getDay(i-5).equals("Eve") || setDayWork.getDay(i-5).equals("Nig"))
+							   && (setDayWork.getDay(i-6).equals("Day") || setDayWork.getDay(i-6).equals("Eve") || setDayWork.getDay(i-6).equals("Nig"))){
 								if(i%2 != 0) {
 									while(!que.peek().equals("Off")) {
 										que.offer(que.peek());
@@ -950,8 +965,7 @@ public class WorkService {
 										break;
 									}
 								}
-								practice[k] = que.peek();
-								nextPractice[k] = practice[k];
+								practice[k] = setDayWork.getDay(i);
 								que2.offer(que.peek());
 								que.remove();
 							} else {
@@ -962,21 +976,22 @@ public class WorkService {
 										break;
 									}
 								}
-								practice[k] = que2.peek();
-								nextPractice[k] = practice[k];
+								practice[k] = setDayWork.getDay(i);
 								que.offer(que2.peek());
 								que2.remove();
 							}
 						}
 						
 					}
-					//제약이 있지만, 오프만 있어야하는 건 아님
+					
+					
+					//제약이 있지만, 오프만 있어야하는 건 아님 - 전날 나이트(N,Off만 가능)
 					for(int k = 0; k < findByRoomIdList.size(); k++) {
 						
 						Work setDayWork = findByRoomIdList.get(k);
 						
 						//null부터 처리
-						if(setDayWork.getDay(i) == null) {
+						if(setDayWork.getDay(i) == null && practice[k] == null) {
 							
 							//전날 나이트 = 무조건 나이트 or 오프줘야할때
 							if(setDayWork.getDay(i-1).equals("Nig") && !setDayWork.getDay(i-2).equals("Nig")) {	
@@ -1075,9 +1090,21 @@ public class WorkService {
 										que2.remove();
 									}
 								}	
+							} else {
+								continue;
 							}
-							//전날 이브닝 = 나이트 or 오프 or 이브닝줘야할때
-							else if(setDayWork.getDay(i-1).equals("Eve")) {
+						} else {
+							continue;
+						}
+					}
+							
+					//제약이 있지만, 오프만 있어야하는 건 아님 - 전날 이브닝
+					for(int k = 0; k < findByRoomIdList.size(); k++) {						
+						Work setDayWork = findByRoomIdList.get(k);
+						
+						//null부터 처리
+						if(setDayWork.getDay(i) == null && practice[k] == null) {									
+							if(setDayWork.getDay(i-1).equals("Eve")) {
 								if(i%2 != 0) {
 									//선택지가 아예 없을때
 									if(!que.contains("Nig") && !que.contains("Off") && !que.contains("Eve")) {
@@ -1173,8 +1200,9 @@ public class WorkService {
 										que2.remove();
 									}	
 								}			
-							}
-						
+							} else {
+								continue;
+							}						
 						} else {
 							continue;
 						}
