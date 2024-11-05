@@ -837,6 +837,13 @@ a {
 	margin-top : 2px;
 }
 
+#caution-message{
+	font-size : 16px;
+	color:#CCE1FF;
+	margin-top : 5px;
+}
+
+
 /******memberdetail.html******/
 .choose-member > p {
 	font-size : 18px;

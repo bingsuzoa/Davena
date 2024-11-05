@@ -80,4 +80,20 @@ public class RoomRestController {
 		
 		return resultMap;
 	}
+	
+	@PostMapping("/join/duplicate-room")
+	public Map<String, Boolean> duplicateJoinRoom(@RequestParam("roomName") String roomName
+											 	,@RequestParam("roomPw") String roomPassword){
+		
+		Room room = roomService.getRoom(roomName, roomPassword);
+		Map<String, Boolean> resultMap = new HashMap<>();
+		
+		if(room != null) {
+			resultMap.put("isDuplicate", true);
+		} else {
+			resultMap.put("isDuplicate", false);
+		}
+		
+		return resultMap;
+	}
 }

@@ -27,12 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRestController {
 	
 	private UserService userService;
-	private WorkService workService;
 	
-	public UserRestController(UserService userService
-							 ,WorkService workService) {
+	public UserRestController(UserService userService) {
 		this.userService = userService;
-		this.workService = workService;
 	}
 	
 	
@@ -162,7 +159,5 @@ public class UserRestController {
 		}
 		return resultMap;
 	}
-	
-	//회원가입 검증과정
 	
 }

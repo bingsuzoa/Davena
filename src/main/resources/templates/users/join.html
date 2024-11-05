@@ -305,7 +305,7 @@
 					//방 중복인지 확인, 확인이 되어야 가입가능
 					$.ajax({
 						type:"post"
-						,url : "/room/duplicate-room"
+						,url : "/room/join/duplicate-room"
 						,data : {"roomName" : roomName, "roomPw" : roomPassword}
 						,success : function(data){
 							if(data.isDuplicate == true){

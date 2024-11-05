@@ -42,6 +42,7 @@
 					,url : "/room/duplicate-room"
 					,data : {"roomName" : roomName, "roomPw" : roomPw}
 					,success : function(data) {
+						console.log(data);
 						if(data.isDuplicate == false) {
 							succ("가입 가능한 방입니다.");						
 						} 

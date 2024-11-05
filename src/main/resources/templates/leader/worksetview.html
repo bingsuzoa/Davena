@@ -73,7 +73,8 @@
 	  					</div>
   					</div>
   				
-				<div id="set-Btn">저장하기</div>
+				<div id="set-Btn">근무표 랜덤 돌리기</div>
+				<div id="caution-message">5초 뒤에도 화면변화가 없다면 새로고침 후 다시 돌려주세요 :)</div>
 			</div>
 		</div> 
 	</div>
@@ -84,6 +85,21 @@
 			let Dduty = $("#set-workCount-input-1").val();
 			let Eduty = $("#set-workCount-input-2").val();
 			let Nduty = $("#set-workCount-input-3").val();
+			
+			if(Dduty == ""){
+				alert("Dduty 근무 수를 설정해주세요.");
+				return;
+			}
+			
+			if(Eduty == ""){
+				alert("Eduty 근무 수를 설정해주세요.");
+				return;
+			}
+			
+			if(Nduty == ""){
+				alert("Nduty 근무 수를 설정해주세요.");
+				return;
+			}
 			
 			new Promise((succ, fail) => {
 				$.ajax({

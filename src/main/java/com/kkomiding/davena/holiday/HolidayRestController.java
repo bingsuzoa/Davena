@@ -25,12 +25,9 @@ import jakarta.servlet.http.HttpSession;
 public class HolidayRestController {
 	
 	private HolidayService holidayService;
-	private RoomService roomService;
 	
-	public HolidayRestController(HolidayService holidayService
-								,RoomService roomService) {
+	public HolidayRestController(HolidayService holidayService) {
 		this.holidayService = holidayService;
-		this.roomService = roomService;
 	}
 
 		
@@ -57,7 +54,7 @@ public class HolidayRestController {
 		return resultMap;
 	}
 	
-
+	//내 휴가 신청 현황 조회하기
 	@PostMapping("/detail")
 	public List<PersonalSchedule> getRequest(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime startDate
 											,@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm") LocalDateTime endDate
